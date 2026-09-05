@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+        /* ===== BASE ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* ===== LIGHT MODE (DEFAULT) ===== */
         :root {
             --primary: #6366f1;
             --primary-dark: #4f46e5;
@@ -19,16 +22,34 @@
             --surface: #ffffff;
             --text: #1e293b;
             --text-light: #64748b;
+            --text-white: #ffffff;
             --border: #e2e8f0;
+            --input-bg: #f8fafc;
+            --card-bg: #f8fafc;
+            --hover-bg: #e0e7ff;
             --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
             --shadow-lg: 0 20px 60px rgba(0,0,0,0.15);
             --radius: 16px;
             --radius-sm: 10px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --input-bg: #f8fafc;
-            --card-bg: #f8fafc;
-            --hover-bg: #e0e7ff;
         }
+        
+        /* ===== DARK MODE ===== */
+        [data-theme="dark"] {
+            --background: #0f172a;
+            --surface: #1e293b;
+            --text: #f1f5f9;
+            --text-light: #94a3b8;
+            --text-white: #f1f5f9;
+            --border: #334155;
+            --input-bg: #0f172a;
+            --card-bg: #0f172a;
+            --hover-bg: #334155;
+            --primary-light: #1e293b;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--background);
@@ -36,219 +57,356 @@
             line-height: 1.6;
             transition: var(--transition);
         }
-        /* ===== DARK MODE ===== */
-        body.dark-mode {
-            --background: #0f172a;
-            --surface: #1e293b;
-            --text: #f1f5f9;
-            --text-light: #94a3b8;
-            --border: #334155;
-            --input-bg: #0f172a;
-            --card-bg: #0f172a;
-            --hover-bg: #334155;
-            --shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
-            --shadow-lg: 0 20px 60px rgba(0,0,0,0.4);
-            --primary-light: #1e293b;
+        
+        /* ===== ALL DARK MODE OVERRIDES ===== */
+        [data-theme="dark"] .navbar,
+        [data-theme="dark"] .location-bar,
+        [data-theme="dark"] .recommendations-panel,
+        [data-theme="dark"] .itinerary-container,
+        [data-theme="dark"] .provider-container,
+        [data-theme="dark"] .modal-content,
+        [data-theme="dark"] .login-container,
+        [data-theme="dark"] .chat-popup,
+        [data-theme="dark"] .stats-card,
+        [data-theme="dark"] .trending-section,
+        [data-theme="dark"] .analytics-card,
+        [data-theme="dark"] .experience-card,
+        [data-theme="dark"] .comparison-panel,
+        [data-theme="dark"] .notification {
+            background: var(--surface) !important;
+            border-color: var(--border) !important;
         }
-        body.dark-mode .navbar,
-        body.dark-mode .location-bar,
-        body.dark-mode .recommendations-panel,
-        body.dark-mode .itinerary-container,
-        body.dark-mode .provider-container,
-        body.dark-mode .modal-content,
-        body.dark-mode .login-container,
-        body.dark-mode .chat-popup,
-        body.dark-mode .stats-card,
-        body.dark-mode .trending-section,
-        body.dark-mode .analytics-card,
-        body.dark-mode .experience-card {
-            background: var(--surface);
-            border-color: var(--border);
+        
+        [data-theme="dark"] .recommendations-header,
+        [data-theme="dark"] .chat-popup-header {
+            background: #0f172a !important;
+            border-color: var(--border) !important;
         }
-        body.dark-mode .recommendations-header,
-        body.dark-mode .chat-popup-header {
-            background: #0f172a;
-            border-color: var(--border);
+        
+        [data-theme="dark"] .experience-card {
+            background: var(--card-bg) !important;
+            border-color: var(--border) !important;
         }
-        body.dark-mode .experience-card {
-            background: var(--card-bg);
-            border-color: var(--border);
+        
+        [data-theme="dark"] .experience-card:hover {
+            border-color: var(--primary) !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
         }
-        body.dark-mode .experience-card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        
+        /* --- TEXT COLORS IN DARK MODE --- */
+        [data-theme="dark"] h1,
+        [data-theme="dark"] h2,
+        [data-theme="dark"] h3,
+        [data-theme="dark"] h4,
+        [data-theme="dark"] h5,
+        [data-theme="dark"] h6,
+        [data-theme="dark"] p,
+        [data-theme="dark"] span,
+        [data-theme="dark"] div,
+        [data-theme="dark"] label,
+        [data-theme="dark"] .text,
+        [data-theme="dark"] .title,
+        [data-theme="dark"] .value,
+        [data-theme="dark"] .stat-value,
+        [data-theme="dark"] .stat strong,
+        [data-theme="dark"] .price,
+        [data-theme="dark"] .content h4,
+        [data-theme="dark"] .itinerary-item .content h4,
+        [data-theme="dark"] .experience-card-content h4,
+        [data-theme="dark"] .experience-list-item .info h4,
+        [data-theme="dark"] .modal-header h2,
+        [data-theme="dark"] .exp-detail-name,
+        [data-theme="dark"] .exp-detail-grid .value,
+        [data-theme="dark"] .recommendations-header h3,
+        [data-theme="dark"] .itinerary-header h2,
+        [data-theme="dark"] .provider-header h2,
+        [data-theme="dark"] .analytics-card h4,
+        [data-theme="dark"] .comparison-panel h4,
+        [data-theme="dark"] .login-container label,
+        [data-theme="dark"] .stats-card .info .value {
+            color: var(--text) !important;
         }
-        body.dark-mode .experience-card-content h4,
-        body.dark-mode .experience-card-content .price {
-            color: var(--text);
+        
+        [data-theme="dark"] .text-light,
+        [data-theme="dark"] .category,
+        [data-theme="dark"] .details,
+        [data-theme="dark"] .stat,
+        [data-theme="dark"] .stat-label,
+        [data-theme="dark"] .empty-itinerary,
+        [data-theme="dark"] .pref-bar span,
+        [data-theme="dark"] .experience-list-item .info p,
+        [data-theme="dark"] .itinerary-item .content p,
+        [data-theme="dark"] .experience-card-content .category,
+        [data-theme="dark"] .experience-card-content .details,
+        [data-theme="dark"] .exp-detail-desc,
+        [data-theme="dark"] .exp-detail-grid .label,
+        [data-theme="dark"] .comparison-panel .compare-item,
+        [data-theme="dark"] .notification .desc,
+        [data-theme="dark"] .login-container .logo p,
+        [data-theme="dark"] .auth-switch,
+        [data-theme="dark"] .location-bar label,
+        [data-theme="dark"] .trending-section h4 {
+            color: var(--text-light) !important;
         }
-        body.dark-mode .experience-card-content .category,
-        body.dark-mode .experience-card-content .details {
-            color: var(--text-light);
+        
+        [data-theme="dark"] .chat-message {
+            background: var(--card-bg) !important;
+            color: var(--text) !important;
+            border-color: var(--border) !important;
         }
-        body.dark-mode .itinerary-item {
-            background: var(--card-bg);
-            border-color: var(--border);
+        
+        [data-theme="dark"] .chat-message.bot {
+            background: var(--card-bg) !important;
+            color: var(--text) !important;
+            border-color: var(--border) !important;
         }
-        body.dark-mode .itinerary-item .content h4 {
-            color: var(--text);
+        
+        [data-theme="dark"] .chat-message.user {
+            background: var(--primary) !important;
+            color: #ffffff !important;
         }
-        body.dark-mode .itinerary-item .content p {
-            color: var(--text-light);
+        
+        [data-theme="dark"] .chat-message.system {
+            background: #451a03 !important;
+            color: #fcd34d !important;
         }
-        body.dark-mode .itinerary-item .time {
-            color: var(--primary);
+        
+        [data-theme="dark"] .chat-popup .quick-suggestions .suggestion-chip {
+            background: var(--surface) !important;
+            border-color: var(--border) !important;
+            color: var(--text) !important;
         }
-        body.dark-mode .stat-card {
-            background: var(--card-bg);
-            border-color: var(--border);
-        }
-        body.dark-mode .stat-card .info .value {
-            color: var(--text);
-        }
-        body.dark-mode .stat-card .info .label {
-            color: var(--text-light);
-        }
-        body.dark-mode .filter-bar select,
-        body.dark-mode .location-bar select,
-        body.dark-mode .login-container input,
-        body.dark-mode .chat-input-area textarea {
-            background: var(--input-bg);
-            border-color: var(--border);
-            color: var(--text);
-        }
-        body.dark-mode .filter-bar select option {
-            background: var(--surface);
-            color: var(--text);
-        }
-        body.dark-mode .chat-message {
-            background: var(--card-bg);
-            color: var(--text);
-            border-color: var(--border);
-        }
-        body.dark-mode .chat-message.user {
-            background: var(--primary);
-            color: white;
-        }
-        body.dark-mode .chat-message.system {
-            background: #451a03;
-            color: #fcd34d;
-        }
-        body.dark-mode .trending-tag {
-            background: var(--card-bg);
-            border-color: var(--border);
-            color: var(--text-light);
-        }
-        body.dark-mode .trending-tag:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: var(--hover-bg);
-        }
-        body.dark-mode .trending-tag .count {
-            background: var(--hover-bg);
-            color: var(--primary-light);
-        }
-        body.dark-mode .empty-itinerary {
-            color: var(--text-light);
-        }
-        body.dark-mode .stat .stat-value {
-            color: var(--text);
-        }
-        body.dark-mode .stat .stat-label {
-            color: var(--text-light);
-        }
-        body.dark-mode .experience-list-item {
-            background: var(--card-bg);
-            border-color: var(--border);
-        }
-        body.dark-mode .experience-list-item .info h4 {
-            color: var(--text);
-        }
-        body.dark-mode .experience-list-item .info p {
-            color: var(--text-light);
-        }
-        body.dark-mode .analytics-card h4 {
-            color: var(--text);
-        }
-        body.dark-mode .analytics-card .pref-bar span {
-            color: var(--text-light);
-        }
-        body.dark-mode .analytics-card .pref-pct {
-            color: var(--text);
-        }
-        body.dark-mode .preference-bars .bar-track {
-            background: var(--border);
-        }
-        body.dark-mode .comparison-panel {
-            background: var(--surface);
-            border-color: var(--border);
-        }
-        body.dark-mode .comparison-panel h4 {
-            color: var(--text);
-        }
-        body.dark-mode .comparison-panel .compare-item {
-            color: var(--text-light);
-            border-color: var(--border);
-        }
-        body.dark-mode .notification {
-            background: var(--surface);
-            border-color: var(--border);
-        }
-        body.dark-mode .notification .title {
-            color: var(--text);
-        }
-        body.dark-mode .notification .desc {
-            color: var(--text-light);
-        }
-        body.dark-mode .modal-content {
-            background: var(--surface);
-        }
-        body.dark-mode .modal-content .exp-detail-name {
-            color: var(--text);
-        }
-        body.dark-mode .modal-content .exp-detail-desc {
-            color: var(--text-light);
-        }
-        body.dark-mode .modal-content .exp-detail-grid .item {
-            background: var(--card-bg);
-        }
-        body.dark-mode .modal-content .exp-detail-grid .item .value {
-            color: var(--text);
-        }
-        body.dark-mode .modal-content .exp-detail-grid .item .label {
-            color: var(--text-light);
-        }
-        body.dark-mode .modal-content .exp-detail-tags span {
-            background: var(--hover-bg);
-            color: var(--text);
-        }
-        body.dark-mode .modal-content .exp-detail-what {
-            background: var(--card-bg);
-            color: var(--text);
-        }
-        body.dark-mode .btn-secondary {
-            background: var(--card-bg);
-            color: var(--text);
-            border-color: var(--border);
-        }
-        body.dark-mode .btn-secondary:hover {
-            background: var(--hover-bg);
-            color: var(--primary);
-        }
-        body.dark-mode .login-container label {
-            color: var(--text);
-        }
-        body.dark-mode .stats-card .icon {
+        
+        [data-theme="dark"] .chat-popup .quick-suggestions .suggestion-chip:hover {
             background: var(--hover-bg) !important;
-        }
-        body.dark-mode .stats-card .icon i {
             color: var(--primary) !important;
         }
-        body.dark-mode .provider-stats-grid .stat-card .stat-value {
-            color: var(--text);
+        
+        [data-theme="dark"] .chat-popup .chat-input-area textarea {
+            background: var(--input-bg) !important;
+            border-color: var(--border) !important;
+            color: var(--text) !important;
         }
-        body.dark-mode .provider-stats-grid .stat-card .stat-label {
-            color: var(--text-light);
+        
+        [data-theme="dark"] .chat-popup .chat-input-area textarea::placeholder {
+            color: var(--text-light) !important;
+        }
+        
+        [data-theme="dark"] .login-container input {
+            background: var(--input-bg) !important;
+            border-color: var(--border) !important;
+            color: var(--text) !important;
+        }
+        
+        [data-theme="dark"] .login-container input::placeholder {
+            color: var(--text-light) !important;
+        }
+        
+        [data-theme="dark"] .filter-bar select,
+        [data-theme="dark"] .location-bar select {
+            background: var(--input-bg) !important;
+            border-color: var(--border) !important;
+            color: var(--text) !important;
+        }
+        
+        [data-theme="dark"] .filter-bar select option {
+            background: var(--surface) !important;
+            color: var(--text) !important;
+        }
+        
+        [data-theme="dark"] .trending-tag {
+            background: var(--surface) !important;
+            border-color: var(--border) !important;
+            color: var(--text-light) !important;
+        }
+        
+        [data-theme="dark"] .trending-tag:hover {
+            border-color: var(--primary) !important;
+            color: var(--primary) !important;
+            background: var(--hover-bg) !important;
+        }
+        
+        [data-theme="dark"] .trending-tag .count {
+            background: var(--hover-bg) !important;
+            color: var(--primary) !important;
+        }
+        
+        [data-theme="dark"] .itinerary-item {
+            background: var(--card-bg) !important;
+            border-color: var(--border) !important;
+        }
+        
+        [data-theme="dark"] .itinerary-item .time {
+            color: var(--primary) !important;
+        }
+        
+        [data-theme="dark"] .itinerary-item .remove-btn {
+            color: var(--danger) !important;
+        }
+        
+        [data-theme="dark"] .itinerary-item .remove-btn:hover {
+            background: #450a0a !important;
+        }
+        
+        [data-theme="dark"] .stat-card {
+            background: var(--card-bg) !important;
+            border-color: var(--border) !important;
+        }
+        
+        [data-theme="dark"] .stat-card .icon {
+            background: var(--hover-bg) !important;
+        }
+        
+        [data-theme="dark"] .stat-card .icon i {
+            color: var(--primary) !important;
+        }
+        
+        [data-theme="dark"] .experience-list-item {
+            background: var(--card-bg) !important;
+            border-color: var(--border) !important;
+        }
+        
+        [data-theme="dark"] .experience-list-item .status.active {
+            background: #064e3b !important;
+            color: #6ee7b7 !important;
+        }
+        
+        [data-theme="dark"] .experience-card .add-btn,
+        [data-theme="dark"] .experience-card .detail-btn,
+        [data-theme="dark"] .experience-card .compare-btn {
+            background: var(--input-bg) !important;
+            color: var(--text-light) !important;
+            border-color: var(--border) !important;
+        }
+        
+        [data-theme="dark"] .experience-card .add-btn:hover,
+        [data-theme="dark"] .experience-card .detail-btn:hover {
+            background: var(--primary) !important;
+            color: #ffffff !important;
+            border-color: var(--primary) !important;
+        }
+        
+        [data-theme="dark"] .experience-card .compare-btn:hover {
+            background: var(--secondary) !important;
+            color: #ffffff !important;
+            border-color: var(--secondary) !important;
+        }
+        
+        [data-theme="dark"] .experience-card .favorite-btn {
+            background: rgba(30, 41, 59, 0.9) !important;
+        }
+        
+        [data-theme="dark"] .btn-secondary {
+            background: var(--card-bg) !important;
+            color: var(--text) !important;
+            border-color: var(--border) !important;
+        }
+        
+        [data-theme="dark"] .btn-secondary:hover {
+            background: var(--hover-bg) !important;
+            color: var(--primary) !important;
+        }
+        
+        [data-theme="dark"] .modal-content .exp-detail-tags span {
+            background: var(--hover-bg) !important;
+            color: var(--text) !important;
+        }
+        
+        [data-theme="dark"] .modal-content .exp-detail-what {
+            background: var(--card-bg) !important;
+            color: var(--text) !important;
+        }
+        
+        [data-theme="dark"] .modal-content .exp-detail-grid .item {
+            background: var(--card-bg) !important;
+        }
+        
+        [data-theme="dark"] .provider-stats-grid .stat-card .stat-value {
+            color: var(--text) !important;
+        }
+        
+        [data-theme="dark"] .provider-stats-grid .stat-card .stat-label {
+            color: var(--text-light) !important;
+        }
+        
+        [data-theme="dark"] .preference-bars .bar-track {
+            background: var(--border) !important;
+        }
+        
+        [data-theme="dark"] .pref-pct {
+            color: var(--text) !important;
+        }
+        
+        [data-theme="dark"] .notification .title {
+            color: var(--text) !important;
+        }
+        
+        [data-theme="dark"] .notification .desc {
+            color: var(--text-light) !important;
+        }
+        
+        [data-theme="dark"] .comparison-panel .compare-item {
+            color: var(--text-light) !important;
+            border-color: var(--border) !important;
+        }
+        
+        [data-theme="dark"] .weather-display {
+            background: var(--hover-bg) !important;
+            color: var(--text) !important;
+        }
+        
+        [data-theme="dark"] .nav-actions .user-badge {
+            background: var(--hover-bg) !important;
+            color: var(--text) !important;
+        }
+        
+        [data-theme="dark"] .nav-actions .user-badge:hover {
+            background: var(--primary) !important;
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] .nav-btn {
+            color: var(--text-light) !important;
+        }
+        
+        [data-theme="dark"] .nav-btn:hover {
+            background: var(--hover-bg) !important;
+            color: var(--primary) !important;
+        }
+        
+        [data-theme="dark"] .nav-btn.active {
+            background: var(--primary) !important;
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] .theme-toggle,
+        [data-theme="dark"] .logout-btn {
+            color: var(--text-light) !important;
+            border-color: var(--border) !important;
+        }
+        
+        [data-theme="dark"] .theme-toggle:hover,
+        [data-theme="dark"] .logout-btn:hover {
+            border-color: var(--primary) !important;
+            color: var(--primary) !important;
+        }
+        
+        [data-theme="dark"] .modal-close {
+            color: var(--text-light) !important;
+        }
+        
+        [data-theme="dark"] .modal-close:hover {
+            color: var(--danger) !important;
+        }
+        
+        [data-theme="dark"] .login-container .error-msg {
+            background: #450a0a !important;
+            color: #fca5a5 !important;
+        }
+        
+        [data-theme="dark"] .chat-toggle-btn {
+            background: var(--primary) !important;
+            color: #ffffff !important;
         }
 
         ::-webkit-scrollbar { width: 6px; }
@@ -316,10 +474,6 @@
             font-size: 13px; margin-bottom: 12px;
             display: none;
         }
-        body.dark-mode .login-container .error-msg {
-            background: #450a0a;
-            color: #fca5a5;
-        }
 
         /* ===== NAVBAR ===== */
         .navbar {
@@ -333,7 +487,6 @@
             background: rgba(255,255,255,0.95);
             transition: var(--transition);
         }
-        body.dark-mode .navbar { background: rgba(15,23,42,0.95); }
         .nav-container {
             max-width: 1400px;
             margin: 0 auto;
@@ -363,7 +516,6 @@
         }
         .nav-btn:hover { background: var(--primary-light); color: var(--primary); }
         .nav-btn.active { background: var(--primary); color: white; }
-        body.dark-mode .nav-btn:hover { background: var(--hover-bg); color: var(--primary-light); }
         .nav-actions { display: flex; align-items: center; gap: 6px; }
         .nav-actions .user-badge {
             display: flex;
@@ -376,10 +528,6 @@
             font-weight: 500;
             cursor: pointer;
             transition: var(--transition);
-            color: var(--text);
-        }
-        body.dark-mode .nav-actions .user-badge {
-            background: var(--hover-bg);
             color: var(--text);
         }
         .nav-actions .user-badge:hover { background: var(--primary); color: white; }
@@ -449,7 +597,6 @@
             font-weight: 500;
             color: var(--text);
         }
-        body.dark-mode .weather-display { background: var(--hover-bg); }
         .weather-display i { font-size: 16px; }
 
         /* ===== STATS ===== */
@@ -607,7 +754,6 @@
             color: var(--primary);
             transition: var(--transition);
         }
-        body.dark-mode .experience-card-image { background: linear-gradient(135deg, #1e293b, #334155); }
         .experience-card-badge {
             position: absolute;
             top: 4px;
@@ -633,7 +779,6 @@
             color: var(--text-light);
             font-size: 12px;
         }
-        body.dark-mode .experience-card .favorite-btn { background: rgba(30,41,59,0.9); }
         .experience-card .favorite-btn:hover { transform: scale(1.1); }
         .experience-card .favorite-btn.favorited { color: var(--danger); }
         .experience-card-content { padding: 10px 12px; }
@@ -670,11 +815,6 @@
             color: var(--text-light);
             font-family: inherit;
         }
-        body.dark-mode .experience-card .add-btn,
-        body.dark-mode .experience-card .detail-btn {
-            background: var(--input-bg);
-            color: var(--text-light);
-        }
         .experience-card .add-btn:hover,
         .experience-card .detail-btn:hover {
             background: var(--primary);
@@ -691,10 +831,6 @@
             transition: var(--transition);
             color: var(--text-light);
             font-family: inherit;
-        }
-        body.dark-mode .experience-card .compare-btn {
-            background: var(--input-bg);
-            color: var(--text-light);
         }
         .experience-card .compare-btn:hover {
             background: var(--secondary);
@@ -981,7 +1117,7 @@
         .stat strong { color: var(--text); font-size: 14px; }
         .itinerary-timeline { min-height: 200px; padding: 12px 0; }
         .empty-itinerary { text-align: center; padding: 40px 20px; color: var(--text-light); }
-        .empty-itinerary i { display: block; margin-bottom: 10px; }
+        .empty-itinerary i { display: block; margin-bottom: 10px; color: var(--text-light); }
         .itinerary-item {
             display: flex;
             gap: 12px;
@@ -994,7 +1130,6 @@
             transition: var(--transition);
         }
         .itinerary-item:hover { background: var(--primary-light); }
-        body.dark-mode .itinerary-item:hover { background: var(--hover-bg); }
         .itinerary-item .time {
             min-width: 60px;
             font-weight: 600;
@@ -1014,7 +1149,6 @@
             transition: var(--transition);
         }
         .itinerary-item .remove-btn:hover { background: #fef2f2; transform: scale(1.1); }
-        body.dark-mode .itinerary-item .remove-btn:hover { background: #450a0a; }
         .itinerary-actions {
             display: flex;
             gap: 6px;
@@ -1057,7 +1191,6 @@
             font-family: inherit;
         }
         .btn-secondary:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
-        body.dark-mode .btn-secondary:hover { background: var(--hover-bg); }
         .btn-danger {
             padding: 6px 14px;
             background: var(--danger);
@@ -1147,7 +1280,6 @@
             font-weight: 500;
         }
         .status.active { background: #d1fae5; color: #059669; }
-        body.dark-mode .status.active { background: #064e3b; color: #6ee7b7; }
         .provider-analytics h3 { font-size: 16px; margin-bottom: 10px; color: var(--text); }
         .analytics-grid {
             display: grid;
@@ -1455,7 +1587,7 @@
                 </div>
                 <div class="itinerary-timeline" id="itineraryTimeline">
                     <div class="empty-itinerary">
-                        <i class="fas fa-map-pin" style="font-size: 40px; color: #d1d5db;"></i>
+                        <i class="fas fa-map-pin" style="font-size: 40px;"></i>
                         <p>Your itinerary is empty. Start exploring global experiences!</p>
                     </div>
                 </div>
@@ -1521,7 +1653,7 @@
                 <h2 style="display:flex;align-items:center;gap:10px;margin-bottom:16px;color:var(--text);"><i class="fas fa-heart" style="color:var(--danger);"></i> Your Favorites</h2>
                 <div id="favoritesList">
                     <div class="empty-itinerary">
-                        <i class="fas fa-heart" style="font-size:40px;color:#d1d5db;"></i>
+                        <i class="fas fa-heart" style="font-size:40px;"></i>
                         <p>No favorites yet. Click the ❤️ on any experience to save it!</p>
                     </div>
                 </div>
@@ -1786,6 +1918,25 @@
         let userPreferences = { interests: ["food", "culture"], budget: 50, timeAvailable: 3, travelerType: "couple" };
         let weatherStates = ["sunny", "rainy", "cloudy", "hot"];
         let currentWeatherIndex = 0;
+
+        // ============================================
+        // THEME TOGGLE (Using data-theme attribute)
+        // ============================================
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const icon = document.querySelector('.theme-toggle i');
+            
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                icon.className = 'fas fa-moon';
+                showNotification('☀️ Light Mode', 'Switched to light theme');
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                icon.className = 'fas fa-sun';
+                showNotification('🌙 Dark Mode', 'Switched to dark theme');
+            }
+        }
 
         // ============================================
         // LOCATION FUNCTIONS
@@ -2103,7 +2254,7 @@
             const container = document.getElementById('itineraryTimeline');
             const details = itinerary.map(id => EXPERIENCES.find(e => e.id === id)).filter(Boolean);
             if (details.length === 0) {
-                container.innerHTML = `<div class="empty-itinerary"><i class="fas fa-map-pin" style="font-size:40px;color:var(--text-light);"></i><p>Your itinerary is empty. Start exploring!</p></div>`;
+                container.innerHTML = `<div class="empty-itinerary"><i class="fas fa-map-pin" style="font-size: 40px;"></i><p>Your itinerary is empty. Start exploring!</p></div>`;
                 return;
             }
             container.innerHTML = details.map((exp, i) => `
@@ -2124,7 +2275,7 @@
             const container = document.getElementById('favoritesList');
             const details = favorites.map(id => EXPERIENCES.find(e => e.id === id)).filter(Boolean);
             if (details.length === 0) {
-                container.innerHTML = `<div class="empty-itinerary"><i class="fas fa-heart" style="font-size:40px;color:var(--text-light);"></i><p>No favorites yet. Click the ❤️ on any experience!</p></div>`;
+                container.innerHTML = `<div class="empty-itinerary"><i class="fas fa-heart" style="font-size:40px;"></i><p>No favorites yet. Click the ❤️ on any experience!</p></div>`;
                 return;
             }
             container.innerHTML = `
@@ -2267,7 +2418,7 @@
                     <div class="item" style="background:var(--card-bg);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">📝 Reviews</div><div style="font-size:14px;font-weight:700;color:var(--text);">${exp.reviews}</div></div>
                     <div class="item" style="background:var(--card-bg);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">🕐 Hours</div><div style="font-size:14px;font-weight:700;color:var(--text);">${exp.openingHours || 'Flexible'}</div></div>
                 </div>
-                <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;">${exp.tags.map(t => `<span style="background:var(--primary-light);padding:2px 8px;border-radius:8px;font-size:10px;color:var(--primary-dark);">#${t}</span>`).join('')}</div>
+                <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;">${exp.tags.map(t => `<span style="background:var(--primary-light);padding:2px 8px;border-radius:8px;font-size:10px;color:var(--text);">#${t}</span>`).join('')}</div>
                 <div style="background:var(--card-bg);padding:10px;border-radius:6px;margin-bottom:10px;border-left:4px solid var(--primary);color:var(--text);">
                     <strong><i class="fas fa-check-circle" style="color:var(--primary);"></i> What to Expect:</strong><br>
                     ${exp.whatToExpect || 'A unique local experience with professional guidance.'}
@@ -2438,21 +2589,6 @@
         }
 
         // ============================================
-        // THEME
-        // ============================================
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            const icon = document.querySelector('.theme-toggle i');
-            if (document.body.classList.contains('dark-mode')) {
-                icon.className = 'fas fa-sun';
-                showNotification('🌙 Dark Mode', 'Switched to dark theme');
-            } else {
-                icon.className = 'fas fa-moon';
-                showNotification('☀️ Light Mode', 'Switched to light theme');
-            }
-        }
-
-        // ============================================
         // USER PROFILE
         // ============================================
         function showUserProfile() {
@@ -2554,9 +2690,35 @@
         document.getElementById('locationSelect').addEventListener('change', setLocation);
 
         // ============================================
+        // CHECK FOR DARK MODE ON LOAD
+        // ============================================
+        function checkDarkModePreference() {
+            const savedTheme = localStorage.getItem('nexus-theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.querySelector('.theme-toggle i').className = 'fas fa-sun';
+            }
+        }
+
+        // Save theme preference
+        const originalToggleTheme = toggleTheme;
+        toggleTheme = function() {
+            originalToggleTheme();
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                localStorage.setItem('nexus-theme', 'dark');
+            } else {
+                localStorage.setItem('nexus-theme', 'light');
+            }
+        };
+
+        // ============================================
         // INIT
         // ============================================
         function init() {
+            // Check for saved theme
+            checkDarkModePreference();
+
             const session = getSession();
             if (session) {
                 const users = getUsers();
@@ -2615,7 +2777,8 @@
         updateComparisonPanel();
         console.log('🚀 Nexus Ultimate Loaded!');
         console.log('📧 Demo: demo@nexus.com / password123');
-        console.log('✨ Dark Mode fixed - all text visible!');
+        console.log('✨ Dark Mode FULLY FIXED - All text visible!');
+        console.log('💡 Theme preference is saved in localStorage');
         init();
     </script>
 </body>
