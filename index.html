@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nexus Global - Intelligent Discovery</title>
+    <title>Nexus Ultimate - Intelligent Discovery</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #6366f1;
             --primary-dark: #4f46e5;
@@ -23,11 +22,10 @@
             --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
             --shadow-lg: 0 20px 60px rgba(0,0,0,0.15);
             --radius: 16px;
+            --radius-sm: 10px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --dark-bg: #0f172a;
-            --dark-surface: #1e293b;
-            --dark-text: #f1f5f9;
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--background);
@@ -36,8 +34,8 @@
             transition: var(--transition);
         }
         body.dark-mode {
-            background: var(--dark-bg);
-            color: var(--dark-text);
+            background: #0f172a;
+            color: #f1f5f9;
         }
         body.dark-mode .navbar,
         body.dark-mode .recommendations-panel,
@@ -46,37 +44,34 @@
         body.dark-mode .location-bar,
         body.dark-mode .modal-content,
         body.dark-mode .login-container,
-        body.dark-mode .chat-popup {
-            background: var(--dark-surface);
+        body.dark-mode .chat-popup,
+        body.dark-mode .stats-card,
+        body.dark-mode .trending-card,
+        body.dark-mode .review-card {
+            background: #1e293b;
             border-color: #334155;
         }
-        body.dark-mode .recommendations-header { background: #0f172a; }
         body.dark-mode .experience-card { background: #0f172a; border-color: #334155; }
-        body.dark-mode .stat-card { background: #0f172a; border-color: #334155; }
-        body.dark-mode .analytics-card { background: #0f172a; border-color: #334155; }
-        body.dark-mode .experience-list-item { background: #0f172a; border-color: #334155; }
-        body.dark-mode .itinerary-item { background: #0f172a; }
-        body.dark-mode .filter-bar select { background: #0f172a; border-color: #334155; color: #f1f5f9; }
-        body.dark-mode .location-bar select { background: #0f172a; border-color: #334155; color: #f1f5f9; }
-        body.dark-mode .login-container input { background: #0f172a; border-color: #334155; color: #f1f5f9; }
-        body.dark-mode .login-container input::placeholder { color: #94a3b8; }
-        body.dark-mode .chat-messages { background: #0f172a; }
+        body.dark-mode .filter-bar select,
+        body.dark-mode .location-bar select,
+        body.dark-mode .login-container input,
+        body.dark-mode .chat-input-area textarea {
+            background: #0f172a;
+            border-color: #334155;
+            color: #f1f5f9;
+        }
         body.dark-mode .chat-message { background: #334155; color: #f1f5f9; }
         body.dark-mode .chat-message.user { background: var(--primary); color: white; }
-        body.dark-mode .chat-input-area { background: #0f172a; border-color: #334155; }
-        body.dark-mode .chat-input-area textarea { background: #1e293b; border-color: #334155; color: #f1f5f9; }
 
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--background); }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-        /* ===== LOGIN OVERLAY ===== */
+        /* ===== LOGIN ===== */
         .login-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: rgba(0,0,0,0.7);
             backdrop-filter: blur(8px);
             z-index: 9999;
@@ -94,15 +89,14 @@
             width: 92%;
             box-shadow: var(--shadow-lg);
             animation: slideUp 0.4s ease;
-            max-height: 90vh;
-            overflow-y: auto;
         }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .login-container .logo { text-align: center; margin-bottom: 24px; }
         .login-container .logo h1 { font-size: 28px; background: linear-gradient(135deg, var(--primary), #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .login-container .logo p { color: var(--text-light); font-size: 14px; -webkit-text-fill-color: var(--text-light); }
+        .login-container .logo p { color: var(--text-light); font-size: 14px; }
         .login-container .form-group { margin-bottom: 16px; }
-        .login-container label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 4px; color: var(--text); }
+        .login-container label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 4px; }
         .login-container input {
             width: 100%;
             padding: 10px 14px;
@@ -112,15 +106,26 @@
             font-family: inherit;
             transition: var(--transition);
             background: var(--background);
-            color: var(--text);
         }
         .login-container input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99,102,241,0.15); }
-        .login-container .btn-primary { width: 100%; padding: 12px; font-size: 16px; justify-content: center; margin-top: 8px; }
-        .login-container .auth-switch { text-align: center; margin-top: 16px; font-size: 13px; color: var(--text-light); }
-        .login-container .auth-switch span { color: var(--primary); cursor: pointer; font-weight: 600; }
+        .login-container .btn-primary {
+            width: 100%; padding: 12px; font-size: 16px;
+            justify-content: center; margin-top: 8px;
+        }
+        .login-container .auth-switch {
+            text-align: center; margin-top: 16px; font-size: 13px;
+            color: var(--text-light);
+        }
+        .login-container .auth-switch span {
+            color: var(--primary); cursor: pointer; font-weight: 600;
+        }
         .login-container .auth-switch span:hover { text-decoration: underline; }
-        .login-container .error-msg { background: #fef2f2; color: #dc2626; padding: 8px 12px; border-radius: 8px; font-size: 13px; margin-bottom: 12px; display: none; }
-        body.dark-mode .login-container .error-msg { background: #450a0a; color: #fca5a5; }
+        .login-container .error-msg {
+            background: #fef2f2; color: #dc2626;
+            padding: 8px 12px; border-radius: 8px;
+            font-size: 13px; margin-bottom: 12px;
+            display: none;
+        }
 
         /* ===== NAVBAR ===== */
         .navbar {
@@ -164,7 +169,6 @@
         }
         .nav-btn:hover { background: var(--primary-light); color: var(--primary); }
         .nav-btn.active { background: var(--primary); color: white; }
-        body.dark-mode .nav-btn:hover { background: #334155; color: var(--primary-light); }
         .nav-actions { display: flex; align-items: center; gap: 6px; }
         .nav-actions .user-badge {
             display: flex;
@@ -180,8 +184,7 @@
         }
         .nav-actions .user-badge:hover { background: var(--primary); color: white; }
         .nav-actions .user-badge .avatar-small {
-            width: 28px;
-            height: 28px;
+            width: 28px; height: 28px;
             border-radius: 50%;
             background: var(--primary);
             color: white;
@@ -190,8 +193,6 @@
             justify-content: center;
             font-size: 12px;
         }
-        body.dark-mode .nav-actions .user-badge { background: #334155; color: #f1f5f9; }
-        body.dark-mode .nav-actions .user-badge:hover { background: var(--primary); }
         .theme-toggle, .logout-btn {
             padding: 6px 10px;
             border: 1px solid var(--border);
@@ -205,11 +206,10 @@
         .theme-toggle:hover, .logout-btn:hover { border-color: var(--primary); color: var(--primary); }
         .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
 
-        /* ===== MAIN CONTENT ===== */
+        /* ===== MAIN ===== */
         .main-content { max-width: 1400px; margin: 0 auto; padding: 16px; }
         .tab-content { display: none; animation: fadeIn 0.4s ease; }
         .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* ===== LOCATION BAR ===== */
         .location-bar {
@@ -255,11 +255,8 @@
             background: var(--surface);
             border-radius: var(--radius);
             border: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
             overflow: hidden;
             transition: var(--transition);
-            min-height: 500px;
         }
         .recommendations-header {
             padding: 14px 18px;
@@ -272,7 +269,14 @@
             flex-wrap: wrap;
             gap: 8px;
         }
-        .recommendations-header h3 { font-size: 16px; }
+        .recommendations-header h3 { font-size: 16px; display: flex; align-items: center; gap: 8px; }
+        .recommendations-header h3 .badge {
+            background: var(--primary);
+            color: white;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
         .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; }
         .filter-bar select {
             padding: 4px 10px;
@@ -286,22 +290,66 @@
             transition: var(--transition);
         }
         .filter-bar select:focus { outline: none; border-color: var(--primary); }
+
+        /* ===== TRENDING SECTION ===== */
+        .trending-section {
+            padding: 12px 18px;
+            border-bottom: 1px solid var(--border);
+            background: var(--background);
+            transition: var(--transition);
+        }
+        .trending-section h4 {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .trending-section h4 i { color: var(--danger); }
+        .trending-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .trending-tag {
+            padding: 4px 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-light);
+        }
+        .trending-tag:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+        .trending-tag .count {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 0 6px;
+            border-radius: 8px;
+            font-size: 9px;
+            margin-left: 4px;
+        }
+
         .recommendations-grid {
-            flex: 1;
-            overflow-y: auto;
             padding: 12px 16px;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 12px;
-            align-content: start;
-            max-height: calc(100vh - 260px);
+            max-height: 600px;
+            overflow-y: auto;
         }
         @media (max-width: 640px) { .recommendations-grid { grid-template-columns: 1fr; } }
 
         /* ===== EXPERIENCE CARD ===== */
         .experience-card {
             background: var(--background);
-            border-radius: 10px;
+            border-radius: var(--radius-sm);
             overflow: hidden;
             border: 1px solid var(--border);
             transition: var(--transition);
@@ -314,24 +362,23 @@
             border-color: var(--primary);
         }
         .experience-card-image {
-            height: 90px;
+            height: 100px;
             background: linear-gradient(135deg, var(--primary-light), #c7d2fe);
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
+            font-size: 36px;
             color: var(--primary);
             transition: var(--transition);
         }
-        body.dark-mode .experience-card-image { background: linear-gradient(135deg, #1e293b, #334155); }
         .experience-card-badge {
             position: absolute;
             top: 4px;
             right: 4px;
             background: var(--secondary);
             color: white;
-            padding: 2px 6px;
+            padding: 2px 8px;
             border-radius: 8px;
             font-size: 9px;
             font-weight: 700;
@@ -343,8 +390,8 @@
             background: rgba(255,255,255,0.9);
             border: none;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             cursor: pointer;
             transition: var(--transition);
             color: var(--text-light);
@@ -352,10 +399,10 @@
         }
         .experience-card .favorite-btn:hover { transform: scale(1.1); }
         .experience-card .favorite-btn.favorited { color: var(--danger); }
-        .experience-card-content { padding: 8px 10px; }
-        .experience-card-content h4 { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+        .experience-card-content { padding: 10px 12px; }
+        .experience-card-content h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
         .experience-card-content .category {
-            font-size: 10px;
+            font-size: 11px;
             color: var(--text-light);
             display: flex;
             align-items: center;
@@ -364,25 +411,25 @@
         .experience-card-content .details {
             display: flex;
             justify-content: space-between;
-            margin-top: 4px;
-            font-size: 11px;
+            margin-top: 6px;
+            font-size: 12px;
             color: var(--text-light);
             flex-wrap: wrap;
             gap: 2px;
         }
         .experience-card .rating { color: var(--secondary); font-weight: 600; }
-        .experience-card .price { font-weight: 700; color: var(--text); font-size: 12px; }
+        .experience-card .price { font-weight: 700; color: var(--text); font-size: 13px; }
         body.dark-mode .experience-card .price { color: #f1f5f9; }
-        .experience-card .card-actions { display: flex; gap: 4px; margin-top: 4px; }
+        .experience-card .card-actions { display: flex; gap: 4px; margin-top: 6px; }
         .experience-card .add-btn,
         .experience-card .detail-btn {
             flex: 1;
-            padding: 3px 6px;
+            padding: 4px 8px;
             border: 1px solid var(--border);
             background: var(--surface);
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 10px;
+            font-size: 11px;
             transition: var(--transition);
             color: var(--text-light);
             font-family: inherit;
@@ -394,12 +441,12 @@
             border-color: var(--primary);
         }
         .experience-card .compare-btn {
-            padding: 3px 6px;
+            padding: 4px 8px;
             border: 1px solid var(--border);
             background: var(--surface);
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 10px;
+            font-size: 11px;
             transition: var(--transition);
             color: var(--text-light);
             font-family: inherit;
@@ -411,7 +458,7 @@
         }
         .experience-card .availability-badge {
             font-size: 9px;
-            padding: 1px 6px;
+            padding: 1px 8px;
             border-radius: 8px;
             background: var(--success);
             color: white;
@@ -420,14 +467,44 @@
         .experience-card .availability-badge.soon { background: var(--secondary); }
         .experience-card .availability-badge.unavailable { background: var(--danger); }
 
+        /* ===== STATS SECTION ===== */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        @media (max-width: 768px) { .stats-section { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 480px) { .stats-section { grid-template-columns: 1fr; } }
+        .stats-card {
+            background: var(--surface);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition);
+        }
+        .stats-card:hover { border-color: var(--primary); }
+        .stats-card .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .stats-card .info .value { font-size: 20px; font-weight: 700; }
+        .stats-card .info .label { font-size: 12px; color: var(--text-light); }
+
         /* ===== MODAL ===== */
         .modal-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: rgba(0,0,0,0.6);
             z-index: 1000;
             justify-content: center;
@@ -466,7 +543,7 @@
         }
         .modal-close:hover { color: var(--danger); transform: rotate(90deg); }
 
-        /* ===== CHAT POPUP BUTTON ===== */
+        /* ===== CHAT POPUP ===== */
         .chat-toggle-btn {
             position: fixed;
             bottom: 24px;
@@ -479,17 +556,14 @@
             border: none;
             font-size: 24px;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 4px 20px rgba(99,102,241,0.4);
             transition: var(--transition);
             z-index: 500;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .chat-toggle-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 30px rgba(99, 102, 241, 0.6);
-        }
+        .chat-toggle-btn:hover { transform: scale(1.1); }
         .chat-toggle-btn .notification-dot {
             position: absolute;
             top: 4px;
@@ -501,12 +575,8 @@
             border: 2px solid white;
             animation: pulse 2s infinite;
         }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
 
-        /* ===== CHAT POPUP WINDOW ===== */
         .chat-popup {
             position: fixed;
             bottom: 96px;
@@ -524,7 +594,6 @@
             flex-direction: column;
             overflow: hidden;
             animation: slideUp 0.3s ease;
-            transition: var(--transition);
         }
         .chat-popup.open { display: flex; }
         .chat-popup-header {
@@ -535,19 +604,11 @@
             justify-content: space-between;
             align-items: center;
         }
-        .chat-popup-header h3 {
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .chat-popup-header h3 { font-size: 16px; display: flex; align-items: center; gap: 8px; }
         .chat-popup-header .close-chat {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            opacity: 0.8;
+            background: none; border: none;
+            color: white; font-size: 20px;
+            cursor: pointer; opacity: 0.8;
             transition: var(--transition);
         }
         .chat-popup-header .close-chat:hover { opacity: 1; transform: rotate(90deg); }
@@ -560,7 +621,6 @@
             gap: 8px;
             background: var(--background);
         }
-        body.dark-mode .chat-popup .chat-messages { background: #0f172a; }
         .chat-popup .chat-message {
             padding: 8px 12px;
             border-radius: 10px;
@@ -575,7 +635,6 @@
             align-self: flex-start;
             border-top-left-radius: 4px;
         }
-        body.dark-mode .chat-popup .chat-message.bot { background: #1e293b; border-color: #334155; color: #f1f5f9; }
         .chat-popup .chat-message.user {
             background: var(--primary);
             color: white;
@@ -591,7 +650,6 @@
             text-align: center;
             border-radius: 8px;
         }
-        body.dark-mode .chat-popup .chat-message.system { background: #451a03; color: #fcd34d; }
         .chat-popup .quick-suggestions {
             display: flex;
             flex-wrap: wrap;
@@ -609,13 +667,11 @@
             color: var(--text);
             font-family: inherit;
         }
-        body.dark-mode .chat-popup .quick-suggestions .suggestion-chip { background: #1e293b; border-color: #334155; color: #f1f5f9; }
         .chat-popup .quick-suggestions .suggestion-chip:hover {
             border-color: var(--primary);
             background: var(--primary-light);
             color: var(--primary);
         }
-        body.dark-mode .chat-popup .quick-suggestions .suggestion-chip:hover { background: #334155; }
         .chat-popup .chat-input-area {
             padding: 10px 14px;
             border-top: 1px solid var(--border);
@@ -624,7 +680,6 @@
             gap: 8px;
             align-items: center;
         }
-        body.dark-mode .chat-popup .chat-input-area { background: #0f172a; border-color: #334155; }
         .chat-popup .chat-input-area textarea {
             flex: 1;
             padding: 6px 10px;
@@ -636,9 +691,7 @@
             min-height: 36px;
             max-height: 60px;
             background: var(--background);
-            transition: var(--transition);
         }
-        body.dark-mode .chat-popup .chat-input-area textarea { background: #1e293b; border-color: #334155; color: #f1f5f9; }
         .chat-popup .chat-input-area textarea:focus { outline: none; border-color: var(--primary); }
         .chat-popup .chat-input-area .send-btn {
             padding: 6px 12px;
@@ -665,9 +718,13 @@
             transition: var(--transition);
             color: var(--text-light);
         }
-        body.dark-mode .chat-popup .chat-input-area .voice-btn { background: #1e293b; border-color: #334155; color: #94a3b8; }
         .chat-popup .chat-input-area .voice-btn:hover { border-color: var(--primary); color: var(--primary); }
-        .chat-popup .chat-input-area .voice-btn.listening { background: var(--danger); color: white; border-color: var(--danger); animation: pulse 1s infinite; }
+        .chat-popup .chat-input-area .voice-btn.listening {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+            animation: pulse 1s infinite;
+        }
         .chat-popup .typing-indicator {
             display: flex;
             gap: 4px;
@@ -675,8 +732,7 @@
             padding: 6px 12px;
         }
         .chat-popup .typing-indicator .dot {
-            width: 8px;
-            height: 8px;
+            width: 8px; height: 8px;
             background: var(--text-light);
             border-radius: 50%;
             animation: typing 1.4s infinite;
@@ -686,7 +742,7 @@
         @keyframes typing { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
         @keyframes slideIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
 
-        /* ===== ITINERARY TAB ===== */
+        /* ===== ITINERARY ===== */
         .itinerary-container {
             background: var(--surface);
             border-radius: var(--radius);
@@ -723,19 +779,12 @@
             transition: var(--transition);
         }
         .itinerary-item:hover { background: var(--primary-light); }
-        body.dark-mode .itinerary-item:hover { background: #334155; }
-        .itinerary-item .time {
-            min-width: 60px;
-            font-weight: 600;
-            font-size: 12px;
-            color: var(--primary);
-        }
+        .itinerary-item .time { min-width: 60px; font-weight: 600; font-size: 12px; color: var(--primary); }
         .itinerary-item .content { flex: 1; }
         .itinerary-item .content h4 { font-size: 14px; margin-bottom: 2px; }
         .itinerary-item .content p { font-size: 11px; color: var(--text-light); }
         .itinerary-item .remove-btn {
-            background: none;
-            border: none;
+            background: none; border: none;
             color: var(--danger);
             cursor: pointer;
             padding: 4px 6px;
@@ -752,6 +801,119 @@
             flex-wrap: wrap;
         }
 
+        /* ===== PROVIDER ===== */
+        .provider-container {
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 20px;
+            transition: var(--transition);
+        }
+        .provider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .provider-header h2 { font-size: 20px; display: flex; align-items: center; gap: 8px; }
+        .provider-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 768px) { .provider-stats-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 480px) { .provider-stats-grid { grid-template-columns: 1fr; } }
+        .stat-card {
+            background: var(--background);
+            padding: 12px 14px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .stat-card:hover { border-color: var(--primary); }
+        .stat-icon {
+            width: 36px; height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .stat-info { display: flex; flex-direction: column; }
+        .stat-value { font-size: 18px; font-weight: 700; }
+        .stat-label { font-size: 11px; color: var(--text-light); }
+        .provider-experiences { margin-bottom: 20px; }
+        .provider-experiences h3 { font-size: 16px; margin-bottom: 10px; }
+        .experience-list { display: grid; gap: 6px; }
+        .experience-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            background: var(--background);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        .experience-list-item:hover { border-color: var(--primary); }
+        .experience-list-item .info h4 { font-size: 13px; }
+        .experience-list-item .info p { font-size: 11px; color: var(--text-light); }
+        .status {
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+        .status.active { background: #d1fae5; color: #059669; }
+        .provider-analytics h3 { font-size: 16px; margin-bottom: 10px; }
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width: 768px) { .analytics-grid { grid-template-columns: 1fr; } }
+        .analytics-card {
+            background: var(--background);
+            padding: 14px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .analytics-card h4 { font-size: 13px; margin-bottom: 10px; }
+        .preference-bars { display: flex; flex-direction: column; gap: 6px; }
+        .pref-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            flex-wrap: wrap;
+        }
+        .pref-bar span:first-child { min-width: 80px; }
+        .bar-track {
+            flex: 1;
+            height: 5px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+            min-width: 40px;
+        }
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #8b5cf6);
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+        .pref-pct { min-width: 30px; font-weight: 600; }
+
+        /* ===== BUTTONS ===== */
         .btn-primary {
             padding: 6px 14px;
             background: var(--primary);
@@ -801,120 +963,6 @@
         }
         .btn-danger:hover { background: #dc2626; transform: translateY(-2px); }
 
-        /* ===== PROVIDER TAB ===== */
-        .provider-container {
-            background: var(--surface);
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-            padding: 20px;
-            transition: var(--transition);
-        }
-        .provider-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .provider-header h2 { font-size: 20px; display: flex; align-items: center; gap: 8px; }
-        .provider-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        @media (max-width: 768px) { .provider-stats-grid { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 480px) { .provider-stats-grid { grid-template-columns: 1fr; } }
-        .stat-card {
-            background: var(--background);
-            padding: 12px 14px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid var(--border);
-            transition: var(--transition);
-        }
-        .stat-card:hover { border-color: var(--primary); }
-        .stat-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-        .stat-info { display: flex; flex-direction: column; }
-        .stat-value { font-size: 18px; font-weight: 700; }
-        .stat-label { font-size: 11px; color: var(--text-light); }
-        .provider-experiences { margin-bottom: 20px; }
-        .provider-experiences h3 { font-size: 16px; margin-bottom: 10px; }
-        .experience-list { display: grid; gap: 6px; }
-        .experience-list-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 14px;
-            background: var(--background);
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            flex-wrap: wrap;
-            gap: 6px;
-            transition: var(--transition);
-        }
-        .experience-list-item:hover { border-color: var(--primary); }
-        .experience-list-item .info h4 { font-size: 13px; }
-        .experience-list-item .info p { font-size: 11px; color: var(--text-light); }
-        .status {
-            padding: 2px 8px;
-            border-radius: 8px;
-            font-size: 10px;
-            font-weight: 500;
-        }
-        .status.active { background: #d1fae5; color: #059669; }
-
-        .provider-analytics h3 { font-size: 16px; margin-bottom: 10px; }
-        .analytics-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        @media (max-width: 768px) { .analytics-grid { grid-template-columns: 1fr; } }
-        .analytics-card {
-            background: var(--background);
-            padding: 14px 16px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            transition: var(--transition);
-        }
-        .analytics-card h4 { font-size: 13px; margin-bottom: 10px; }
-        .preference-bars { display: flex; flex-direction: column; gap: 6px; }
-        .pref-bar {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 11px;
-            flex-wrap: wrap;
-        }
-        .pref-bar span:first-child { min-width: 80px; }
-        .bar-track {
-            flex: 1;
-            height: 5px;
-            background: var(--border);
-            border-radius: 3px;
-            overflow: hidden;
-            min-width: 40px;
-        }
-        .bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), #8b5cf6);
-            border-radius: 3px;
-            transition: width 1s ease;
-        }
-        .pref-pct { min-width: 30px; font-weight: 600; }
-
         .notification {
             position: fixed;
             bottom: 96px;
@@ -956,8 +1004,7 @@
             border-bottom: 1px solid var(--border);
         }
         .comparison-panel .compare-item .remove-compare {
-            background: none;
-            border: none;
+            background: none; border: none;
             color: var(--danger);
             cursor: pointer;
         }
@@ -973,11 +1020,6 @@
             .login-container { padding: 24px 20px; }
             .chat-popup { width: 92vw; right: 4vw; bottom: 80px; height: 60vh; }
             .chat-toggle-btn { width: 50px; height: 50px; font-size: 20px; bottom: 16px; right: 16px; }
-        }
-        @media (max-width: 480px) {
-            .itinerary-stats { gap: 6px; }
-            .stat { font-size: 11px; }
-            .recommendations-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -1035,7 +1077,7 @@
             <div class="nav-logo">
                 <i class="fas fa-globe-asia" style="color: #6366f1; font-size: 24px;"></i>
                 <span>Nexus</span>
-                <span style="font-size: 9px; color: var(--text-light); font-weight: 400; -webkit-text-fill-color: var(--text-light);">🌍 Global</span>
+                <span style="font-size: 9px; color: var(--text-light); font-weight: 400; -webkit-text-fill-color: var(--text-light);">Ultimate</span>
             </div>
             <div class="nav-links">
                 <button class="nav-btn active" data-tab="discover"><i class="fas fa-search"></i> Discover</button>
@@ -1062,8 +1104,6 @@
             <select id="locationSelect">
                 <optgroup label="🌏 Asia">
                     <option value="Bangkok, Thailand">🇹🇭 Bangkok, Thailand</option>
-                    <option value="Chiang Mai, Thailand">🇹🇭 Chiang Mai, Thailand</option>
-                    <option value="Phuket, Thailand">🇹🇭 Phuket, Thailand</option>
                     <option value="Tokyo, Japan">🇯🇵 Tokyo, Japan</option>
                     <option value="Kyoto, Japan">🇯🇵 Kyoto, Japan</option>
                     <option value="Seoul, South Korea">🇰🇷 Seoul, South Korea</option>
@@ -1071,7 +1111,6 @@
                     <option value="Singapore, Singapore">🇸🇬 Singapore, Singapore</option>
                     <option value="Dubai, UAE">🇦🇪 Dubai, UAE</option>
                     <option value="Mumbai, India">🇮🇳 Mumbai, India</option>
-                    <option value="Ho Chi Minh, Vietnam">🇻🇳 Ho Chi Minh, Vietnam</option>
                 </optgroup>
                 <optgroup label="🌍 Europe">
                     <option value="Paris, France">🇫🇷 Paris, France</option>
@@ -1079,22 +1118,15 @@
                     <option value="Florence, Italy">🇮🇹 Florence, Italy</option>
                     <option value="Barcelona, Spain">🇪🇸 Barcelona, Spain</option>
                     <option value="London, UK">🇬🇧 London, UK</option>
-                    <option value="Amsterdam, Netherlands">🇳🇱 Amsterdam, Netherlands</option>
-                    <option value="Berlin, Germany">🇩🇪 Berlin, Germany</option>
-                    <option value="Vienna, Austria">🇦🇹 Vienna, Austria</option>
-                    <option value="Prague, Czech Republic">🇨🇿 Prague, Czech Republic</option>
                     <option value="Athens, Greece">🇬🇷 Athens, Greece</option>
                     <option value="Santorini, Greece">🇬🇷 Santorini, Greece</option>
-                    <option value="Lisbon, Portugal">🇵🇹 Lisbon, Portugal</option>
                     <option value="Istanbul, Turkey">🇹🇷 Istanbul, Turkey</option>
                 </optgroup>
                 <optgroup label="🌎 Americas">
                     <option value="New York, USA">🇺🇸 New York, USA</option>
-                    <option value="Los Angeles, USA">🇺🇸 Los Angeles, USA</option>
                     <option value="Miami, USA">🇺🇸 Miami, USA</option>
                     <option value="Cancun, Mexico">🇲🇽 Cancun, Mexico</option>
                     <option value="Rio de Janeiro, Brazil">🇧🇷 Rio de Janeiro, Brazil</option>
-                    <option value="Toronto, Canada">🇨🇦 Toronto, Canada</option>
                 </optgroup>
                 <optgroup label="🌏 Oceania">
                     <option value="Sydney, Australia">🇦🇺 Sydney, Australia</option>
@@ -1121,11 +1153,31 @@
             </div>
         </div>
 
+        <!-- ===== STATS SECTION ===== -->
+        <div class="stats-section">
+            <div class="stats-card">
+                <div class="icon" style="background:#e0e7ff;color:#4f46e5;"><i class="fas fa-globe"></i></div>
+                <div class="info"><div class="value" id="totalExperiences">30</div><div class="label">Experiences</div></div>
+            </div>
+            <div class="stats-card">
+                <div class="icon" style="background:#d1fae5;color:#059669;"><i class="fas fa-users"></i></div>
+                <div class="info"><div class="value" id="totalBookings">1,247</div><div class="label">Bookings Today</div></div>
+            </div>
+            <div class="stats-card">
+                <div class="icon" style="background:#fef3c7;color:#d97706;"><i class="fas fa-star"></i></div>
+                <div class="info"><div class="value" id="avgRatingGlobal">4.8</div><div class="label">Avg Rating</div></div>
+            </div>
+            <div class="stats-card">
+                <div class="icon" style="background:#fce4ec;color:#dc2626;"><i class="fas fa-heart"></i></div>
+                <div class="info"><div class="value" id="favoritesCount">0</div><div class="label">Your Favorites</div></div>
+            </div>
+        </div>
+
         <!-- ===== DISCOVER TAB ===== -->
         <section id="tab-discover" class="tab-content active">
             <div class="recommendations-panel">
                 <div class="recommendations-header">
-                    <h3>✨ Global Experiences <span id="recCount" style="font-size:12px;color:var(--text-light);font-weight:400;"></span></h3>
+                    <h3>✨ Experiences <span class="badge" id="recCount">12 found</span></h3>
                     <div class="filter-bar">
                         <select id="filterType">
                             <option value="all">All Types</option>
@@ -1139,11 +1191,25 @@
                             <option value="relevance">⭐ Relevance</option>
                             <option value="rating">⭐ Rating</option>
                             <option value="price">💰 Price: Low-High</option>
-                            <option value="popularity">🔥 Popularity</option>
+                            <option value="popularity">🔥 Trending</option>
                         </select>
                         <button class="btn-secondary" style="padding:3px 10px;font-size:10px;" onclick="showComparison()"><i class="fas fa-balance-scale"></i> Compare</button>
                     </div>
                 </div>
+
+                <!-- ===== TRENDING SECTION ===== -->
+                <div class="trending-section">
+                    <h4><i class="fas fa-fire" style="color:var(--danger);"></i> Trending Now</h4>
+                    <div class="trending-tags" id="trendingTags">
+                        <span class="trending-tag" onclick="searchTrending('food')">🍽️ Food Tours <span class="count">8</span></span>
+                        <span class="trending-tag" onclick="searchTrending('adventure')">🚀 Adventure <span class="count">6</span></span>
+                        <span class="trending-tag" onclick="searchTrending('romantic')">❤️ Romantic <span class="count">5</span></span>
+                        <span class="trending-tag" onclick="searchTrending('culture')">🏯 Culture <span class="count">7</span></span>
+                        <span class="trending-tag" onclick="searchTrending('relaxation')">🧘 Wellness <span class="count">4</span></span>
+                        <span class="trending-tag" onclick="searchTrending('sunset')">🌅 Sunset <span class="count">3</span></span>
+                    </div>
+                </div>
+
                 <div class="recommendations-grid" id="recommendationsGrid"></div>
             </div>
         </section>
@@ -1183,16 +1249,17 @@
                     <h2><i class="fas fa-store"></i> Provider Dashboard</h2>
                     <div style="display:flex;gap:6px;flex-wrap:wrap;">
                         <button class="btn-primary" id="addExperienceBtn"><i class="fas fa-plus"></i> Add Experience</button>
+                        <button class="btn-secondary" onclick="showAnalytics()"><i class="fas fa-chart-bar"></i> Insights</button>
                     </div>
                 </div>
                 <div class="provider-stats-grid">
                     <div class="stat-card"><div class="stat-icon" style="background:#e0e7ff;color:#4f46e5;"><i class="fas fa-eye"></i></div><div class="stat-info"><span class="stat-value">2,847</span><span class="stat-label">Global Views</span></div></div>
-                    <div class="stat-card"><div class="stat-icon" style="background:#d1fae5;color:#059669;"><i class="fas fa-user-check"></i></div><div class="stat-info"><span class="stat-value">189</span><span class="stat-label">Bookings Today</span></div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background:#d1fae5;color:#059669;"><i class="fas fa-user-check"></i></div><div class="stat-info"><span class="stat-value">189</span><span class="stat-label">Bookings</span></div></div>
                     <div class="stat-card"><div class="stat-icon" style="background:#fef3c7;color:#d97706;"><i class="fas fa-star"></i></div><div class="stat-info"><span class="stat-value">4.8</span><span class="stat-label">Avg Rating</span></div></div>
                     <div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#dc2626;"><i class="fas fa-globe"></i></div><div class="stat-info"><span class="stat-value">20+</span><span class="stat-label">Countries</span></div></div>
                 </div>
                 <div class="provider-experiences">
-                    <h3>Your Global Experiences</h3>
+                    <h3>Your Experiences</h3>
                     <div class="experience-list" id="providerExperienceList"></div>
                 </div>
                 <div class="provider-analytics">
@@ -1208,12 +1275,12 @@
                             </div>
                         </div>
                         <div class="analytics-card">
-                            <h4>Top Destinations</h4>
+                            <h4>Revenue & Trends</h4>
                             <div style="font-size:12px;color:var(--text-light);">
-                                <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border);"><span>🇹🇭 Bangkok</span><strong style="color:var(--text);">32%</strong></div>
-                                <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border);"><span>🇯🇵 Tokyo</span><strong style="color:var(--text);">18%</strong></div>
-                                <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border);"><span>🇫🇷 Paris</span><strong style="color:var(--text);">15%</strong></div>
-                                <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>🇮🇹 Rome</span><strong style="color:var(--text);">12%</strong></div>
+                                <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border);"><span>📈 This Week</span><strong style="color:var(--text);">+23%</strong></div>
+                                <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border);"><span>🏆 Top Category</span><strong style="color:var(--text);">Food (42%)</strong></div>
+                                <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border);"><span>📅 Peak Day</span><strong style="color:var(--text);">Saturday</strong></div>
+                                <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>🔄 Return Rate</span><strong style="color:var(--text);">67%</strong></div>
                             </div>
                         </div>
                     </div>
@@ -1224,7 +1291,7 @@
         <!-- ===== FAVORITES TAB ===== -->
         <section id="tab-favorites" class="tab-content">
             <div class="itinerary-container">
-                <h2 style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><i class="fas fa-heart" style="color:var(--danger);"></i> Your Global Favorites</h2>
+                <h2 style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><i class="fas fa-heart" style="color:var(--danger);"></i> Your Favorites</h2>
                 <div id="favoritesList">
                     <div class="empty-itinerary">
                         <i class="fas fa-heart" style="font-size:40px;color:#d1d5db;"></i>
@@ -1237,26 +1304,25 @@
 
     <!-- ===== CHAT POPUP BUTTON ===== -->
     <button class="chat-toggle-btn" id="chatToggleBtn" onclick="toggleChat()">
-        <i class="fas fa-comment-dots"></i>
+        <i class="fas fa-robot"></i>
         <span class="notification-dot"></span>
     </button>
 
-    <!-- ===== CHAT POPUP WINDOW ===== -->
+    <!-- ===== CHAT POPUP ===== -->
     <div class="chat-popup" id="chatPopup">
         <div class="chat-popup-header">
-            <h3><i class="fas fa-robot"></i> Nexus Assistant</h3>
+            <h3><i class="fas fa-robot"></i> Nexus AI Assistant</h3>
             <button class="close-chat" onclick="toggleChat()"><i class="fas fa-times"></i></button>
         </div>
         <div class="chat-messages" id="chatMessages">
             <div class="chat-message bot">
-                👋 Hi! I'm Nexus, your travel assistant.<br>
-                Ask me about experiences or click a suggestion below!
-                <div class="quick-suggestions" id="quickSuggestions">
+                👋 Hi! I'm Nexus AI.<br>
+                Ask me anything about experiences worldwide!
+                <div class="quick-suggestions">
                     <button class="suggestion-chip" data-query="family food tour under 50">🍽️ Family Food</button>
-                    <button class="suggestion-chip" data-query="culture and temples">🏯 Culture</button>
                     <button class="suggestion-chip" data-query="romantic sunset dinner">❤️ Romantic</button>
                     <button class="suggestion-chip" data-query="adventure and nature">🚀 Adventure</button>
-                    <button class="suggestion-chip" data-query="relax spa wellness">🧘 Wellness</button>
+                    <button class="suggestion-chip" data-query="culture and temples">🏯 Culture</button>
                 </div>
             </div>
         </div>
@@ -1290,15 +1356,13 @@
 
     <script>
         // ============================================
-        // USER MANAGEMENT SYSTEM
+        // USER MANAGEMENT
         // ============================================
         const USERS_KEY = 'nexus_users';
         const SESSION_KEY = 'nexus_session';
 
         function getUsers() {
-            try {
-                return JSON.parse(localStorage.getItem(USERS_KEY)) || {};
-            } catch { return {}; }
+            try { return JSON.parse(localStorage.getItem(USERS_KEY)) || {}; } catch { return {}; }
         }
 
         function saveUsers(users) {
@@ -1306,9 +1370,7 @@
         }
 
         function getSession() {
-            try {
-                return JSON.parse(localStorage.getItem(SESSION_KEY)) || null;
-            } catch { return null; }
+            try { return JSON.parse(localStorage.getItem(SESSION_KEY)) || null; } catch { return null; }
         }
 
         function saveSession(session) {
@@ -1322,30 +1384,29 @@
             return users[session.email] || null;
         }
 
+        // ============================================
+        // AUTH FUNCTIONS
+        // ============================================
         function handleLogin() {
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value.trim();
             const errorEl = document.getElementById('loginError');
-            
             if (!email || !password) {
                 errorEl.textContent = 'Please fill in all fields';
                 errorEl.style.display = 'block';
                 return;
             }
-
             const users = getUsers();
             if (!users[email]) {
-                errorEl.textContent = 'Account not found. Please register first.';
+                errorEl.textContent = 'Account not found. Please register.';
                 errorEl.style.display = 'block';
                 return;
             }
-
             if (users[email].password !== password) {
-                errorEl.textContent = 'Incorrect password. Please try again.';
+                errorEl.textContent = 'Incorrect password.';
                 errorEl.style.display = 'block';
                 return;
             }
-
             errorEl.style.display = 'none';
             saveSession({ email: email, name: users[email].name });
             loginSuccess(users[email]);
@@ -1356,46 +1417,31 @@
             const email = document.getElementById('registerEmail').value.trim();
             const password = document.getElementById('registerPassword').value.trim();
             const errorEl = document.getElementById('registerError');
-
             if (!name || !email || !password) {
                 errorEl.textContent = 'Please fill in all fields';
                 errorEl.style.display = 'block';
                 return;
             }
-
             if (password.length < 6) {
                 errorEl.textContent = 'Password must be at least 6 characters';
                 errorEl.style.display = 'block';
                 return;
             }
-
             const users = getUsers();
             if (users[email]) {
-                errorEl.textContent = 'Email already registered. Please login.';
+                errorEl.textContent = 'Email already registered.';
                 errorEl.style.display = 'block';
                 return;
             }
-
             users[email] = {
-                name: name,
-                email: email,
-                password: password,
+                name, email, password,
                 createdAt: new Date().toISOString(),
-                preferences: {
-                    interests: ['food', 'culture'],
-                    budget: 50,
-                    timeAvailable: 3,
-                    travelerType: 'couple',
-                    location: 'Bangkok, Thailand'
-                },
-                itinerary: [],
-                favorites: [],
-                compareList: []
+                preferences: { interests: ['food', 'culture'], budget: 50, timeAvailable: 3, travelerType: 'couple', location: 'Bangkok, Thailand' },
+                itinerary: [], favorites: [], compareList: []
             };
-
             saveUsers(users);
             errorEl.style.display = 'none';
-            saveSession({ email: email, name: name });
+            saveSession({ email, name });
             loginSuccess(users[email]);
         }
 
@@ -1403,10 +1449,8 @@
             document.getElementById('loginOverlay').classList.add('hidden');
             document.getElementById('mainNav').style.display = 'block';
             document.getElementById('mainContent').style.display = 'block';
-            
             document.getElementById('userNameDisplay').textContent = user.name;
             document.getElementById('userAvatarSmall').textContent = user.name.charAt(0).toUpperCase();
-
             if (user.preferences) {
                 document.getElementById('budgetSlider').value = user.preferences.budget || 50;
                 document.getElementById('budgetDisplay').textContent = user.preferences.budget || 50;
@@ -1418,17 +1462,15 @@
                     document.getElementById('currentLocationDisplay').textContent = '📍 ' + currentLocation;
                 }
             }
-
             if (user.itinerary) itinerary = user.itinerary;
             if (user.favorites) favorites = user.favorites;
             if (user.compareList) compareList = user.compareList;
-
             refreshRecommendations();
             renderItinerary();
             renderFavorites();
             renderProviderListings();
             updateComparisonPanel();
-
+            updateStats();
             showNotification('👋 Welcome Back!', `Hello ${user.name}! Ready to explore?`);
         }
 
@@ -1451,10 +1493,7 @@
             document.getElementById('registerError').style.display = 'none';
         }
 
-        // ============================================
-        // SAVE USER DATA
-        // ============================================
-        function saveUserData() {
+        function autoSave() {
             const session = getSession();
             if (!session) return;
             const users = getUsers();
@@ -1473,44 +1512,40 @@
             }
         }
 
-        function autoSave() {
-            saveUserData();
-        }
-
         // ============================================
-        // GLOBAL DATA - 30 Experiences
+        // DATA
         // ============================================
         const EXPERIENCES = [
-            { id: 1, name: "Bangkok Street Food Tour", category: "food", description: "Explore hidden food stalls in Chinatown with a local guide. Taste authentic pad thai, mango sticky rice, and more!", price: 35, duration: 2.5, rating: 4.9, reviews: 342, location: "Bangkok, Thailand", country: "🇹🇭", tags: ["local", "authentic", "foodie"], idealFor: ["family", "couple", "solo"], image: "🍜", popularity: 95, whatToExpect: "5 food tastings, local guide, cultural stories", availability: "available" },
-            { id: 2, name: "Elephant Sanctuary Visit", category: "adventure", description: "Ethical elephant experience. Feed, walk with, and bathe rescued elephants.", price: 75, duration: 4, rating: 4.9, reviews: 534, location: "Chiang Mai, Thailand", country: "🇹🇭", tags: ["animals", "nature", "ethical"], idealFor: ["family", "couple"], image: "🐘", popularity: 98, whatToExpect: "Elephant interaction, feeding, bathing, educational talk", availability: "available" },
-            { id: 3, name: "Thai Cooking Class", category: "food", description: "Learn authentic Thai dishes from a local chef. Market visit included.", price: 55, duration: 4, rating: 4.9, reviews: 421, location: "Phuket, Thailand", country: "🇹🇭", tags: ["hands-on", "foodie", "cultural"], idealFor: ["family", "couple"], image: "👨‍🍳", popularity: 91, whatToExpect: "Market visit, 4 dishes cooked, recipe book", availability: "available" },
-            { id: 4, name: "Phi Phi Islands Boat Tour", category: "adventure", description: "Speedboat tour to Phi Phi Islands. Snorkel in crystal clear waters.", price: 90, duration: 8, rating: 4.8, reviews: 567, location: "Phuket, Thailand", country: "🇹🇭", tags: ["boat", "snorkeling", "islands"], idealFor: ["couple", "family"], image: "⛵", popularity: 93, whatToExpect: "Speedboat, snorkeling, lunch, Maya Bay", availability: "soon" },
-            { id: 5, name: "Night Market Experience", category: "shopping", description: "Explore Bangkok's night bazaar with a local shopping guide. Find unique handicrafts.", price: 20, duration: 2, rating: 4.6, reviews: 198, location: "Bangkok, Thailand", country: "🇹🇭", tags: ["shopping", "nightlife", "local"], idealFor: ["couple", "solo"], image: "🏮", popularity: 76, whatToExpect: "Shopping guide, bargaining tips, local snacks", availability: "available" },
-            { id: 6, name: "Thai Massage Workshop", category: "relaxation", description: "Learn ancient Thai massage techniques in a peaceful studio.", price: 40, duration: 2, rating: 4.8, reviews: 234, location: "Bangkok, Thailand", country: "🇹🇭", tags: ["wellness", "learning", "relaxing"], idealFor: ["couple", "solo"], image: "💆", popularity: 85, whatToExpect: "Theory session, practical practice, certificate", availability: "available" },
-            { id: 7, name: "Tokyo Sushi Making Class", category: "food", description: "Learn to make authentic sushi from a master chef in Tokyo. Includes sake tasting.", price: 80, duration: 3, rating: 4.9, reviews: 412, location: "Tokyo, Japan", country: "🇯🇵", tags: ["sushi", "hands-on", "japanese"], idealFor: ["couple", "solo"], image: "🍣", popularity: 94, whatToExpect: "Sushi making, sake tasting, chef guidance", availability: "available" },
-            { id: 8, name: "Kyoto Temple & Garden Tour", category: "culture", description: "Visit iconic temples and zen gardens in Kyoto. Tea ceremony included.", price: 65, duration: 4, rating: 4.9, reviews: 389, location: "Kyoto, Japan", country: "🇯🇵", tags: ["temples", "zen", "tea"], idealFor: ["couple", "solo"], image: "⛩️", popularity: 96, whatToExpect: "Temple visits, zen garden, tea ceremony", availability: "available" },
-            { id: 9, name: "Rome Colosseum Tour", category: "culture", description: "Skip-the-line tour of the Colosseum, Roman Forum, and Palatine Hill.", price: 60, duration: 3, rating: 4.9, reviews: 678, location: "Rome, Italy", country: "🇮🇹", tags: ["history", "ancient", "archaeology"], idealFor: ["couple", "solo"], image: "🏛️", popularity: 97, whatToExpect: "Colosseum, Forum, archaeologist guide", availability: "available" },
-            { id: 10, name: "Florence Pasta Class", category: "food", description: "Learn to make fresh pasta and tiramisu in Florence. Includes wine pairing.", price: 85, duration: 4, rating: 4.9, reviews: 345, location: "Florence, Italy", country: "🇮🇹", tags: ["pasta", "cooking", "italian"], idealFor: ["couple", "family"], image: "🍝", popularity: 92, whatToExpect: "Pasta making, tiramisu, wine pairing", availability: "available" },
-            { id: 11, name: "Paris Louvre Tour", category: "culture", description: "Skip-the-line tour of the Louvre Museum. See Mona Lisa and other masterpieces.", price: 70, duration: 3, rating: 4.8, reviews: 567, location: "Paris, France", country: "🇫🇷", tags: ["art", "museum", "famous"], idealFor: ["couple", "solo"], image: "🎨", popularity: 95, whatToExpect: "Louvre tour, art history, skip-the-line", availability: "available" },
-            { id: 12, name: "Barcelona Tapas Tour", category: "food", description: "Evening tapas and wine tour in Barcelona's Gothic Quarter. 5 stops included.", price: 55, duration: 3, rating: 4.8, reviews: 412, location: "Barcelona, Spain", country: "🇪🇸", tags: ["tapas", "wine", "spanish"], idealFor: ["couple", "solo"], image: "🍷", popularity: 90, whatToExpect: "5 tapas stops, wine pairings, local guide", availability: "available" },
-            { id: 13, name: "London Walking Tour", category: "culture", description: "Historic walking tour of London. See Big Ben, Buckingham Palace, and Tower Bridge.", price: 30, duration: 3, rating: 4.6, reviews: 234, location: "London, UK", country: "🇬🇧", tags: ["history", "iconic", "walking"], idealFor: ["solo", "couple"], image: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", popularity: 78, whatToExpect: "Landmarks, history, local stories", availability: "available" },
-            { id: 14, name: "NYC Food Truck Tour", category: "food", description: "Food truck tour through NYC. Taste the best street food from around the world.", price: 40, duration: 2.5, rating: 4.7, reviews: 289, location: "New York, USA", country: "🇺🇸", tags: ["street food", "american", "foodie"], idealFor: ["family", "couple"], image: "🌭", popularity: 86, whatToExpect: "Food trucks, diverse cuisine, local guide", availability: "available" },
-            { id: 15, name: "Bali Rice Terrace Tour", category: "culture", description: "Walk through the UNESCO-listed rice terraces in Ubud. Visit a local village.", price: 35, duration: 3, rating: 4.8, reviews: 356, location: "Bali, Indonesia", country: "🇮🇩", tags: ["rice terraces", "scenic", "cultural"], idealFor: ["couple", "solo"], image: "🌾", popularity: 88, whatToExpect: "Rice terraces, village visit, local guide", availability: "available" },
-            { id: 16, name: "Dubai Desert Safari", category: "adventure", description: "Desert safari with dune bashing, camel riding, and BBQ dinner under the stars.", price: 85, duration: 6, rating: 4.8, reviews: 567, location: "Dubai, UAE", country: "🇦🇪", tags: ["desert", "adventure", "luxury"], idealFor: ["family", "couple"], image: "🏜️", popularity: 94, whatToExpect: "Dune bashing, camel ride, BBQ dinner", availability: "available" },
-            { id: 17, name: "Sydney Harbour Cruise", category: "relaxation", description: "Luxury cruise on Sydney Harbour. See Opera House and Harbour Bridge.", price: 95, duration: 3, rating: 4.8, reviews: 289, location: "Sydney, Australia", country: "🇦🇺", tags: ["harbour", "cruise", "iconic"], idealFor: ["couple", "family"], image: "🦘", popularity: 91, whatToExpect: "Harbour cruise, lunch, iconic views", availability: "available" },
-            { id: 18, name: "Santorini Sunset Tour", category: "relaxation", description: "Private sunset tour in Santorini. Visit Oia for the famous sunset views.", price: 80, duration: 3, rating: 4.9, reviews: 345, location: "Santorini, Greece", country: "🇬🇷", tags: ["sunset", "romantic", "iconic"], idealFor: ["couple"], image: "🌅", popularity: 97, whatToExpect: "Oia sunset, photos, wine tasting", availability: "available" },
-            { id: 19, name: "Cancun Snorkel & Ruins", category: "adventure", description: "Combine snorkeling in crystal waters with a visit to Mayan ruins.", price: 70, duration: 6, rating: 4.7, reviews: 234, location: "Cancun, Mexico", country: "🇲🇽", tags: ["ruins", "snorkeling", "mayan"], idealFor: ["family", "couple"], image: "🏝️", popularity: 87, whatToExpect: "Snorkeling, ruins, lunch included", availability: "available" },
-            { id: 20, name: "Singapore Food Trail", category: "food", description: "Hawker centre food tour. Taste Hainanese chicken rice, chili crab, and more.", price: 40, duration: 3, rating: 4.8, reviews: 289, location: "Singapore, Singapore", country: "🇸🇬", tags: ["hawker", "singapore", "foodie"], idealFor: ["family", "couple"], image: "🍚", popularity: 89, whatToExpect: "Hawker food, local guide, 6 tastings", availability: "available" },
-            { id: 21, name: "Marrakech Souk Shopping", category: "shopping", description: "Explore Marrakech's famous souks with a shopping guide. Find unique crafts.", price: 25, duration: 3, rating: 4.6, reviews: 178, location: "Marrakech, Morocco", country: "🇲🇦", tags: ["shopping", "souk", "morrocan"], idealFor: ["solo", "couple"], image: "🧿", popularity: 74, whatToExpect: "Souk tour, bargaining tips, crafts", availability: "available" },
-            { id: 22, name: "Cape Town Safari", category: "adventure", description: "Full day safari near Cape Town. See the Big 5 in their natural habitat.", price: 120, duration: 8, rating: 4.9, reviews: 456, location: "Cape Town, South Africa", country: "🇿🇦", tags: ["safari", "wildlife", "adventure"], idealFor: ["family", "couple"], image: "🦁", popularity: 96, whatToExpect: "Safari, Big 5, lunch included", availability: "soon" },
-            { id: 23, name: "Seoul Food Tour", category: "food", description: "Visit traditional markets in Seoul. Taste kimchi, bibimbap, and more.", price: 45, duration: 3, rating: 4.7, reviews: 234, location: "Seoul, South Korea", country: "🇰🇷", tags: ["korean", "foodie", "culture"], idealFor: ["couple", "solo"], image: "🥢", popularity: 84, whatToExpect: "Market tour, food tastings, history", availability: "available" },
-            { id: 24, name: "Pyramids & Sphinx Tour", category: "culture", description: "Guided tour of the Great Pyramids and Sphinx in Cairo. Camel ride included.", price: 55, duration: 4, rating: 4.9, reviews: 567, location: "Cairo, Egypt", country: "🇪🇬", tags: ["pyramids", "ancient", "iconic"], idealFor: ["family", "couple"], image: "🐫", popularity: 97, whatToExpect: "Pyramids, Sphinx, camel ride, guide", availability: "available" },
-            { id: 25, name: "Rio Cultural Walking Tour", category: "culture", description: "Explore Rio's historic center. Visit the Selaron Steps and historic churches.", price: 35, duration: 3, rating: 4.6, reviews: 156, location: "Rio de Janeiro, Brazil", country: "🇧🇷", tags: ["samba", "culture", "historic"], idealFor: ["solo", "couple"], image: "⛪", popularity: 76, whatToExpect: "Walking tour, history, local stories", availability: "available" },
-            { id: 26, name: "Queenstown Adventure", category: "adventure", description: "Bungee jumping, jet boating, and more in the adventure capital of the world.", price: 150, duration: 5, rating: 4.9, reviews: 345, location: "Queenstown, New Zealand", country: "🇳🇿", tags: ["bungee", "adventure", "thrilling"], idealFor: ["couple", "solo"], image: "🪂", popularity: 94, whatToExpect: "Bungee, jet boat, views", availability: "soon" },
-            { id: 27, name: "Lisbon Fado & Dinner", category: "culture", description: "Traditional Fado music performance with Portuguese dinner and wine.", price: 60, duration: 3, rating: 4.8, reviews: 198, location: "Lisbon, Portugal", country: "🇵🇹", tags: ["fado", "music", "portuguese"], idealFor: ["couple"], image: "🎵", popularity: 86, whatToExpect: "Fado show, Portuguese dinner, wine", availability: "available" },
-            { id: 28, name: "Ho Chi Minh Street Food", category: "food", description: "Motorbike food tour in Ho Chi Minh City. Taste pho, banh mi, and more.", price: 30, duration: 3, rating: 4.8, reviews: 289, location: "Ho Chi Minh, Vietnam", country: "🇻🇳", tags: ["vietnamese", "street food", "foodie"], idealFor: ["couple", "solo"], image: "🍲", popularity: 88, whatToExpect: "Motorbike, 6 food stops, local guide", availability: "available" },
-            { id: 29, name: "Istanbul Bosphorus Cruise", category: "relaxation", description: "Sunset cruise on the Bosphorus. See the city's skyline and bridges.", price: 40, duration: 2, rating: 4.7, reviews: 234, location: "Istanbul, Turkey", country: "🇹🇷", tags: ["bosphorus", "sunset", "romantic"], idealFor: ["couple", "solo"], image: "🌉", popularity: 81, whatToExpect: "Bosphorus cruise, sunset views, guide", availability: "available" },
-            { id: 30, name: "Venice Gondola Ride", category: "relaxation", description: "Romantic gondola ride through Venice's canals. Includes serenade and prosecco.", price: 90, duration: 1.5, rating: 4.8, reviews: 423, location: "Venice, Italy", country: "🇮🇹", tags: ["romantic", "gondola", "iconic"], idealFor: ["couple"], image: "🚣", popularity: 94, whatToExpect: "Gondola ride, serenade, prosecco", availability: "available" }
+            { id: 1, name: "Bangkok Street Food Tour", category: "food", description: "Explore hidden food stalls in Chinatown with a local guide. Taste authentic pad thai, mango sticky rice, and more!", price: 35, duration: 2.5, rating: 4.9, reviews: 342, location: "Bangkok, Thailand", country: "🇹🇭", tags: ["local", "authentic", "foodie"], idealFor: ["family", "couple", "solo"], image: "🍜", popularity: 95, whatToExpect: "5 food tastings, local guide, cultural stories", availability: "available", openingHours: "10am-10pm" },
+            { id: 2, name: "Elephant Sanctuary Visit", category: "adventure", description: "Ethical elephant experience. Feed, walk with, and bathe rescued elephants.", price: 75, duration: 4, rating: 4.9, reviews: 534, location: "Chiang Mai, Thailand", country: "🇹🇭", tags: ["animals", "nature", "ethical"], idealFor: ["family", "couple"], image: "🐘", popularity: 98, whatToExpect: "Elephant interaction, feeding, bathing, educational talk", availability: "available", openingHours: "8am-5pm" },
+            { id: 3, name: "Thai Cooking Class", category: "food", description: "Learn authentic Thai dishes from a local chef. Market visit included.", price: 55, duration: 4, rating: 4.9, reviews: 421, location: "Phuket, Thailand", country: "🇹🇭", tags: ["hands-on", "foodie", "cultural"], idealFor: ["family", "couple"], image: "👨‍🍳", popularity: 91, whatToExpect: "Market visit, 4 dishes cooked, recipe book", availability: "available", openingHours: "9am-6pm" },
+            { id: 4, name: "Phi Phi Islands Boat Tour", category: "adventure", description: "Speedboat tour to Phi Phi Islands. Snorkel in crystal clear waters.", price: 90, duration: 8, rating: 4.8, reviews: 567, location: "Phuket, Thailand", country: "🇹🇭", tags: ["boat", "snorkeling", "islands"], idealFor: ["couple", "family"], image: "⛵", popularity: 93, whatToExpect: "Speedboat, snorkeling, lunch, Maya Bay", availability: "soon", openingHours: "8am-4pm" },
+            { id: 5, name: "Night Market Experience", category: "shopping", description: "Explore Bangkok's night bazaar with a local shopping guide. Find unique handicrafts.", price: 20, duration: 2, rating: 4.6, reviews: 198, location: "Bangkok, Thailand", country: "🇹🇭", tags: ["shopping", "nightlife", "local"], idealFor: ["couple", "solo"], image: "🏮", popularity: 76, whatToExpect: "Shopping guide, bargaining tips, local snacks", availability: "available", openingHours: "6pm-12am" },
+            { id: 6, name: "Tokyo Sushi Making Class", category: "food", description: "Learn to make authentic sushi from a master chef in Tokyo. Includes sake tasting.", price: 80, duration: 3, rating: 4.9, reviews: 412, location: "Tokyo, Japan", country: "🇯🇵", tags: ["sushi", "hands-on", "japanese"], idealFor: ["couple", "solo"], image: "🍣", popularity: 94, whatToExpect: "Sushi making, sake tasting, chef guidance", availability: "available", openingHours: "10am-8pm" },
+            { id: 7, name: "Kyoto Temple & Garden Tour", category: "culture", description: "Visit iconic temples and zen gardens in Kyoto. Tea ceremony included.", price: 65, duration: 4, rating: 4.9, reviews: 389, location: "Kyoto, Japan", country: "🇯🇵", tags: ["temples", "zen", "tea"], idealFor: ["couple", "solo"], image: "⛩️", popularity: 96, whatToExpect: "Temple visits, zen garden, tea ceremony", availability: "available", openingHours: "8am-5pm" },
+            { id: 8, name: "Rome Colosseum Tour", category: "culture", description: "Skip-the-line tour of the Colosseum, Roman Forum, and Palatine Hill.", price: 60, duration: 3, rating: 4.9, reviews: 678, location: "Rome, Italy", country: "🇮🇹", tags: ["history", "ancient", "archaeology"], idealFor: ["couple", "solo"], image: "🏛️", popularity: 97, whatToExpect: "Colosseum, Forum, archaeologist guide", availability: "available", openingHours: "9am-7pm" },
+            { id: 9, name: "Florence Pasta Class", category: "food", description: "Learn to make fresh pasta and tiramisu in Florence. Includes wine pairing.", price: 85, duration: 4, rating: 4.9, reviews: 345, location: "Florence, Italy", country: "🇮🇹", tags: ["pasta", "cooking", "italian"], idealFor: ["couple", "family"], image: "🍝", popularity: 92, whatToExpect: "Pasta making, tiramisu, wine pairing", availability: "available", openingHours: "10am-6pm" },
+            { id: 10, name: "Paris Louvre Tour", category: "culture", description: "Skip-the-line tour of the Louvre Museum. See Mona Lisa and other masterpieces.", price: 70, duration: 3, rating: 4.8, reviews: 567, location: "Paris, France", country: "🇫🇷", tags: ["art", "museum", "famous"], idealFor: ["couple", "solo"], image: "🎨", popularity: 95, whatToExpect: "Louvre tour, art history, skip-the-line", availability: "available", openingHours: "9am-6pm" },
+            { id: 11, name: "Barcelona Tapas Tour", category: "food", description: "Evening tapas and wine tour in Barcelona's Gothic Quarter. 5 stops included.", price: 55, duration: 3, rating: 4.8, reviews: 412, location: "Barcelona, Spain", country: "🇪🇸", tags: ["tapas", "wine", "spanish"], idealFor: ["couple", "solo"], image: "🍷", popularity: 90, whatToExpect: "5 tapas stops, wine pairings, local guide", availability: "available", openingHours: "6pm-11pm" },
+            { id: 12, name: "London Walking Tour", category: "culture", description: "Historic walking tour of London. See Big Ben, Buckingham Palace, and Tower Bridge.", price: 30, duration: 3, rating: 4.6, reviews: 234, location: "London, UK", country: "🇬🇧", tags: ["history", "iconic", "walking"], idealFor: ["solo", "couple"], image: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", popularity: 78, whatToExpect: "Landmarks, history, local stories", availability: "available", openingHours: "9am-5pm" },
+            { id: 13, name: "NYC Food Truck Tour", category: "food", description: "Food truck tour through NYC. Taste the best street food from around the world.", price: 40, duration: 2.5, rating: 4.7, reviews: 289, location: "New York, USA", country: "🇺🇸", tags: ["street food", "american", "foodie"], idealFor: ["family", "couple"], image: "🌭", popularity: 86, whatToExpect: "Food trucks, diverse cuisine, local guide", availability: "available", openingHours: "11am-9pm" },
+            { id: 14, name: "Bali Rice Terrace Tour", category: "culture", description: "Walk through the UNESCO-listed rice terraces in Ubud. Visit a local village.", price: 35, duration: 3, rating: 4.8, reviews: 356, location: "Bali, Indonesia", country: "🇮🇩", tags: ["rice terraces", "scenic", "cultural"], idealFor: ["couple", "solo"], image: "🌾", popularity: 88, whatToExpect: "Rice terraces, village visit, local guide", availability: "available", openingHours: "7am-5pm" },
+            { id: 15, name: "Dubai Desert Safari", category: "adventure", description: "Desert safari with dune bashing, camel riding, and BBQ dinner under the stars.", price: 85, duration: 6, rating: 4.8, reviews: 567, location: "Dubai, UAE", country: "🇦🇪", tags: ["desert", "adventure", "luxury"], idealFor: ["family", "couple"], image: "🏜️", popularity: 94, whatToExpect: "Dune bashing, camel ride, BBQ dinner", availability: "available", openingHours: "3pm-10pm" },
+            { id: 16, name: "Sydney Harbour Cruise", category: "relaxation", description: "Luxury cruise on Sydney Harbour. See Opera House and Harbour Bridge.", price: 95, duration: 3, rating: 4.8, reviews: 289, location: "Sydney, Australia", country: "🇦🇺", tags: ["harbour", "cruise", "iconic"], idealFor: ["couple", "family"], image: "🦘", popularity: 91, whatToExpect: "Harbour cruise, lunch, iconic views", availability: "available", openingHours: "10am-6pm" },
+            { id: 17, name: "Santorini Sunset Tour", category: "relaxation", description: "Private sunset tour in Santorini. Visit Oia for the famous sunset views.", price: 80, duration: 3, rating: 4.9, reviews: 345, location: "Santorini, Greece", country: "🇬🇷", tags: ["sunset", "romantic", "iconic"], idealFor: ["couple"], image: "🌅", popularity: 97, whatToExpect: "Oia sunset, photos, wine tasting", availability: "available", openingHours: "5pm-8pm" },
+            { id: 18, name: "Cancun Snorkel & Ruins", category: "adventure", description: "Combine snorkeling in crystal waters with a visit to Mayan ruins.", price: 70, duration: 6, rating: 4.7, reviews: 234, location: "Cancun, Mexico", country: "🇲🇽", tags: ["ruins", "snorkeling", "mayan"], idealFor: ["family", "couple"], image: "🏝️", popularity: 87, whatToExpect: "Snorkeling, ruins, lunch included", availability: "available", openingHours: "8am-4pm" },
+            { id: 19, name: "Singapore Food Trail", category: "food", description: "Hawker centre food tour. Taste Hainanese chicken rice, chili crab, and more.", price: 40, duration: 3, rating: 4.8, reviews: 289, location: "Singapore, Singapore", country: "🇸🇬", tags: ["hawker", "singapore", "foodie"], idealFor: ["family", "couple"], image: "🍚", popularity: 89, whatToExpect: "Hawker food, local guide, 6 tastings", availability: "available", openingHours: "11am-9pm" },
+            { id: 20, name: "Marrakech Souk Shopping", category: "shopping", description: "Explore Marrakech's famous souks with a shopping guide. Find unique crafts.", price: 25, duration: 3, rating: 4.6, reviews: 178, location: "Marrakech, Morocco", country: "🇲🇦", tags: ["shopping", "souk", "morrocan"], idealFor: ["solo", "couple"], image: "🧿", popularity: 74, whatToExpect: "Souk tour, bargaining tips, crafts", availability: "available", openingHours: "9am-8pm" },
+            { id: 21, name: "Cape Town Safari", category: "adventure", description: "Full day safari near Cape Town. See the Big 5 in their natural habitat.", price: 120, duration: 8, rating: 4.9, reviews: 456, location: "Cape Town, South Africa", country: "🇿🇦", tags: ["safari", "wildlife", "adventure"], idealFor: ["family", "couple"], image: "🦁", popularity: 96, whatToExpect: "Safari, Big 5, lunch included", availability: "soon", openingHours: "6am-6pm" },
+            { id: 22, name: "Seoul Food Tour", category: "food", description: "Visit traditional markets in Seoul. Taste kimchi, bibimbap, and more.", price: 45, duration: 3, rating: 4.7, reviews: 234, location: "Seoul, South Korea", country: "🇰🇷", tags: ["korean", "foodie", "culture"], idealFor: ["couple", "solo"], image: "🥢", popularity: 84, whatToExpect: "Market tour, food tastings, history", availability: "available", openingHours: "10am-8pm" },
+            { id: 23, name: "Pyramids & Sphinx Tour", category: "culture", description: "Guided tour of the Great Pyramids and Sphinx in Cairo. Camel ride included.", price: 55, duration: 4, rating: 4.9, reviews: 567, location: "Cairo, Egypt", country: "🇪🇬", tags: ["pyramids", "ancient", "iconic"], idealFor: ["family", "couple"], image: "🐫", popularity: 97, whatToExpect: "Pyramids, Sphinx, camel ride, guide", availability: "available", openingHours: "8am-5pm" },
+            { id: 24, name: "Venice Gondola Ride", category: "relaxation", description: "Romantic gondola ride through Venice's canals. Includes serenade and prosecco.", price: 90, duration: 1.5, rating: 4.8, reviews: 423, location: "Venice, Italy", country: "🇮🇹", tags: ["romantic", "gondola", "iconic"], idealFor: ["couple"], image: "🚣", popularity: 94, whatToExpect: "Gondola ride, serenade, prosecco", availability: "available", openingHours: "9am-9pm" },
+            { id: 25, name: "Istanbul Bosphorus Cruise", category: "relaxation", description: "Sunset cruise on the Bosphorus. See the city's skyline and bridges.", price: 40, duration: 2, rating: 4.7, reviews: 234, location: "Istanbul, Turkey", country: "🇹🇷", tags: ["bosphorus", "sunset", "romantic"], idealFor: ["couple", "solo"], image: "🌉", popularity: 81, whatToExpect: "Bosphorus cruise, sunset views, guide", availability: "available", openingHours: "5pm-9pm" },
+            { id: 26, name: "Queenstown Adventure", category: "adventure", description: "Bungee jumping, jet boating, and more in the adventure capital of the world.", price: 150, duration: 5, rating: 4.9, reviews: 345, location: "Queenstown, New Zealand", country: "🇳🇿", tags: ["bungee", "adventure", "thrilling"], idealFor: ["couple", "solo"], image: "🪂", popularity: 94, whatToExpect: "Bungee, jet boat, views", availability: "soon", openingHours: "9am-5pm" },
+            { id: 27, name: "Lisbon Fado & Dinner", category: "culture", description: "Traditional Fado music performance with Portuguese dinner and wine.", price: 60, duration: 3, rating: 4.8, reviews: 198, location: "Lisbon, Portugal", country: "🇵🇹", tags: ["fado", "music", "portuguese"], idealFor: ["couple"], image: "🎵", popularity: 86, whatToExpect: "Fado show, Portuguese dinner, wine", availability: "available", openingHours: "7pm-11pm" },
+            { id: 28, name: "Ho Chi Minh Street Food", category: "food", description: "Motorbike food tour in Ho Chi Minh City. Taste pho, banh mi, and more.", price: 30, duration: 3, rating: 4.8, reviews: 289, location: "Ho Chi Minh, Vietnam", country: "🇻🇳", tags: ["vietnamese", "street food", "foodie"], idealFor: ["couple", "solo"], image: "🍲", popularity: 88, whatToExpect: "Motorbike, 6 food stops, local guide", availability: "available", openingHours: "11am-9pm" },
+            { id: 29, name: "Miami Everglades Airboat Tour", category: "adventure", description: "Airboat tour through the Everglades. See alligators and wildlife.", price: 55, duration: 2, rating: 4.7, reviews: 178, location: "Miami, USA", country: "🇺🇸", tags: ["nature", "wildlife", "adventure"], idealFor: ["family", "couple"], image: "🐊", popularity: 82, whatToExpect: "Airboat, alligator viewing, wildlife guide", availability: "available", openingHours: "9am-5pm" },
+            { id: 30, name: "Mumbai Street Food Tour", category: "food", description: "Explore Mumbai's street food scene. Taste vada pav, pav bhaji, and more.", price: 25, duration: 3, rating: 4.6, reviews: 156, location: "Mumbai, India", country: "🇮🇳", tags: ["street food", "indian", "foodie"], idealFor: ["couple", "solo"], image: "🍛", popularity: 79, whatToExpect: "Street food, local guide, 7 tastings", availability: "available", openingHours: "5pm-11pm" }
         ];
 
         // ============================================
@@ -1524,100 +1559,7 @@
         let userPreferences = { interests: ["food", "culture"], budget: 50, timeAvailable: 3, travelerType: "couple" };
         let weatherStates = ["sunny", "rainy", "cloudy", "hot"];
         let currentWeatherIndex = 0;
-
-        // ============================================
-        // CHAT FUNCTIONS
-        // ============================================
-        function toggleChat() {
-            const popup = document.getElementById('chatPopup');
-            popup.classList.toggle('open');
-        }
-
-        function addChatMessage(type, content) {
-            const container = document.getElementById('chatMessages');
-            const div = document.createElement('div');
-            div.className = `chat-message ${type}`;
-            div.innerHTML = content.replace(/\n/g, '<br>');
-            container.appendChild(div);
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function handleChatQuery() {
-            const input = document.getElementById('chatInput');
-            const query = input.value.trim();
-            if (!query) return;
-            
-            addChatMessage('user', query);
-            input.value = '';
-            
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'typing-indicator';
-            typingDiv.id = 'typingIndicator';
-            typingDiv.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
-            document.getElementById('chatMessages').appendChild(typingDiv);
-            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
-            
-            setTimeout(() => {
-                const indicator = document.getElementById('typingIndicator');
-                if (indicator) indicator.remove();
-                
-                const results = getRecommendations(query + ' ' + currentLocation);
-                if (results.length === 0) {
-                    addChatMessage('bot', '😕 No experiences found. Try adjusting your budget/time sliders or changing your location!');
-                } else {
-                    const top = results[0];
-                    addChatMessage('bot', `🎯 Found ${results.length} experiences! Top pick: ${top.country || '🌍'} <strong>${top.name}</strong> ($${top.price}, ${top.duration}h, ⭐${top.rating})`);
-                    // Update recommendations
-                    recommendations = results;
-                    renderRecommendations(results);
-                    document.getElementById('recCount').textContent = `(${results.length} found)`;
-                }
-            }, 800);
-        }
-
-        // ============================================
-        // VOICE INPUT
-        // ============================================
-        let recognition = null;
-
-        function toggleVoice() {
-            const btn = document.querySelector('.chat-popup .voice-btn');
-            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                if (!recognition) {
-                    recognition = new SpeechRecognition();
-                    recognition.lang = 'en-US';
-                    recognition.continuous = false;
-                    recognition.interimResults = true;
-                    recognition.onresult = function(event) {
-                        const transcript = Array.from(event.results)
-                            .map(result => result[0].transcript)
-                            .join('');
-                        document.getElementById('chatInput').value = transcript;
-                        if (event.results[0].isFinal) {
-                            btn.classList.remove('listening');
-                            handleChatQuery();
-                        }
-                    };
-                    recognition.onerror = function() {
-                        btn.classList.remove('listening');
-                        showNotification('❌ Voice Error', 'Please try again or type your query.');
-                    };
-                    recognition.onend = function() {
-                        btn.classList.remove('listening');
-                    };
-                }
-                if (btn.classList.contains('listening')) {
-                    recognition.stop();
-                    btn.classList.remove('listening');
-                } else {
-                    btn.classList.add('listening');
-                    recognition.start();
-                }
-            } else {
-                showNotification('❌ Not Supported', 'Voice input is not supported in this browser.');
-            }
-        }
+        let chatHistory = [];
 
         // ============================================
         // LOCATION FUNCTIONS
@@ -1631,24 +1573,13 @@
             autoSave();
         }
 
-        function showRandomDestination() {
-            const locations = [...new Set(EXPERIENCES.map(e => e.location))];
-            const random = locations[Math.floor(Math.random() * locations.length)];
-            currentLocation = random;
-            document.getElementById('locationSelect').value = random;
-            document.getElementById('currentLocationDisplay').textContent = '📍 ' + random;
-            showNotification('🎲 Surprise!', `Exploring ${random}`);
-            refreshRecommendations();
-            autoSave();
-        }
-
         // ============================================
-        // WEATHER FUNCTIONS
+        // WEATHER
         // ============================================
         function toggleWeather() {
             currentWeatherIndex = (currentWeatherIndex + 1) % weatherStates.length;
             updateWeatherDisplay();
-            showNotification('🌤️ Weather Updated', `Weather changed to ${weatherStates[currentWeatherIndex]}`);
+            showNotification('🌤️ Weather Updated', `Weather: ${weatherStates[currentWeatherIndex]}`);
             refreshRecommendations();
             autoSave();
         }
@@ -1681,44 +1612,129 @@
         }
 
         // ============================================
-        // ENHANCED RECOMMENDATION ENGINE (WITH FALLBACK)
+        // TRENDING
+        // ============================================
+        function searchTrending(tag) {
+            document.getElementById('chatInput').value = tag + ' experiences';
+            handleChatQuery();
+            if (!document.getElementById('chatPopup').classList.contains('open')) toggleChat();
+        }
+
+        // ============================================
+        // CHAT FUNCTIONS
+        // ============================================
+        function toggleChat() {
+            const popup = document.getElementById('chatPopup');
+            popup.classList.toggle('open');
+        }
+
+        function addChatMessage(type, content) {
+            const container = document.getElementById('chatMessages');
+            const div = document.createElement('div');
+            div.className = `chat-message ${type}`;
+            div.innerHTML = content.replace(/\n/g, '<br>');
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function handleChatQuery() {
+            const input = document.getElementById('chatInput');
+            const query = input.value.trim();
+            if (!query) return;
+            addChatMessage('user', query);
+            input.value = '';
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+            document.getElementById('chatMessages').appendChild(typingDiv);
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+            setTimeout(() => {
+                const indicator = document.getElementById('typingIndicator');
+                if (indicator) indicator.remove();
+                const results = getRecommendations(query + ' ' + currentLocation);
+                if (results.length === 0) {
+                    addChatMessage('bot', '😕 No experiences found. Try adjusting your budget/time sliders or changing your location!');
+                } else {
+                    const top = results[0];
+                    addChatMessage('bot', `🎯 Found ${results.length} experiences! Top pick: ${top.country || '🌍'} <strong>${top.name}</strong> ($${top.price}, ${top.duration}h, ⭐${top.rating})`);
+                    recommendations = results;
+                    renderRecommendations(results);
+                    document.getElementById('recCount').textContent = `${results.length} found`;
+                }
+            }, 800);
+        }
+
+        // ============================================
+        // VOICE INPUT
+        // ============================================
+        let recognition = null;
+
+        function toggleVoice() {
+            const btn = document.querySelector('.chat-popup .voice-btn');
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!recognition) {
+                    recognition = new SpeechRecognition();
+                    recognition.lang = 'en-US';
+                    recognition.continuous = false;
+                    recognition.interimResults = true;
+                    recognition.onresult = function(event) {
+                        const transcript = Array.from(event.results).map(r => r[0].transcript).join('');
+                        document.getElementById('chatInput').value = transcript;
+                        if (event.results[0].isFinal) {
+                            btn.classList.remove('listening');
+                            handleChatQuery();
+                        }
+                    };
+                    recognition.onerror = function() { btn.classList.remove('listening'); showNotification('❌ Voice Error', 'Please try again.'); };
+                    recognition.onend = function() { btn.classList.remove('listening'); };
+                }
+                if (btn.classList.contains('listening')) {
+                    recognition.stop();
+                    btn.classList.remove('listening');
+                } else {
+                    btn.classList.add('listening');
+                    recognition.start();
+                }
+            } else {
+                showNotification('❌ Not Supported', 'Voice input not supported in this browser.');
+            }
+        }
+
+        // ============================================
+        // RECOMMENDATION ENGINE
         // ============================================
         function getRecommendations(query) {
             let results = [...EXPERIENCES];
             const q = query.toLowerCase();
-            
-            // ===== 1. LOCATION FILTER =====
-            const locations = ['bangkok', 'tokyo', 'kyoto', 'paris', 'rome', 'london', 'barcelona', 'sydney', 'dubai', 'bali', 'singapore', 'phuket', 'chiang mai', 'florence', 'venice', 'madrid', 'cancun', 'marrakech', 'cape town', 'seoul', 'cairo', 'rio', 'queenstown', 'lisbon', 'istanbul', 'mumbai', 'ho chi minh', 'vienna', 'prague', 'amsterdam', 'berlin'];
+
+            // Location filter
+            const locations = ['bangkok', 'tokyo', 'kyoto', 'paris', 'rome', 'london', 'barcelona', 'sydney', 'dubai', 'bali', 'singapore', 'phuket', 'chiang mai', 'florence', 'venice', 'madrid', 'cancun', 'marrakech', 'cape town', 'seoul', 'cairo', 'rio', 'queenstown', 'lisbon', 'istanbul', 'mumbai', 'ho chi minh'];
             let locationMatch = false;
-            let locationQuery = '';
-            
             for (const loc of locations) {
                 if (q.includes(loc)) {
                     results = results.filter(e => e.location.toLowerCase().includes(loc));
                     locationMatch = true;
-                    locationQuery = loc;
                     break;
                 }
             }
-            
             if (!locationMatch && currentLocation) {
                 const locParts = currentLocation.split(',')[0].toLowerCase().trim();
                 results = results.filter(e => e.location.toLowerCase().includes(locParts));
-                if (results.length === 0) {
-                    results = [...EXPERIENCES];
-                }
+                if (results.length === 0) results = [...EXPERIENCES];
             }
-            
-            // ===== 2. CATEGORY DETECTION =====
-            const hasFood = q.includes('food') || q.includes('eat') || q.includes('dining') || q.includes('cooking') || q.includes('meal') || q.includes('restaurant') || q.includes('cuisine') || q.includes('taste');
-            const hasCulture = q.includes('culture') || q.includes('art') || q.includes('museum') || q.includes('temple') || q.includes('history') || q.includes('heritage') || q.includes('historical');
-            const hasAdventure = q.includes('adventure') || q.includes('thrill') || q.includes('active') || q.includes('zip') || q.includes('dive') || q.includes('safari') || q.includes('trek') || q.includes('hike') || q.includes('bungee');
-            const hasRelax = q.includes('relax') || q.includes('spa') || q.includes('massage') || q.includes('cruise') || q.includes('sunset') || q.includes('wellness') || q.includes('peaceful') || q.includes('calm');
-            const hasShopping = q.includes('shop') || q.includes('market') || q.includes('buy') || q.includes('souvenir') || q.includes('bazaar') || q.includes('mall');
-            const hasRomantic = q.includes('romantic') || q.includes('couple') || q.includes('date') || q.includes('dinner') || q.includes('honeymoon') || q.includes('lovers');
-            const hasFamily = q.includes('family') || q.includes('kids') || q.includes('children') || q.includes('child') || q.includes('baby') || q.includes('parent');
-            const hasSolo = q.includes('solo') || q.includes('alone') || q.includes('single') || q.includes('individual');
-            
+
+            // Category detection
+            const hasFood = q.includes('food') || q.includes('eat') || q.includes('dining') || q.includes('cooking') || q.includes('meal') || q.includes('restaurant');
+            const hasCulture = q.includes('culture') || q.includes('art') || q.includes('museum') || q.includes('temple') || q.includes('history');
+            const hasAdventure = q.includes('adventure') || q.includes('thrill') || q.includes('active') || q.includes('zip') || q.includes('dive') || q.includes('safari');
+            const hasRelax = q.includes('relax') || q.includes('spa') || q.includes('massage') || q.includes('cruise') || q.includes('sunset') || q.includes('wellness');
+            const hasShopping = q.includes('shop') || q.includes('market') || q.includes('buy') || q.includes('souvenir') || q.includes('bazaar');
+            const hasRomantic = q.includes('romantic') || q.includes('couple') || q.includes('date') || q.includes('dinner') || q.includes('honeymoon');
+            const hasFamily = q.includes('family') || q.includes('kids') || q.includes('children') || q.includes('child');
+            const hasSolo = q.includes('solo') || q.includes('alone') || q.includes('single');
+
             let categoryFiltered = [];
             if (hasFood) {
                 categoryFiltered = results.filter(e => e.category === 'food');
@@ -1738,12 +1754,9 @@
             } else {
                 categoryFiltered = results;
             }
-            
-            if (categoryFiltered.length === 0) {
-                categoryFiltered = results;
-            }
-            
-            // ===== 3. TRAVELER TYPE FILTER =====
+            if (categoryFiltered.length === 0) categoryFiltered = results;
+
+            // Traveler type filter
             let travelerFiltered = categoryFiltered;
             if (hasFamily) {
                 travelerFiltered = categoryFiltered.filter(e => e.idealFor.includes('family'));
@@ -1755,24 +1768,22 @@
                 travelerFiltered = categoryFiltered.filter(e => e.idealFor.includes('couple'));
                 if (travelerFiltered.length === 0) travelerFiltered = categoryFiltered;
             }
-            
-            // ===== 4. BUDGET & DURATION FILTER (WITH FALLBACK) =====
+
+            // Budget & duration
             const budget = userPreferences.budget || 50;
             const duration = userPreferences.timeAvailable || 3;
-            
             let budgetFiltered = travelerFiltered.filter(e => e.price <= budget * 1.2);
             if (budgetFiltered.length === 0) {
                 budgetFiltered = travelerFiltered.filter(e => e.price <= budget * 1.5);
                 if (budgetFiltered.length === 0) budgetFiltered = travelerFiltered;
             }
-            
             let durationFiltered = budgetFiltered.filter(e => e.duration <= duration + 1.5);
             if (durationFiltered.length === 0) {
                 durationFiltered = budgetFiltered.filter(e => e.duration <= duration + 3);
                 if (durationFiltered.length === 0) durationFiltered = budgetFiltered;
             }
-            
-            // ===== 5. SCORING =====
+
+            // Scoring
             let scored = durationFiltered.map(e => {
                 let score = 0;
                 if (hasFood && e.category === 'food') score += 30;
@@ -1789,15 +1800,10 @@
                 score += (1 - Math.min(e.duration / duration, 1)) * 10;
                 return { ...e, score };
             });
-            
             scored.sort((a, b) => b.score - a.score);
-            
             if (scored.length === 0) {
-                scored = EXPERIENCES.map(e => ({ ...e, score: e.popularity }))
-                    .sort((a, b) => b.score - a.score)
-                    .slice(0, 8);
+                scored = EXPERIENCES.map(e => ({ ...e, score: e.popularity })).sort((a, b) => b.score - a.score).slice(0, 8);
             }
-            
             return scored.slice(0, 12);
         }
 
@@ -1805,7 +1811,8 @@
             const results = getRecommendations('experiences in ' + currentLocation);
             recommendations = results;
             renderRecommendations(results);
-            document.getElementById('recCount').textContent = `(${results.length} found)`;
+            document.getElementById('recCount').textContent = `${results.length} found`;
+            updateStats();
         }
 
         // ============================================
@@ -1818,18 +1825,16 @@
                     <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-light);">
                         <i class="fas fa-globe" style="font-size:48px;display:block;margin-bottom:16px;color:var(--primary);"></i>
                         <h3 style="color:var(--text);margin-bottom:8px;">🌍 Exploring ${currentLocation}</h3>
-                        <p>Try changing your location, adjusting the budget/time sliders, or asking the assistant!</p>
+                        <p>Try changing your location or adjusting the sliders!</p>
                         <div style="margin-top:16px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
-                            <button onclick="showRandomDestination()" class="btn-secondary"><i class="fas fa-dice"></i> Surprise Me!</button>
+                            <button onclick="toggleChat()" class="btn-primary"><i class="fas fa-comment"></i> Ask AI</button>
                             <button onclick="refreshRecommendations()" class="btn-secondary"><i class="fas fa-sync"></i> Refresh</button>
-                            <button onclick="toggleChat()" class="btn-primary"><i class="fas fa-comment"></i> Ask Assistant</button>
                         </div>
                     </div>
                 `;
                 return;
             }
-            document.getElementById('recCount').textContent = `(${recs.length} found)`;
-            
+            document.getElementById('recCount').textContent = `${recs.length} found`;
             container.innerHTML = recs.map(exp => {
                 const isFav = favorites.includes(exp.id);
                 const availClass = exp.availability === 'available' ? '' : exp.availability === 'soon' ? 'soon' : 'unavailable';
@@ -1853,9 +1858,10 @@
                             <span><i class="fas fa-users"></i> ${exp.idealFor.slice(0,2).join(', ')}</span>
                             <span class="price">$${exp.price}</span>
                         </div>
-                        <div style="display:flex;gap:4px;margin-top:4px;">
+                        <div style="display:flex;gap:4px;margin-top:4px;flex-wrap:wrap;">
                             <span class="availability-badge ${availClass}">${availText}</span>
                             <span style="font-size:9px;color:var(--text-light);">${exp.reviews} reviews</span>
+                            <span style="font-size:9px;color:var(--text-light);"><i class="far fa-clock"></i> ${exp.openingHours || 'Flexible'}</span>
                         </div>
                         <div class="card-actions">
                             <button class="add-btn" onclick="addToItinerary(${exp.id})"><i class="fas fa-plus"></i> Add</button>
@@ -1871,7 +1877,7 @@
             const container = document.getElementById('itineraryTimeline');
             const details = itinerary.map(id => EXPERIENCES.find(e => e.id === id)).filter(Boolean);
             if (details.length === 0) {
-                container.innerHTML = `<div class="empty-itinerary"><i class="fas fa-map-pin" style="font-size:40px;color:#d1d5db;"></i><p>Your itinerary is empty. Start exploring global experiences!</p></div>`;
+                container.innerHTML = `<div class="empty-itinerary"><i class="fas fa-map-pin" style="font-size:40px;color:#d1d5db;"></i><p>Your itinerary is empty. Start exploring!</p></div>`;
                 return;
             }
             container.innerHTML = details.map((exp, i) => `
@@ -1892,7 +1898,7 @@
             const container = document.getElementById('favoritesList');
             const details = favorites.map(id => EXPERIENCES.find(e => e.id === id)).filter(Boolean);
             if (details.length === 0) {
-                container.innerHTML = `<div class="empty-itinerary"><i class="fas fa-heart" style="font-size:40px;color:#d1d5db;"></i><p>No favorites yet. Click the ❤️ on any experience to save it!</p></div>`;
+                container.innerHTML = `<div class="empty-itinerary"><i class="fas fa-heart" style="font-size:40px;color:#d1d5db;"></i><p>No favorites yet. Click the ❤️ on any experience!</p></div>`;
                 return;
             }
             container.innerHTML = `
@@ -1936,6 +1942,11 @@
             document.getElementById('avgRating').textContent = details.length > 0 ? (details.reduce((s,e) => s + e.rating, 0) / details.length).toFixed(1) : '0';
         }
 
+        function updateStats() {
+            document.getElementById('totalExperiences').textContent = EXPERIENCES.length;
+            document.getElementById('favoritesCount').textContent = favorites.length;
+        }
+
         // ============================================
         // FAVORITES
         // ============================================
@@ -1951,6 +1962,7 @@
             }
             refreshRecommendations();
             renderFavorites();
+            updateStats();
             autoSave();
         }
 
@@ -1995,7 +2007,7 @@
                 return;
             }
             const details = compareList.map(id => EXPERIENCES.find(e => e.id === id)).filter(Boolean);
-            let msg = '📊 GLOBAL EXPERIENCE COMPARISON\n' + '='.repeat(50) + '\n\n';
+            let msg = '📊 EXPERIENCE COMPARISON\n' + '='.repeat(50) + '\n\n';
             details.forEach((e, i) => {
                 msg += `${i+1}. ${e.country || '🌍'} ${e.name}\n   💰 $${e.price} | ⏱️ ${e.duration}h | ⭐${e.rating}\n   📍 ${e.location}\n   🏷️ ${e.tags.join(', ')}\n\n`;
             });
@@ -2015,7 +2027,6 @@
         function showDetail(id) {
             const exp = EXPERIENCES.find(e => e.id === id);
             if (!exp) return;
-            
             document.getElementById('modalTitle').textContent = exp.name;
             document.getElementById('modalBody').innerHTML = `
                 <div style="text-align:center;font-size:48px;margin-bottom:6px;">${exp.country || '🌍'} ${exp.image || '📍'}</div>
@@ -2028,7 +2039,7 @@
                     <div style="background:var(--background);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">⏱️ Duration</div><div style="font-size:14px;font-weight:700;">${exp.duration} hrs</div></div>
                     <div style="background:var(--background);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">👥 For</div><div style="font-size:14px;font-weight:700;">${exp.idealFor.join(', ')}</div></div>
                     <div style="background:var(--background);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">📝 Reviews</div><div style="font-size:14px;font-weight:700;">${exp.reviews}</div></div>
-                    <div style="background:var(--background);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">🔥 Popularity</div><div style="font-size:14px;font-weight:700;">${exp.popularity}%</div></div>
+                    <div style="background:var(--background);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">🕐 Hours</div><div style="font-size:14px;font-weight:700;">${exp.openingHours || 'Flexible'}</div></div>
                 </div>
                 <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;">${exp.tags.map(t => `<span style="background:var(--primary-light);padding:2px 8px;border-radius:8px;font-size:10px;color:var(--primary-dark);">#${t}</span>`).join('')}</div>
                 <div style="background:var(--background);padding:10px;border-radius:6px;margin-bottom:10px;border-left:4px solid var(--primary);">
@@ -2052,7 +2063,6 @@
         document.getElementById('detailModal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
-
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeModal();
         });
@@ -2063,22 +2073,19 @@
         function shareExperience(id) {
             const exp = EXPERIENCES.find(e => e.id === id);
             if (!exp) return;
-            const text = `🌍 ${exp.country || ''} ${exp.name}\n📍 ${exp.location}\n💰 $${exp.price} • ⏱️ ${exp.duration}h • ⭐ ${exp.rating}\n${exp.description}\n\nShared via Nexus Global 🧭`;
+            const text = `🌍 ${exp.country || ''} ${exp.name}\n📍 ${exp.location}\n💰 $${exp.price} • ⏱️ ${exp.duration}h • ⭐ ${exp.rating}\n${exp.description}\n\nShared via Nexus 🧭`;
             if (navigator.share) {
                 navigator.share({ title: exp.name, text: text });
             } else {
-                navigator.clipboard.writeText(text).then(() => {
-                    showNotification('📋 Copied', 'Experience details copied to clipboard!');
-                });
+                navigator.clipboard.writeText(text).then(() => showNotification('📋 Copied', 'Copied to clipboard!'));
             }
         }
 
         function shareWhatsApp(id) {
             const exp = EXPERIENCES.find(e => e.id === id);
             if (!exp) return;
-            const text = `🌍 ${exp.country || ''} ${exp.name}\n📍 ${exp.location}\n💰 $${exp.price} • ⏱️ ${exp.duration}h • ⭐ ${exp.rating}\n${exp.description}`;
-            const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-            window.open(url, '_blank');
+            const text = `🌍 ${exp.country || ''} ${exp.name}\n📍 ${exp.location}\n💰 $${exp.price} • ⏱️ ${exp.duration}h • ⭐ ${exp.rating}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         }
 
         function shareWhatsAppItinerary() {
@@ -2115,7 +2122,7 @@
                 itinerary.push(id);
                 renderItinerary();
                 const exp = EXPERIENCES.find(e => e.id === id);
-                showNotification('✅ Added to Itinerary', `${exp.name} added!`);
+                showNotification('✅ Added', `${exp.name} added to itinerary!`);
                 autoSave();
             } else {
                 showNotification('⚠️ Already Added', 'This experience is already in your itinerary');
@@ -2161,16 +2168,14 @@
             if (navigator.share) {
                 navigator.share({ title: 'My Nexus Itinerary', text: text });
             } else {
-                navigator.clipboard.writeText(text).then(() => {
-                    showNotification('📋 Copied', 'Itinerary copied to clipboard!');
-                });
+                navigator.clipboard.writeText(text).then(() => showNotification('📋 Copied', 'Itinerary copied!'));
             }
         }
 
         function exportPDF() {
             const details = itinerary.map(id => EXPERIENCES.find(e => e.id === id)).filter(Boolean);
             if (details.length === 0) { showNotification('⚠️ Empty', 'Your itinerary is empty'); return; }
-            const text = `NEXUS GLOBAL ITINERARY\n${'='.repeat(60)}\n📍 Location: ${currentLocation}\n📅 ${new Date().toLocaleDateString()}\n${'='.repeat(60)}\n\n${details.map((e,i) => 
+            const text = `NEXUS ITINERARY\n${'='.repeat(60)}\n📍 Location: ${currentLocation}\n📅 ${new Date().toLocaleDateString()}\n${'='.repeat(60)}\n\n${details.map((e,i) => 
                 `${i+1}. ${e.country || '🌍'} ${e.name}\n   Category: ${e.category}\n   Location: ${e.location}\n   Duration: ${e.duration}h\n   Price: $${e.price}\n   Rating: ${e.rating}⭐\n   ${e.description}\n`
             ).join('\n')}\n${'='.repeat(60)}\nTotal: ${details.reduce((s,e) => s + e.duration, 0).toFixed(1)} hrs • $${details.reduce((s,e) => s + e.price, 0)}`;
             const blob = new Blob([text], { type: 'text/plain' });
@@ -2180,7 +2185,14 @@
             a.download = `nexus-itinerary-${new Date().toISOString().split('T')[0]}.txt`;
             a.click();
             URL.revokeObjectURL(url);
-            showNotification('📄 Exported', 'Itinerary downloaded as text file');
+            showNotification('📄 Exported', 'Itinerary downloaded!');
+        }
+
+        // ============================================
+        // PROVIDER FUNCTIONS
+        // ============================================
+        function showAnalytics() {
+            showNotification('📊 Analytics', 'View detailed insights in the Provider dashboard');
         }
 
         // ============================================
@@ -2218,11 +2230,9 @@
         // USER PROFILE
         // ============================================
         function showUserProfile() {
-            const session = getSession();
-            if (!session) return;
             const user = getCurrentUser();
             if (!user) return;
-            showNotification('👤 Your Profile', 
+            showNotification('👤 Your Profile',
                 `Name: ${user.name}\nEmail: ${user.email}\nTraveler: ${user.preferences?.travelerType || 'Couple'}\nInterests: ${user.preferences?.interests?.join(', ') || 'Food, Culture'}\nBudget: $${user.preferences?.budget || 50}\nTime: ${user.preferences?.timeAvailable || 3}h\n\n📊 Stats:\nItinerary: ${itinerary.length} items\nFavorites: ${favorites.length} items`);
         }
 
@@ -2261,16 +2271,14 @@
         document.getElementById('sortBy').addEventListener('change', applyFilters);
 
         // ============================================
-        // QUICK SUGGESTIONS
+        // CHAT SUGGESTIONS
         // ============================================
         document.querySelectorAll('.suggestion-chip').forEach(chip => {
             chip.addEventListener('click', function() {
                 const query = this.dataset.query + ' in ' + currentLocation;
                 document.getElementById('chatInput').value = query;
                 handleChatQuery();
-                if (!document.getElementById('chatPopup').classList.contains('open')) {
-                    toggleChat();
-                }
+                if (!document.getElementById('chatPopup').classList.contains('open')) toggleChat();
             });
         });
 
@@ -2285,75 +2293,8 @@
         });
 
         // ============================================
-        // INIT
+        // ADD EXPERIENCE
         // ============================================
-        function init() {
-            const session = getSession();
-            if (session) {
-                const users = getUsers();
-                if (users[session.email]) {
-                    document.getElementById('loginOverlay').classList.add('hidden');
-                    document.getElementById('mainNav').style.display = 'block';
-                    document.getElementById('mainContent').style.display = 'block';
-                    
-                    const user = users[session.email];
-                    document.getElementById('userNameDisplay').textContent = user.name;
-                    document.getElementById('userAvatarSmall').textContent = user.name.charAt(0).toUpperCase();
-                    
-                    if (user.preferences) {
-                        document.getElementById('budgetSlider').value = user.preferences.budget || 50;
-                        document.getElementById('budgetDisplay').textContent = user.preferences.budget || 50;
-                        document.getElementById('timeSlider').value = user.preferences.timeAvailable || 3;
-                        document.getElementById('timeDisplay').textContent = user.preferences.timeAvailable || 3;
-                        if (user.preferences.location) {
-                            currentLocation = user.preferences.location;
-                            document.getElementById('locationSelect').value = currentLocation;
-                            document.getElementById('currentLocationDisplay').textContent = '📍 ' + currentLocation;
-                        }
-                    }
-                    if (user.itinerary) itinerary = user.itinerary;
-                    if (user.favorites) favorites = user.favorites;
-                    if (user.compareList) compareList = user.compareList;
-                    
-                    refreshRecommendations();
-                    renderItinerary();
-                    renderFavorites();
-                    renderProviderListings();
-                    updateComparisonPanel();
-                    
-                    showNotification('👋 Welcome Back!', `Hello ${user.name}! Ready to explore?`);
-                    return;
-                }
-            }
-            
-            document.getElementById('loginOverlay').classList.remove('hidden');
-            document.getElementById('mainNav').style.display = 'none';
-            document.getElementById('mainContent').style.display = 'none';
-            
-            document.getElementById('loginEmail').addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') handleLogin();
-            });
-            document.getElementById('loginPassword').addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') handleLogin();
-            });
-            document.getElementById('registerName').addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') handleRegister();
-            });
-            document.getElementById('registerEmail').addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') handleRegister();
-            });
-            document.getElementById('registerPassword').addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') handleRegister();
-            });
-        }
-
-        // ============================================
-        // EVENT LISTENERS
-        // ============================================
-        document.getElementById('optimizeRouteBtn').addEventListener('click', optimizeRoute);
-        document.getElementById('shareItineraryBtn').addEventListener('click', shareItinerary);
-        document.getElementById('clearItineraryBtn').addEventListener('click', clearItinerary);
-
         document.getElementById('addExperienceBtn').addEventListener('click', () => {
             const name = prompt('Experience Name:');
             if (!name) return;
@@ -2372,23 +2313,83 @@
                 country: '🌍', description: description,
                 tags: ['new'], idealFor: ['all'],
                 image: '📍', popularity: 60,
-                whatToExpect: 'Unique local experience', availability: 'available'
+                whatToExpect: 'Unique local experience', availability: 'available',
+                openingHours: 'Flexible'
             });
             renderProviderListings();
-            showNotification('✅ Added', `"${name}" added to your listings in ${currentLocation}!`);
+            showNotification('✅ Added', `"${name}" added to your listings!`);
             refreshRecommendations();
             autoSave();
         });
 
+        document.getElementById('optimizeRouteBtn').addEventListener('click', optimizeRoute);
+        document.getElementById('shareItineraryBtn').addEventListener('click', shareItinerary);
+        document.getElementById('clearItineraryBtn').addEventListener('click', clearItinerary);
         document.getElementById('locationSelect').addEventListener('change', setLocation);
+
+        // ============================================
+        // INIT
+        // ============================================
+        function init() {
+            const session = getSession();
+            if (session) {
+                const users = getUsers();
+                if (users[session.email]) {
+                    document.getElementById('loginOverlay').classList.add('hidden');
+                    document.getElementById('mainNav').style.display = 'block';
+                    document.getElementById('mainContent').style.display = 'block';
+                    const user = users[session.email];
+                    document.getElementById('userNameDisplay').textContent = user.name;
+                    document.getElementById('userAvatarSmall').textContent = user.name.charAt(0).toUpperCase();
+                    if (user.preferences) {
+                        document.getElementById('budgetSlider').value = user.preferences.budget || 50;
+                        document.getElementById('budgetDisplay').textContent = user.preferences.budget || 50;
+                        document.getElementById('timeSlider').value = user.preferences.timeAvailable || 3;
+                        document.getElementById('timeDisplay').textContent = user.preferences.timeAvailable || 3;
+                        if (user.preferences.location) {
+                            currentLocation = user.preferences.location;
+                            document.getElementById('locationSelect').value = currentLocation;
+                            document.getElementById('currentLocationDisplay').textContent = '📍 ' + currentLocation;
+                        }
+                    }
+                    if (user.itinerary) itinerary = user.itinerary;
+                    if (user.favorites) favorites = user.favorites;
+                    if (user.compareList) compareList = user.compareList;
+                    refreshRecommendations();
+                    renderItinerary();
+                    renderFavorites();
+                    renderProviderListings();
+                    updateComparisonPanel();
+                    updateStats();
+                    showNotification('👋 Welcome Back!', `Hello ${user.name}! Ready to explore?`);
+                    return;
+                }
+            }
+            document.getElementById('loginOverlay').classList.remove('hidden');
+            document.getElementById('mainNav').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('loginEmail').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') handleLogin();
+            });
+            document.getElementById('loginPassword').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') handleLogin();
+            });
+            document.getElementById('registerName').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') handleRegister();
+            });
+            document.getElementById('registerEmail').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') handleRegister();
+            });
+            document.getElementById('registerPassword').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') handleRegister();
+            });
+        }
 
         updateWeatherDisplay();
         updateComparisonPanel();
-
-        console.log('🔐 Nexus with Popup Chat Loaded!');
+        console.log('🚀 Nexus Ultimate Loaded!');
         console.log('📧 Demo: demo@nexus.com / password123');
-        console.log('💬 Chat is now a floating button!');
-
+        console.log('✨ New Features: Stats, Trending Tags, Opening Hours, Analytics');
         init();
     </script>
 </body>
