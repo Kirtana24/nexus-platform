@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #6366f1;
             --primary-dark: #4f46e5;
@@ -24,8 +25,10 @@
             --radius: 16px;
             --radius-sm: 10px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --input-bg: #f8fafc;
+            --card-bg: #f8fafc;
+            --hover-bg: #e0e7ff;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--background);
@@ -33,35 +36,220 @@
             line-height: 1.6;
             transition: var(--transition);
         }
+        /* ===== DARK MODE ===== */
         body.dark-mode {
-            background: #0f172a;
-            color: #f1f5f9;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --text: #f1f5f9;
+            --text-light: #94a3b8;
+            --border: #334155;
+            --input-bg: #0f172a;
+            --card-bg: #0f172a;
+            --hover-bg: #334155;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.4);
+            --primary-light: #1e293b;
         }
         body.dark-mode .navbar,
+        body.dark-mode .location-bar,
         body.dark-mode .recommendations-panel,
         body.dark-mode .itinerary-container,
         body.dark-mode .provider-container,
-        body.dark-mode .location-bar,
         body.dark-mode .modal-content,
         body.dark-mode .login-container,
         body.dark-mode .chat-popup,
         body.dark-mode .stats-card,
-        body.dark-mode .trending-card,
-        body.dark-mode .review-card {
-            background: #1e293b;
-            border-color: #334155;
+        body.dark-mode .trending-section,
+        body.dark-mode .analytics-card,
+        body.dark-mode .experience-card {
+            background: var(--surface);
+            border-color: var(--border);
         }
-        body.dark-mode .experience-card { background: #0f172a; border-color: #334155; }
+        body.dark-mode .recommendations-header,
+        body.dark-mode .chat-popup-header {
+            background: #0f172a;
+            border-color: var(--border);
+        }
+        body.dark-mode .experience-card {
+            background: var(--card-bg);
+            border-color: var(--border);
+        }
+        body.dark-mode .experience-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        body.dark-mode .experience-card-content h4,
+        body.dark-mode .experience-card-content .price {
+            color: var(--text);
+        }
+        body.dark-mode .experience-card-content .category,
+        body.dark-mode .experience-card-content .details {
+            color: var(--text-light);
+        }
+        body.dark-mode .itinerary-item {
+            background: var(--card-bg);
+            border-color: var(--border);
+        }
+        body.dark-mode .itinerary-item .content h4 {
+            color: var(--text);
+        }
+        body.dark-mode .itinerary-item .content p {
+            color: var(--text-light);
+        }
+        body.dark-mode .itinerary-item .time {
+            color: var(--primary);
+        }
+        body.dark-mode .stat-card {
+            background: var(--card-bg);
+            border-color: var(--border);
+        }
+        body.dark-mode .stat-card .info .value {
+            color: var(--text);
+        }
+        body.dark-mode .stat-card .info .label {
+            color: var(--text-light);
+        }
         body.dark-mode .filter-bar select,
         body.dark-mode .location-bar select,
         body.dark-mode .login-container input,
         body.dark-mode .chat-input-area textarea {
-            background: #0f172a;
-            border-color: #334155;
-            color: #f1f5f9;
+            background: var(--input-bg);
+            border-color: var(--border);
+            color: var(--text);
         }
-        body.dark-mode .chat-message { background: #334155; color: #f1f5f9; }
-        body.dark-mode .chat-message.user { background: var(--primary); color: white; }
+        body.dark-mode .filter-bar select option {
+            background: var(--surface);
+            color: var(--text);
+        }
+        body.dark-mode .chat-message {
+            background: var(--card-bg);
+            color: var(--text);
+            border-color: var(--border);
+        }
+        body.dark-mode .chat-message.user {
+            background: var(--primary);
+            color: white;
+        }
+        body.dark-mode .chat-message.system {
+            background: #451a03;
+            color: #fcd34d;
+        }
+        body.dark-mode .trending-tag {
+            background: var(--card-bg);
+            border-color: var(--border);
+            color: var(--text-light);
+        }
+        body.dark-mode .trending-tag:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--hover-bg);
+        }
+        body.dark-mode .trending-tag .count {
+            background: var(--hover-bg);
+            color: var(--primary-light);
+        }
+        body.dark-mode .empty-itinerary {
+            color: var(--text-light);
+        }
+        body.dark-mode .stat .stat-value {
+            color: var(--text);
+        }
+        body.dark-mode .stat .stat-label {
+            color: var(--text-light);
+        }
+        body.dark-mode .experience-list-item {
+            background: var(--card-bg);
+            border-color: var(--border);
+        }
+        body.dark-mode .experience-list-item .info h4 {
+            color: var(--text);
+        }
+        body.dark-mode .experience-list-item .info p {
+            color: var(--text-light);
+        }
+        body.dark-mode .analytics-card h4 {
+            color: var(--text);
+        }
+        body.dark-mode .analytics-card .pref-bar span {
+            color: var(--text-light);
+        }
+        body.dark-mode .analytics-card .pref-pct {
+            color: var(--text);
+        }
+        body.dark-mode .preference-bars .bar-track {
+            background: var(--border);
+        }
+        body.dark-mode .comparison-panel {
+            background: var(--surface);
+            border-color: var(--border);
+        }
+        body.dark-mode .comparison-panel h4 {
+            color: var(--text);
+        }
+        body.dark-mode .comparison-panel .compare-item {
+            color: var(--text-light);
+            border-color: var(--border);
+        }
+        body.dark-mode .notification {
+            background: var(--surface);
+            border-color: var(--border);
+        }
+        body.dark-mode .notification .title {
+            color: var(--text);
+        }
+        body.dark-mode .notification .desc {
+            color: var(--text-light);
+        }
+        body.dark-mode .modal-content {
+            background: var(--surface);
+        }
+        body.dark-mode .modal-content .exp-detail-name {
+            color: var(--text);
+        }
+        body.dark-mode .modal-content .exp-detail-desc {
+            color: var(--text-light);
+        }
+        body.dark-mode .modal-content .exp-detail-grid .item {
+            background: var(--card-bg);
+        }
+        body.dark-mode .modal-content .exp-detail-grid .item .value {
+            color: var(--text);
+        }
+        body.dark-mode .modal-content .exp-detail-grid .item .label {
+            color: var(--text-light);
+        }
+        body.dark-mode .modal-content .exp-detail-tags span {
+            background: var(--hover-bg);
+            color: var(--text);
+        }
+        body.dark-mode .modal-content .exp-detail-what {
+            background: var(--card-bg);
+            color: var(--text);
+        }
+        body.dark-mode .btn-secondary {
+            background: var(--card-bg);
+            color: var(--text);
+            border-color: var(--border);
+        }
+        body.dark-mode .btn-secondary:hover {
+            background: var(--hover-bg);
+            color: var(--primary);
+        }
+        body.dark-mode .login-container label {
+            color: var(--text);
+        }
+        body.dark-mode .stats-card .icon {
+            background: var(--hover-bg) !important;
+        }
+        body.dark-mode .stats-card .icon i {
+            color: var(--primary) !important;
+        }
+        body.dark-mode .provider-stats-grid .stat-card .stat-value {
+            color: var(--text);
+        }
+        body.dark-mode .provider-stats-grid .stat-card .stat-label {
+            color: var(--text-light);
+        }
 
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--background); }
@@ -96,7 +284,7 @@
         .login-container .logo h1 { font-size: 28px; background: linear-gradient(135deg, var(--primary), #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .login-container .logo p { color: var(--text-light); font-size: 14px; }
         .login-container .form-group { margin-bottom: 16px; }
-        .login-container label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+        .login-container label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 4px; color: var(--text); }
         .login-container input {
             width: 100%;
             padding: 10px 14px;
@@ -105,8 +293,10 @@
             font-size: 14px;
             font-family: inherit;
             transition: var(--transition);
-            background: var(--background);
+            background: var(--input-bg);
+            color: var(--text);
         }
+        .login-container input::placeholder { color: var(--text-light); }
         .login-container input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99,102,241,0.15); }
         .login-container .btn-primary {
             width: 100%; padding: 12px; font-size: 16px;
@@ -125,6 +315,10 @@
             padding: 8px 12px; border-radius: 8px;
             font-size: 13px; margin-bottom: 12px;
             display: none;
+        }
+        body.dark-mode .login-container .error-msg {
+            background: #450a0a;
+            color: #fca5a5;
         }
 
         /* ===== NAVBAR ===== */
@@ -169,6 +363,7 @@
         }
         .nav-btn:hover { background: var(--primary-light); color: var(--primary); }
         .nav-btn.active { background: var(--primary); color: white; }
+        body.dark-mode .nav-btn:hover { background: var(--hover-bg); color: var(--primary-light); }
         .nav-actions { display: flex; align-items: center; gap: 6px; }
         .nav-actions .user-badge {
             display: flex;
@@ -181,6 +376,11 @@
             font-weight: 500;
             cursor: pointer;
             transition: var(--transition);
+            color: var(--text);
+        }
+        body.dark-mode .nav-actions .user-badge {
+            background: var(--hover-bg);
+            color: var(--text);
         }
         .nav-actions .user-badge:hover { background: var(--primary); color: white; }
         .nav-actions .user-badge .avatar-small {
@@ -224,16 +424,17 @@
             flex-wrap: wrap;
             transition: var(--transition);
         }
-        .location-bar label { font-weight: 600; display: flex; align-items: center; gap: 6px; font-size: 14px; }
+        .location-bar label { font-weight: 600; display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--text); }
         .location-bar select {
             padding: 6px 12px;
             border: 1px solid var(--border);
             border-radius: 8px;
             font-size: 13px;
-            background: var(--background);
+            background: var(--input-bg);
             cursor: pointer;
             min-width: 180px;
             font-family: inherit;
+            color: var(--text);
         }
         .location-bar select:focus { outline: none; border-color: var(--primary); }
         .location-bar .current-location { color: var(--primary); font-weight: 600; font-size: 14px; }
@@ -246,9 +447,42 @@
             border-radius: 20px;
             font-size: 12px;
             font-weight: 500;
+            color: var(--text);
         }
-        body.dark-mode .weather-display { background: #334155; }
+        body.dark-mode .weather-display { background: var(--hover-bg); }
         .weather-display i { font-size: 16px; }
+
+        /* ===== STATS ===== */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        @media (max-width: 768px) { .stats-section { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 480px) { .stats-section { grid-template-columns: 1fr; } }
+        .stats-card {
+            background: var(--surface);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition);
+        }
+        .stats-card:hover { border-color: var(--primary); }
+        .stats-card .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .stats-card .info .value { font-size: 20px; font-weight: 700; color: var(--text); }
+        .stats-card .info .label { font-size: 12px; color: var(--text-light); }
 
         /* ===== RECOMMENDATIONS ===== */
         .recommendations-panel {
@@ -269,7 +503,7 @@
             flex-wrap: wrap;
             gap: 8px;
         }
-        .recommendations-header h3 { font-size: 16px; display: flex; align-items: center; gap: 8px; }
+        .recommendations-header h3 { font-size: 16px; display: flex; align-items: center; gap: 8px; color: var(--text); }
         .recommendations-header h3 .badge {
             background: var(--primary);
             color: white;
@@ -283,15 +517,16 @@
             border: 1px solid var(--border);
             border-radius: 6px;
             font-size: 11px;
-            background: var(--surface);
+            background: var(--input-bg);
             cursor: pointer;
             font-family: inherit;
             color: var(--text);
             transition: var(--transition);
         }
         .filter-bar select:focus { outline: none; border-color: var(--primary); }
+        .filter-bar select option { background: var(--surface); color: var(--text); }
 
-        /* ===== TRENDING SECTION ===== */
+        /* ===== TRENDING ===== */
         .trending-section {
             padding: 12px 18px;
             border-bottom: 1px solid var(--border);
@@ -329,7 +564,7 @@
         }
         .trending-tag .count {
             background: var(--primary-light);
-            color: var(--primary);
+            color: var(--primary-dark);
             padding: 0 6px;
             border-radius: 8px;
             font-size: 9px;
@@ -348,7 +583,7 @@
 
         /* ===== EXPERIENCE CARD ===== */
         .experience-card {
-            background: var(--background);
+            background: var(--card-bg);
             border-radius: var(--radius-sm);
             overflow: hidden;
             border: 1px solid var(--border);
@@ -372,6 +607,7 @@
             color: var(--primary);
             transition: var(--transition);
         }
+        body.dark-mode .experience-card-image { background: linear-gradient(135deg, #1e293b, #334155); }
         .experience-card-badge {
             position: absolute;
             top: 4px;
@@ -397,10 +633,11 @@
             color: var(--text-light);
             font-size: 12px;
         }
+        body.dark-mode .experience-card .favorite-btn { background: rgba(30,41,59,0.9); }
         .experience-card .favorite-btn:hover { transform: scale(1.1); }
         .experience-card .favorite-btn.favorited { color: var(--danger); }
         .experience-card-content { padding: 10px 12px; }
-        .experience-card-content h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+        .experience-card-content h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; color: var(--text); }
         .experience-card-content .category {
             font-size: 11px;
             color: var(--text-light);
@@ -419,7 +656,6 @@
         }
         .experience-card .rating { color: var(--secondary); font-weight: 600; }
         .experience-card .price { font-weight: 700; color: var(--text); font-size: 13px; }
-        body.dark-mode .experience-card .price { color: #f1f5f9; }
         .experience-card .card-actions { display: flex; gap: 4px; margin-top: 6px; }
         .experience-card .add-btn,
         .experience-card .detail-btn {
@@ -433,6 +669,11 @@
             transition: var(--transition);
             color: var(--text-light);
             font-family: inherit;
+        }
+        body.dark-mode .experience-card .add-btn,
+        body.dark-mode .experience-card .detail-btn {
+            background: var(--input-bg);
+            color: var(--text-light);
         }
         .experience-card .add-btn:hover,
         .experience-card .detail-btn:hover {
@@ -451,6 +692,10 @@
             color: var(--text-light);
             font-family: inherit;
         }
+        body.dark-mode .experience-card .compare-btn {
+            background: var(--input-bg);
+            color: var(--text-light);
+        }
         .experience-card .compare-btn:hover {
             background: var(--secondary);
             color: white;
@@ -466,38 +711,6 @@
         }
         .experience-card .availability-badge.soon { background: var(--secondary); }
         .experience-card .availability-badge.unavailable { background: var(--danger); }
-
-        /* ===== STATS SECTION ===== */
-        .stats-section {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-        @media (max-width: 768px) { .stats-section { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 480px) { .stats-section { grid-template-columns: 1fr; } }
-        .stats-card {
-            background: var(--surface);
-            border-radius: var(--radius-sm);
-            padding: 14px 16px;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: var(--transition);
-        }
-        .stats-card:hover { border-color: var(--primary); }
-        .stats-card .icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
-        .stats-card .info .value { font-size: 20px; font-weight: 700; }
-        .stats-card .info .label { font-size: 12px; color: var(--text-light); }
 
         /* ===== MODAL ===== */
         .modal-overlay {
@@ -531,7 +744,7 @@
             align-items: center;
             margin-bottom: 14px;
         }
-        .modal-header h2 { font-size: 20px; }
+        .modal-header h2 { font-size: 20px; color: var(--text); }
         .modal-close {
             background: none;
             border: none;
@@ -634,6 +847,7 @@
             border: 1px solid var(--border);
             align-self: flex-start;
             border-top-left-radius: 4px;
+            color: var(--text);
         }
         .chat-popup .chat-message.user {
             background: var(--primary);
@@ -690,8 +904,10 @@
             resize: none;
             min-height: 36px;
             max-height: 60px;
-            background: var(--background);
+            background: var(--input-bg);
+            color: var(--text);
         }
+        .chat-popup .chat-input-area textarea::placeholder { color: var(--text-light); }
         .chat-popup .chat-input-area textarea:focus { outline: none; border-color: var(--primary); }
         .chat-popup .chat-input-area .send-btn {
             padding: 6px 12px;
@@ -710,7 +926,7 @@
         .chat-popup .chat-input-area .send-btn:hover { background: var(--primary-dark); }
         .chat-popup .chat-input-area .voice-btn {
             padding: 6px 10px;
-            background: var(--background);
+            background: var(--input-bg);
             border: 1px solid var(--border);
             border-radius: 8px;
             cursor: pointer;
@@ -758,12 +974,11 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        .itinerary-header h2 { font-size: 20px; display: flex; align-items: center; gap: 8px; }
+        .itinerary-header h2 { font-size: 20px; display: flex; align-items: center; gap: 8px; color: var(--text); }
         .itinerary-stats { display: flex; gap: 12px; flex-wrap: wrap; }
         .stat { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text-light); }
         .stat i { color: var(--primary); }
         .stat strong { color: var(--text); font-size: 14px; }
-        body.dark-mode .stat strong { color: #f1f5f9; }
         .itinerary-timeline { min-height: 200px; padding: 12px 0; }
         .empty-itinerary { text-align: center; padding: 40px 20px; color: var(--text-light); }
         .empty-itinerary i { display: block; margin-bottom: 10px; }
@@ -773,18 +988,25 @@
             padding: 10px 14px;
             border-left: 3px solid var(--primary);
             margin-bottom: 8px;
-            background: var(--background);
+            background: var(--card-bg);
             border-radius: 6px;
             align-items: center;
             transition: var(--transition);
         }
         .itinerary-item:hover { background: var(--primary-light); }
-        .itinerary-item .time { min-width: 60px; font-weight: 600; font-size: 12px; color: var(--primary); }
+        body.dark-mode .itinerary-item:hover { background: var(--hover-bg); }
+        .itinerary-item .time {
+            min-width: 60px;
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--primary);
+        }
         .itinerary-item .content { flex: 1; }
-        .itinerary-item .content h4 { font-size: 14px; margin-bottom: 2px; }
+        .itinerary-item .content h4 { font-size: 14px; margin-bottom: 2px; color: var(--text); }
         .itinerary-item .content p { font-size: 11px; color: var(--text-light); }
         .itinerary-item .remove-btn {
-            background: none; border: none;
+            background: none;
+            border: none;
             color: var(--danger);
             cursor: pointer;
             padding: 4px 6px;
@@ -792,6 +1014,7 @@
             transition: var(--transition);
         }
         .itinerary-item .remove-btn:hover { background: #fef2f2; transform: scale(1.1); }
+        body.dark-mode .itinerary-item .remove-btn:hover { background: #450a0a; }
         .itinerary-actions {
             display: flex;
             gap: 6px;
@@ -800,118 +1023,6 @@
             border-top: 1px solid var(--border);
             flex-wrap: wrap;
         }
-
-        /* ===== PROVIDER ===== */
-        .provider-container {
-            background: var(--surface);
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-            padding: 20px;
-            transition: var(--transition);
-        }
-        .provider-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .provider-header h2 { font-size: 20px; display: flex; align-items: center; gap: 8px; }
-        .provider-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        @media (max-width: 768px) { .provider-stats-grid { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 480px) { .provider-stats-grid { grid-template-columns: 1fr; } }
-        .stat-card {
-            background: var(--background);
-            padding: 12px 14px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid var(--border);
-            transition: var(--transition);
-        }
-        .stat-card:hover { border-color: var(--primary); }
-        .stat-icon {
-            width: 36px; height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-        .stat-info { display: flex; flex-direction: column; }
-        .stat-value { font-size: 18px; font-weight: 700; }
-        .stat-label { font-size: 11px; color: var(--text-light); }
-        .provider-experiences { margin-bottom: 20px; }
-        .provider-experiences h3 { font-size: 16px; margin-bottom: 10px; }
-        .experience-list { display: grid; gap: 6px; }
-        .experience-list-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 14px;
-            background: var(--background);
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            flex-wrap: wrap;
-            gap: 6px;
-            transition: var(--transition);
-        }
-        .experience-list-item:hover { border-color: var(--primary); }
-        .experience-list-item .info h4 { font-size: 13px; }
-        .experience-list-item .info p { font-size: 11px; color: var(--text-light); }
-        .status {
-            padding: 2px 8px;
-            border-radius: 8px;
-            font-size: 10px;
-            font-weight: 500;
-        }
-        .status.active { background: #d1fae5; color: #059669; }
-        .provider-analytics h3 { font-size: 16px; margin-bottom: 10px; }
-        .analytics-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        @media (max-width: 768px) { .analytics-grid { grid-template-columns: 1fr; } }
-        .analytics-card {
-            background: var(--background);
-            padding: 14px 16px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            transition: var(--transition);
-        }
-        .analytics-card h4 { font-size: 13px; margin-bottom: 10px; }
-        .preference-bars { display: flex; flex-direction: column; gap: 6px; }
-        .pref-bar {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 11px;
-            flex-wrap: wrap;
-        }
-        .pref-bar span:first-child { min-width: 80px; }
-        .bar-track {
-            flex: 1;
-            height: 5px;
-            background: var(--border);
-            border-radius: 3px;
-            overflow: hidden;
-            min-width: 40px;
-        }
-        .bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), #8b5cf6);
-            border-radius: 3px;
-            transition: width 1s ease;
-        }
-        .pref-pct { min-width: 30px; font-weight: 600; }
 
         /* ===== BUTTONS ===== */
         .btn-primary {
@@ -932,7 +1043,7 @@
         .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: var(--shadow); }
         .btn-secondary {
             padding: 6px 14px;
-            background: var(--background);
+            background: var(--input-bg);
             color: var(--text);
             border: 1px solid var(--border);
             border-radius: 6px;
@@ -946,6 +1057,7 @@
             font-family: inherit;
         }
         .btn-secondary:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+        body.dark-mode .btn-secondary:hover { background: var(--hover-bg); }
         .btn-danger {
             padding: 6px 14px;
             background: var(--danger);
@@ -963,6 +1075,120 @@
         }
         .btn-danger:hover { background: #dc2626; transform: translateY(-2px); }
 
+        /* ===== PROVIDER ===== */
+        .provider-container {
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 20px;
+            transition: var(--transition);
+        }
+        .provider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .provider-header h2 { font-size: 20px; display: flex; align-items: center; gap: 8px; color: var(--text); }
+        .provider-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 768px) { .provider-stats-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 480px) { .provider-stats-grid { grid-template-columns: 1fr; } }
+        .stat-card {
+            background: var(--card-bg);
+            padding: 12px 14px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .stat-card:hover { border-color: var(--primary); }
+        .stat-icon {
+            width: 36px; height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .stat-info { display: flex; flex-direction: column; }
+        .stat-value { font-size: 18px; font-weight: 700; color: var(--text); }
+        .stat-label { font-size: 11px; color: var(--text-light); }
+        .provider-experiences { margin-bottom: 20px; }
+        .provider-experiences h3 { font-size: 16px; margin-bottom: 10px; color: var(--text); }
+        .experience-list { display: grid; gap: 6px; }
+        .experience-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            background: var(--card-bg);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        .experience-list-item:hover { border-color: var(--primary); }
+        .experience-list-item .info h4 { font-size: 13px; color: var(--text); }
+        .experience-list-item .info p { font-size: 11px; color: var(--text-light); }
+        .status {
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+        .status.active { background: #d1fae5; color: #059669; }
+        body.dark-mode .status.active { background: #064e3b; color: #6ee7b7; }
+        .provider-analytics h3 { font-size: 16px; margin-bottom: 10px; color: var(--text); }
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width: 768px) { .analytics-grid { grid-template-columns: 1fr; } }
+        .analytics-card {
+            background: var(--card-bg);
+            padding: 14px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .analytics-card h4 { font-size: 13px; margin-bottom: 10px; color: var(--text); }
+        .preference-bars { display: flex; flex-direction: column; gap: 6px; }
+        .pref-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            flex-wrap: wrap;
+            color: var(--text-light);
+        }
+        .pref-bar span:first-child { min-width: 80px; }
+        .bar-track {
+            flex: 1;
+            height: 5px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+            min-width: 40px;
+        }
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #8b5cf6);
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+        .pref-pct { min-width: 30px; font-weight: 600; color: var(--text); }
+
         .notification {
             position: fixed;
             bottom: 96px;
@@ -977,7 +1203,7 @@
             animation: slideUp 0.4s ease;
             border-left: 4px solid var(--primary);
         }
-        .notification .title { font-weight: 600; font-size: 13px; }
+        .notification .title { font-weight: 600; font-size: 13px; color: var(--text); }
         .notification .desc { font-size: 12px; color: var(--text-light); }
 
         .comparison-panel {
@@ -994,7 +1220,7 @@
             display: none;
         }
         .comparison-panel.active { display: block; animation: slideUp 0.3s ease; }
-        .comparison-panel h4 { font-size: 13px; margin-bottom: 6px; }
+        .comparison-panel h4 { font-size: 13px; margin-bottom: 6px; color: var(--text); }
         .comparison-panel .compare-item {
             display: flex;
             justify-content: space-between;
@@ -1002,6 +1228,7 @@
             padding: 3px 0;
             font-size: 12px;
             border-bottom: 1px solid var(--border);
+            color: var(--text-light);
         }
         .comparison-panel .compare-item .remove-compare {
             background: none; border: none;
@@ -1291,7 +1518,7 @@
         <!-- ===== FAVORITES TAB ===== -->
         <section id="tab-favorites" class="tab-content">
             <div class="itinerary-container">
-                <h2 style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><i class="fas fa-heart" style="color:var(--danger);"></i> Your Favorites</h2>
+                <h2 style="display:flex;align-items:center;gap:10px;margin-bottom:16px;color:var(--text);"><i class="fas fa-heart" style="color:var(--danger);"></i> Your Favorites</h2>
                 <div id="favoritesList">
                     <div class="empty-itinerary">
                         <i class="fas fa-heart" style="font-size:40px;color:#d1d5db;"></i>
@@ -1559,7 +1786,6 @@
         let userPreferences = { interests: ["food", "culture"], budget: 50, timeAvailable: 3, travelerType: "couple" };
         let weatherStates = ["sunny", "rainy", "cloudy", "hot"];
         let currentWeatherIndex = 0;
-        let chatHistory = [];
 
         // ============================================
         // LOCATION FUNCTIONS
@@ -1877,7 +2103,7 @@
             const container = document.getElementById('itineraryTimeline');
             const details = itinerary.map(id => EXPERIENCES.find(e => e.id === id)).filter(Boolean);
             if (details.length === 0) {
-                container.innerHTML = `<div class="empty-itinerary"><i class="fas fa-map-pin" style="font-size:40px;color:#d1d5db;"></i><p>Your itinerary is empty. Start exploring!</p></div>`;
+                container.innerHTML = `<div class="empty-itinerary"><i class="fas fa-map-pin" style="font-size:40px;color:var(--text-light);"></i><p>Your itinerary is empty. Start exploring!</p></div>`;
                 return;
             }
             container.innerHTML = details.map((exp, i) => `
@@ -1898,7 +2124,7 @@
             const container = document.getElementById('favoritesList');
             const details = favorites.map(id => EXPERIENCES.find(e => e.id === id)).filter(Boolean);
             if (details.length === 0) {
-                container.innerHTML = `<div class="empty-itinerary"><i class="fas fa-heart" style="font-size:40px;color:#d1d5db;"></i><p>No favorites yet. Click the ❤️ on any experience!</p></div>`;
+                container.innerHTML = `<div class="empty-itinerary"><i class="fas fa-heart" style="font-size:40px;color:var(--text-light);"></i><p>No favorites yet. Click the ❤️ on any experience!</p></div>`;
                 return;
             }
             container.innerHTML = `
@@ -2030,19 +2256,19 @@
             document.getElementById('modalTitle').textContent = exp.name;
             document.getElementById('modalBody').innerHTML = `
                 <div style="text-align:center;font-size:48px;margin-bottom:6px;">${exp.country || '🌍'} ${exp.image || '📍'}</div>
-                <div style="font-size:18px;font-weight:700;">${exp.name}</div>
+                <div style="font-size:18px;font-weight:700;color:var(--text);">${exp.name}</div>
                 <div style="color:var(--primary);font-weight:500;margin-bottom:6px;font-size:13px;"><i class="fas fa-tag"></i> ${exp.category} • 📍 ${exp.location}</div>
                 <div style="color:var(--text-light);line-height:1.6;margin-bottom:10px;font-size:14px;">${exp.description}</div>
                 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px;">
-                    <div style="background:var(--background);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">⭐ Rating</div><div style="font-size:14px;font-weight:700;">${exp.rating}</div></div>
-                    <div style="background:var(--background);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">💰 Price</div><div style="font-size:14px;font-weight:700;">$${exp.price}</div></div>
-                    <div style="background:var(--background);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">⏱️ Duration</div><div style="font-size:14px;font-weight:700;">${exp.duration} hrs</div></div>
-                    <div style="background:var(--background);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">👥 For</div><div style="font-size:14px;font-weight:700;">${exp.idealFor.join(', ')}</div></div>
-                    <div style="background:var(--background);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">📝 Reviews</div><div style="font-size:14px;font-weight:700;">${exp.reviews}</div></div>
-                    <div style="background:var(--background);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">🕐 Hours</div><div style="font-size:14px;font-weight:700;">${exp.openingHours || 'Flexible'}</div></div>
+                    <div class="item" style="background:var(--card-bg);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">⭐ Rating</div><div style="font-size:14px;font-weight:700;color:var(--text);">${exp.rating}</div></div>
+                    <div class="item" style="background:var(--card-bg);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">💰 Price</div><div style="font-size:14px;font-weight:700;color:var(--text);">$${exp.price}</div></div>
+                    <div class="item" style="background:var(--card-bg);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">⏱️ Duration</div><div style="font-size:14px;font-weight:700;color:var(--text);">${exp.duration} hrs</div></div>
+                    <div class="item" style="background:var(--card-bg);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">👥 For</div><div style="font-size:14px;font-weight:700;color:var(--text);">${exp.idealFor.join(', ')}</div></div>
+                    <div class="item" style="background:var(--card-bg);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">📝 Reviews</div><div style="font-size:14px;font-weight:700;color:var(--text);">${exp.reviews}</div></div>
+                    <div class="item" style="background:var(--card-bg);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">🕐 Hours</div><div style="font-size:14px;font-weight:700;color:var(--text);">${exp.openingHours || 'Flexible'}</div></div>
                 </div>
                 <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;">${exp.tags.map(t => `<span style="background:var(--primary-light);padding:2px 8px;border-radius:8px;font-size:10px;color:var(--primary-dark);">#${t}</span>`).join('')}</div>
-                <div style="background:var(--background);padding:10px;border-radius:6px;margin-bottom:10px;border-left:4px solid var(--primary);">
+                <div style="background:var(--card-bg);padding:10px;border-radius:6px;margin-bottom:10px;border-left:4px solid var(--primary);color:var(--text);">
                     <strong><i class="fas fa-check-circle" style="color:var(--primary);"></i> What to Expect:</strong><br>
                     ${exp.whatToExpect || 'A unique local experience with professional guidance.'}
                 </div>
@@ -2389,7 +2615,7 @@
         updateComparisonPanel();
         console.log('🚀 Nexus Ultimate Loaded!');
         console.log('📧 Demo: demo@nexus.com / password123');
-        console.log('✨ New Features: Stats, Trending Tags, Opening Hours, Analytics');
+        console.log('✨ Dark Mode fixed - all text visible!');
         init();
     </script>
 </body>
