@@ -13,7 +13,7 @@
 - 📱 Mobile Responsive
 
 ## 🚀 Live Demo
-[View Live Demo](https://your-username.github.io/nexus-platform/)
+[View Live Demo](https://kirtana24.github.io/nexus-platform/)
 
 ## 🛠️ Technologies Used
 - HTML5
