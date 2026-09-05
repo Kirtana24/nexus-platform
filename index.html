@@ -34,20 +34,20 @@
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* ===== DARK MODE ===== */
+        /* ===== DARK MODE - COMPLETE OVERRIDE ===== */
         [data-theme="dark"] {
-            --background: #0f172a;
-            --surface: #1e293b;
-            --text: #f1f5f9;
-            --text-light: #94a3b8;
-            --text-white: #f1f5f9;
-            --border: #334155;
-            --input-bg: #0f172a;
-            --card-bg: #0f172a;
-            --hover-bg: #334155;
-            --primary-light: #1e293b;
-            --shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
-            --shadow-lg: 0 20px 60px rgba(0,0,0,0.4);
+            --background: #0f172a !important;
+            --surface: #1e293b !important;
+            --text: #f1f5f9 !important;
+            --text-light: #94a3b8 !important;
+            --text-white: #f1f5f9 !important;
+            --border: #334155 !important;
+            --input-bg: #0f172a !important;
+            --card-bg: #0f172a !important;
+            --hover-bg: #334155 !important;
+            --primary-light: #1e293b !important;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.3) !important;
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.4) !important;
         }
         
         body {
@@ -58,7 +58,11 @@
             transition: var(--transition);
         }
         
-        /* ===== ALL DARK MODE OVERRIDES ===== */
+        /* ===== FORCE ALL TEXT COLORS IN DARK MODE ===== */
+        [data-theme="dark"] * {
+            color: inherit;
+        }
+        
         [data-theme="dark"] .navbar,
         [data-theme="dark"] .location-bar,
         [data-theme="dark"] .recommendations-panel,
@@ -72,7 +76,8 @@
         [data-theme="dark"] .analytics-card,
         [data-theme="dark"] .experience-card,
         [data-theme="dark"] .comparison-panel,
-        [data-theme="dark"] .notification {
+        [data-theme="dark"] .notification,
+        [data-theme="dark"] .chat-messages {
             background: var(--surface) !important;
             border-color: var(--border) !important;
         }
@@ -83,17 +88,7 @@
             border-color: var(--border) !important;
         }
         
-        [data-theme="dark"] .experience-card {
-            background: var(--card-bg) !important;
-            border-color: var(--border) !important;
-        }
-        
-        [data-theme="dark"] .experience-card:hover {
-            border-color: var(--primary) !important;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
-        }
-        
-        /* --- TEXT COLORS IN DARK MODE --- */
+        /* --- ALL TEXT ELEMENTS --- */
         [data-theme="dark"] h1,
         [data-theme="dark"] h2,
         [data-theme="dark"] h3,
@@ -104,6 +99,8 @@
         [data-theme="dark"] span,
         [data-theme="dark"] div,
         [data-theme="dark"] label,
+        [data-theme="dark"] a,
+        [data-theme="dark"] li,
         [data-theme="dark"] .text,
         [data-theme="dark"] .title,
         [data-theme="dark"] .value,
@@ -123,7 +120,10 @@
         [data-theme="dark"] .analytics-card h4,
         [data-theme="dark"] .comparison-panel h4,
         [data-theme="dark"] .login-container label,
-        [data-theme="dark"] .stats-card .info .value {
+        [data-theme="dark"] .stats-card .info .value,
+        [data-theme="dark"] .nav-logo span,
+        [data-theme="dark"] .chat-popup-header h3,
+        [data-theme="dark"] .modal-body .exp-detail-name {
             color: var(--text) !important;
         }
         
@@ -145,10 +145,12 @@
         [data-theme="dark"] .login-container .logo p,
         [data-theme="dark"] .auth-switch,
         [data-theme="dark"] .location-bar label,
-        [data-theme="dark"] .trending-section h4 {
+        [data-theme="dark"] .trending-section h4,
+        [data-theme="dark"] .nav-links .nav-btn {
             color: var(--text-light) !important;
         }
         
+        /* --- CHAT MESSAGES --- */
         [data-theme="dark"] .chat-message {
             background: var(--card-bg) !important;
             color: var(--text) !important;
@@ -158,7 +160,6 @@
         [data-theme="dark"] .chat-message.bot {
             background: var(--card-bg) !important;
             color: var(--text) !important;
-            border-color: var(--border) !important;
         }
         
         [data-theme="dark"] .chat-message.user {
@@ -192,6 +193,7 @@
             color: var(--text-light) !important;
         }
         
+        /* --- LOGIN --- */
         [data-theme="dark"] .login-container input {
             background: var(--input-bg) !important;
             border-color: var(--border) !important;
@@ -202,6 +204,12 @@
             color: var(--text-light) !important;
         }
         
+        [data-theme="dark"] .login-container .error-msg {
+            background: #450a0a !important;
+            color: #fca5a5 !important;
+        }
+        
+        /* --- FILTERS & SELECTS --- */
         [data-theme="dark"] .filter-bar select,
         [data-theme="dark"] .location-bar select {
             background: var(--input-bg) !important;
@@ -209,11 +217,13 @@
             color: var(--text) !important;
         }
         
-        [data-theme="dark"] .filter-bar select option {
+        [data-theme="dark"] .filter-bar select option,
+        [data-theme="dark"] .location-bar select option {
             background: var(--surface) !important;
             color: var(--text) !important;
         }
         
+        /* --- TRENDING TAGS --- */
         [data-theme="dark"] .trending-tag {
             background: var(--surface) !important;
             border-color: var(--border) !important;
@@ -231,6 +241,7 @@
             color: var(--primary) !important;
         }
         
+        /* --- ITINERARY --- */
         [data-theme="dark"] .itinerary-item {
             background: var(--card-bg) !important;
             border-color: var(--border) !important;
@@ -248,6 +259,7 @@
             background: #450a0a !important;
         }
         
+        /* --- STATS CARDS --- */
         [data-theme="dark"] .stat-card {
             background: var(--card-bg) !important;
             border-color: var(--border) !important;
@@ -261,6 +273,7 @@
             color: var(--primary) !important;
         }
         
+        /* --- PROVIDER --- */
         [data-theme="dark"] .experience-list-item {
             background: var(--card-bg) !important;
             border-color: var(--border) !important;
@@ -271,6 +284,7 @@
             color: #6ee7b7 !important;
         }
         
+        /* --- EXPERIENCE CARDS --- */
         [data-theme="dark"] .experience-card .add-btn,
         [data-theme="dark"] .experience-card .detail-btn,
         [data-theme="dark"] .experience-card .compare-btn {
@@ -283,19 +297,18 @@
         [data-theme="dark"] .experience-card .detail-btn:hover {
             background: var(--primary) !important;
             color: #ffffff !important;
-            border-color: var(--primary) !important;
         }
         
         [data-theme="dark"] .experience-card .compare-btn:hover {
             background: var(--secondary) !important;
             color: #ffffff !important;
-            border-color: var(--secondary) !important;
         }
         
         [data-theme="dark"] .experience-card .favorite-btn {
             background: rgba(30, 41, 59, 0.9) !important;
         }
         
+        /* --- BUTTONS --- */
         [data-theme="dark"] .btn-secondary {
             background: var(--card-bg) !important;
             color: var(--text) !important;
@@ -307,6 +320,7 @@
             color: var(--primary) !important;
         }
         
+        /* --- MODAL --- */
         [data-theme="dark"] .modal-content .exp-detail-tags span {
             background: var(--hover-bg) !important;
             color: var(--text) !important;
@@ -321,50 +335,15 @@
             background: var(--card-bg) !important;
         }
         
-        [data-theme="dark"] .provider-stats-grid .stat-card .stat-value {
-            color: var(--text) !important;
-        }
-        
-        [data-theme="dark"] .provider-stats-grid .stat-card .stat-label {
+        [data-theme="dark"] .modal-close {
             color: var(--text-light) !important;
         }
         
-        [data-theme="dark"] .preference-bars .bar-track {
-            background: var(--border) !important;
+        [data-theme="dark"] .modal-close:hover {
+            color: var(--danger) !important;
         }
         
-        [data-theme="dark"] .pref-pct {
-            color: var(--text) !important;
-        }
-        
-        [data-theme="dark"] .notification .title {
-            color: var(--text) !important;
-        }
-        
-        [data-theme="dark"] .notification .desc {
-            color: var(--text-light) !important;
-        }
-        
-        [data-theme="dark"] .comparison-panel .compare-item {
-            color: var(--text-light) !important;
-            border-color: var(--border) !important;
-        }
-        
-        [data-theme="dark"] .weather-display {
-            background: var(--hover-bg) !important;
-            color: var(--text) !important;
-        }
-        
-        [data-theme="dark"] .nav-actions .user-badge {
-            background: var(--hover-bg) !important;
-            color: var(--text) !important;
-        }
-        
-        [data-theme="dark"] .nav-actions .user-badge:hover {
-            background: var(--primary) !important;
-            color: #ffffff !important;
-        }
-        
+        /* --- NAV --- */
         [data-theme="dark"] .nav-btn {
             color: var(--text-light) !important;
         }
@@ -375,6 +354,16 @@
         }
         
         [data-theme="dark"] .nav-btn.active {
+            background: var(--primary) !important;
+            color: #ffffff !important;
+        }
+        
+        [data-theme="dark"] .nav-actions .user-badge {
+            background: var(--hover-bg) !important;
+            color: var(--text) !important;
+        }
+        
+        [data-theme="dark"] .nav-actions .user-badge:hover {
             background: var(--primary) !important;
             color: #ffffff !important;
         }
@@ -391,19 +380,46 @@
             color: var(--primary) !important;
         }
         
-        [data-theme="dark"] .modal-close {
+        /* --- WEATHER --- */
+        [data-theme="dark"] .weather-display {
+            background: var(--hover-bg) !important;
+            color: var(--text) !important;
+        }
+        
+        /* --- NOTIFICATIONS --- */
+        [data-theme="dark"] .notification .title {
+            color: var(--text) !important;
+        }
+        
+        [data-theme="dark"] .notification .desc {
             color: var(--text-light) !important;
         }
         
-        [data-theme="dark"] .modal-close:hover {
-            color: var(--danger) !important;
+        /* --- COMPARISON --- */
+        [data-theme="dark"] .comparison-panel .compare-item {
+            color: var(--text-light) !important;
+            border-color: var(--border) !important;
         }
         
-        [data-theme="dark"] .login-container .error-msg {
-            background: #450a0a !important;
-            color: #fca5a5 !important;
+        /* --- PROVIDER STATS --- */
+        [data-theme="dark"] .provider-stats-grid .stat-card .stat-value {
+            color: var(--text) !important;
         }
         
+        [data-theme="dark"] .provider-stats-grid .stat-card .stat-label {
+            color: var(--text-light) !important;
+        }
+        
+        /* --- PREFERENCE BARS --- */
+        [data-theme="dark"] .preference-bars .bar-track {
+            background: var(--border) !important;
+        }
+        
+        [data-theme="dark"] .pref-pct {
+            color: var(--text) !important;
+        }
+        
+        /* --- CHAT TOGGLE BUTTON --- */
         [data-theme="dark"] .chat-toggle-btn {
             background: var(--primary) !important;
             color: #ffffff !important;
@@ -1930,10 +1946,12 @@
             if (currentTheme === 'dark') {
                 html.removeAttribute('data-theme');
                 icon.className = 'fas fa-moon';
+                localStorage.setItem('nexus-theme', 'light');
                 showNotification('☀️ Light Mode', 'Switched to light theme');
             } else {
                 html.setAttribute('data-theme', 'dark');
                 icon.className = 'fas fa-sun';
+                localStorage.setItem('nexus-theme', 'dark');
                 showNotification('🌙 Dark Mode', 'Switched to dark theme');
             }
         }
@@ -2700,18 +2718,6 @@
             }
         }
 
-        // Save theme preference
-        const originalToggleTheme = toggleTheme;
-        toggleTheme = function() {
-            originalToggleTheme();
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                localStorage.setItem('nexus-theme', 'dark');
-            } else {
-                localStorage.setItem('nexus-theme', 'light');
-            }
-        };
-
         // ============================================
         // INIT
         // ============================================
@@ -2777,7 +2783,7 @@
         updateComparisonPanel();
         console.log('🚀 Nexus Ultimate Loaded!');
         console.log('📧 Demo: demo@nexus.com / password123');
-        console.log('✨ Dark Mode FULLY FIXED - All text visible!');
+        console.log('✅ Dark Mode COMPLETELY FIXED - All text visible everywhere!');
         console.log('💡 Theme preference is saved in localStorage');
         init();
     </script>
