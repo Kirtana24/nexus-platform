@@ -40,42 +40,37 @@
             color: var(--dark-text);
         }
         body.dark-mode .navbar,
-        body.dark-mode .chat-panel,
         body.dark-mode .recommendations-panel,
         body.dark-mode .itinerary-container,
         body.dark-mode .provider-container,
         body.dark-mode .location-bar,
         body.dark-mode .modal-content,
-        body.dark-mode .login-container {
+        body.dark-mode .login-container,
+        body.dark-mode .chat-popup {
             background: var(--dark-surface);
             border-color: #334155;
         }
-        body.dark-mode .chat-header,
         body.dark-mode .recommendations-header { background: #0f172a; }
-        body.dark-mode .message-bubble { background: #334155; color: #f1f5f9; }
-        body.dark-mode .message.user .message-bubble { background: var(--primary); }
         body.dark-mode .experience-card { background: #0f172a; border-color: #334155; }
         body.dark-mode .stat-card { background: #0f172a; border-color: #334155; }
         body.dark-mode .analytics-card { background: #0f172a; border-color: #334155; }
         body.dark-mode .experience-list-item { background: #0f172a; border-color: #334155; }
         body.dark-mode .itinerary-item { background: #0f172a; }
-        body.dark-mode .suggestion-chip { background: #0f172a; border-color: #334155; color: #f1f5f9; }
-        body.dark-mode .suggestion-chip:hover { background: #334155; }
-        body.dark-mode .action-btn { background: #0f172a; border-color: #334155; color: #94a3b8; }
-        body.dark-mode .action-btn:hover { background: #334155; }
         body.dark-mode .filter-bar select { background: #0f172a; border-color: #334155; color: #f1f5f9; }
         body.dark-mode .location-bar select { background: #0f172a; border-color: #334155; color: #f1f5f9; }
-        body.dark-mode .input-wrapper textarea { background: #0f172a; border-color: #334155; color: #f1f5f9; }
-        body.dark-mode .modal-content { color: #f1f5f9; }
-        body.dark-mode .exp-detail-grid .item { background: #0f172a; }
-        body.dark-mode .exp-detail-tags span { background: #334155; color: #f1f5f9; }
         body.dark-mode .login-container input { background: #0f172a; border-color: #334155; color: #f1f5f9; }
         body.dark-mode .login-container input::placeholder { color: #94a3b8; }
+        body.dark-mode .chat-messages { background: #0f172a; }
+        body.dark-mode .chat-message { background: #334155; color: #f1f5f9; }
+        body.dark-mode .chat-message.user { background: var(--primary); color: white; }
+        body.dark-mode .chat-input-area { background: #0f172a; border-color: #334155; }
+        body.dark-mode .chat-input-area textarea { background: #1e293b; border-color: #334155; color: #f1f5f9; }
 
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--background); }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
+        /* ===== LOGIN OVERLAY ===== */
         .login-overlay {
             position: fixed;
             top: 0;
@@ -127,6 +122,7 @@
         .login-container .error-msg { background: #fef2f2; color: #dc2626; padding: 8px 12px; border-radius: 8px; font-size: 13px; margin-bottom: 12px; display: none; }
         body.dark-mode .login-container .error-msg { background: #450a0a; color: #fca5a5; }
 
+        /* ===== NAVBAR ===== */
         .navbar {
             background: var(--surface);
             border-bottom: 1px solid var(--border);
@@ -209,11 +205,13 @@
         .theme-toggle:hover, .logout-btn:hover { border-color: var(--primary); color: var(--primary); }
         .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
 
+        /* ===== MAIN CONTENT ===== */
         .main-content { max-width: 1400px; margin: 0 auto; padding: 16px; }
         .tab-content { display: none; animation: fadeIn 0.4s ease; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* ===== LOCATION BAR ===== */
         .location-bar {
             background: var(--surface);
             border-radius: var(--radius);
@@ -252,178 +250,7 @@
         body.dark-mode .weather-display { background: #334155; }
         .weather-display i { font-size: 16px; }
 
-        .discover-layout {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 16px;
-            height: calc(100vh - 210px);
-            min-height: 450px;
-        }
-        @media (max-width: 1024px) {
-            .discover-layout { grid-template-columns: 1fr; height: auto; }
-            .chat-panel { max-height: 400px; }
-            .recommendations-grid { max-height: 450px; }
-        }
-
-        .chat-panel {
-            background: var(--surface);
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transition: var(--transition);
-        }
-        .chat-header {
-            padding: 14px 18px;
-            border-bottom: 1px solid var(--border);
-            background: var(--background);
-            transition: var(--transition);
-        }
-        .chat-header h2 { font-size: 17px; display: flex; align-items: center; gap: 8px; }
-        .chat-header h2 i { color: var(--primary); }
-        .chat-header p { color: var(--text-light); font-size: 12px; margin-top: 2px; }
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 14px 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-height: 400px;
-        }
-        .message { display: flex; gap: 8px; max-width: 88%; animation: slideIn 0.3s ease; }
-        .message.user { align-self: flex-end; flex-direction: row-reverse; }
-        .message.system { max-width: 100%; }
-        .message-avatar {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: var(--primary-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            flex-shrink: 0;
-            font-size: 13px;
-        }
-        .message.user .message-avatar { background: var(--primary); color: white; }
-        .message.system .message-avatar { background: #fef3c7; color: #92400e; }
-        .message-bubble {
-            background: var(--background);
-            padding: 8px 12px;
-            border-radius: 10px;
-            border-top-left-radius: 4px;
-            font-size: 13px;
-            line-height: 1.5;
-            transition: var(--transition);
-        }
-        .message.user .message-bubble {
-            background: var(--primary);
-            color: white;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 4px;
-        }
-        .message.system .message-bubble {
-            background: #fef3c7;
-            color: #92400e;
-            border-radius: 8px;
-            font-size: 12px;
-        }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
-
-        .quick-suggestions { display: flex; flex-direction: column; gap: 5px; margin-top: 8px; }
-        .suggestion-chip {
-            padding: 6px 12px;
-            border: 1px solid var(--border);
-            background: var(--surface);
-            border-radius: 10px;
-            font-size: 11px;
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: left;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-family: inherit;
-        }
-        .suggestion-chip:hover {
-            border-color: var(--primary);
-            background: var(--primary-light);
-            color: var(--primary);
-            transform: translateX(4px);
-        }
-        .suggestion-chip .chip-icon { font-size: 14px; }
-        .suggestion-chip .chip-label { font-weight: 600; font-size: 12px; }
-        .suggestion-chip .chip-desc { font-size: 10px; color: var(--text-light); margin-left: auto; }
-
-        .chat-input-area {
-            padding: 10px 18px;
-            border-top: 1px solid var(--border);
-            background: var(--surface);
-            transition: var(--transition);
-        }
-        .input-wrapper { display: flex; gap: 8px; align-items: flex-end; }
-        .input-wrapper textarea {
-            flex: 1;
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 13px;
-            resize: none;
-            min-height: 38px;
-            max-height: 70px;
-            background: var(--background);
-            transition: var(--transition);
-        }
-        .input-wrapper textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
-        .send-btn {
-            padding: 8px 14px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            height: 38px;
-            width: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-        .send-btn:hover { background: var(--primary-dark); transform: scale(1.05); }
-        .voice-btn {
-            padding: 8px 10px;
-            background: var(--background);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            cursor: pointer;
-            height: 38px;
-            transition: var(--transition);
-            color: var(--text-light);
-        }
-        .voice-btn:hover { border-color: var(--primary); color: var(--primary); }
-        .voice-btn.listening { background: var(--danger); color: white; border-color: var(--danger); animation: pulse 1s infinite; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-        .input-actions { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
-        .action-btn {
-            padding: 4px 10px;
-            border: 1px solid var(--border);
-            background: var(--background);
-            border-radius: 14px;
-            font-size: 10px;
-            cursor: pointer;
-            transition: var(--transition);
-            color: var(--text-light);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-family: inherit;
-        }
-        .action-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
-
+        /* ===== RECOMMENDATIONS ===== */
         .recommendations-panel {
             background: var(--surface);
             border-radius: var(--radius);
@@ -432,14 +259,20 @@
             flex-direction: column;
             overflow: hidden;
             transition: var(--transition);
+            min-height: 500px;
         }
         .recommendations-header {
             padding: 14px 18px;
             border-bottom: 1px solid var(--border);
             background: var(--background);
             transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
         }
-        .recommendations-header h3 { font-size: 16px; margin-bottom: 8px; }
+        .recommendations-header h3 { font-size: 16px; }
         .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; }
         .filter-bar select {
             padding: 4px 10px;
@@ -456,15 +289,16 @@
         .recommendations-grid {
             flex: 1;
             overflow-y: auto;
-            padding: 10px 14px;
+            padding: 12px 16px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
             align-content: start;
-            max-height: calc(100vh - 280px);
+            max-height: calc(100vh - 260px);
         }
         @media (max-width: 640px) { .recommendations-grid { grid-template-columns: 1fr; } }
 
+        /* ===== EXPERIENCE CARD ===== */
         .experience-card {
             background: var(--background);
             border-radius: 10px;
@@ -586,6 +420,7 @@
         .experience-card .availability-badge.soon { background: var(--secondary); }
         .experience-card .availability-badge.unavailable { background: var(--danger); }
 
+        /* ===== MODAL ===== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -630,73 +465,228 @@
             padding: 0 6px;
         }
         .modal-close:hover { color: var(--danger); transform: rotate(90deg); }
-        .modal-body .exp-detail-icon { font-size: 48px; text-align: center; display: block; margin-bottom: 6px; }
-        .modal-body .exp-detail-name { font-size: 18px; font-weight: 700; }
-        .modal-body .exp-detail-category {
-            color: var(--primary);
-            font-weight: 500;
-            margin-bottom: 6px;
-            font-size: 13px;
+
+        /* ===== CHAT POPUP BUTTON ===== */
+        .chat-toggle-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            transition: var(--transition);
+            z-index: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .modal-body .exp-detail-desc { color: var(--text-light); line-height: 1.6; margin-bottom: 10px; font-size: 14px; }
-        .modal-body .exp-detail-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 6px;
-            margin-bottom: 10px;
+        .chat-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(99, 102, 241, 0.6);
         }
-        .modal-body .exp-detail-grid .item {
-            background: var(--background);
-            padding: 8px;
-            border-radius: 6px;
-            text-align: center;
+        .chat-toggle-btn .notification-dot {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 12px;
+            height: 12px;
+            background: var(--danger);
+            border-radius: 50%;
+            border: 2px solid white;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* ===== CHAT POPUP WINDOW ===== */
+        .chat-popup {
+            position: fixed;
+            bottom: 96px;
+            right: 24px;
+            width: 420px;
+            max-width: 90vw;
+            height: 500px;
+            max-height: 70vh;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            z-index: 600;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            animation: slideUp 0.3s ease;
             transition: var(--transition);
         }
-        .modal-body .exp-detail-grid .item .label { font-size: 9px; color: var(--text-light); text-transform: uppercase; }
-        .modal-body .exp-detail-grid .item .value { font-size: 14px; font-weight: 700; color: var(--text); }
-        body.dark-mode .modal-body .exp-detail-grid .item .value { color: #f1f5f9; }
-        .modal-body .exp-detail-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px; }
-        .modal-body .exp-detail-tags span {
-            background: var(--primary-light);
-            padding: 2px 8px;
-            border-radius: 8px;
-            font-size: 10px;
-            color: var(--primary-dark);
-        }
-        body.dark-mode .modal-body .exp-detail-tags span { background: #334155; color: #f1f5f9; }
-        .modal-body .exp-detail-what {
-            background: var(--background);
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            border-left: 4px solid var(--primary);
-        }
-        .modal-body .exp-detail-actions {
+        .chat-popup.open { display: flex; }
+        .chat-popup-header {
+            padding: 14px 18px;
+            background: var(--primary);
+            color: white;
             display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
         }
-        .modal-body .exp-detail-actions button {
-            flex: 1;
-            padding: 8px 12px;
+        .chat-popup-header h3 {
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .chat-popup-header .close-chat {
+            background: none;
             border: none;
-            border-radius: 6px;
-            font-weight: 600;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+        .chat-popup-header .close-chat:hover { opacity: 1; transform: rotate(90deg); }
+        .chat-popup .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: var(--background);
+        }
+        body.dark-mode .chat-popup .chat-messages { background: #0f172a; }
+        .chat-popup .chat-message {
+            padding: 8px 12px;
+            border-radius: 10px;
+            max-width: 85%;
+            font-size: 13px;
+            line-height: 1.5;
+            animation: slideIn 0.3s ease;
+        }
+        .chat-popup .chat-message.bot {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            align-self: flex-start;
+            border-top-left-radius: 4px;
+        }
+        body.dark-mode .chat-popup .chat-message.bot { background: #1e293b; border-color: #334155; color: #f1f5f9; }
+        .chat-popup .chat-message.user {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+            border-top-right-radius: 4px;
+        }
+        .chat-popup .chat-message.system {
+            background: #fef3c7;
+            color: #92400e;
+            align-self: center;
+            max-width: 90%;
+            font-size: 12px;
+            text-align: center;
+            border-radius: 8px;
+        }
+        body.dark-mode .chat-popup .chat-message.system { background: #451a03; color: #fcd34d; }
+        .chat-popup .quick-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 6px;
+        }
+        .chat-popup .quick-suggestions .suggestion-chip {
+            padding: 4px 10px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            border-radius: 12px;
+            font-size: 10px;
             cursor: pointer;
             transition: var(--transition);
+            color: var(--text);
+            font-family: inherit;
+        }
+        body.dark-mode .chat-popup .quick-suggestions .suggestion-chip { background: #1e293b; border-color: #334155; color: #f1f5f9; }
+        .chat-popup .quick-suggestions .suggestion-chip:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+        body.dark-mode .chat-popup .quick-suggestions .suggestion-chip:hover { background: #334155; }
+        .chat-popup .chat-input-area {
+            padding: 10px 14px;
+            border-top: 1px solid var(--border);
+            background: var(--surface);
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        body.dark-mode .chat-popup .chat-input-area { background: #0f172a; border-color: #334155; }
+        .chat-popup .chat-input-area textarea {
+            flex: 1;
+            padding: 6px 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
             font-family: inherit;
             font-size: 12px;
-            min-width: 100px;
+            resize: none;
+            min-height: 36px;
+            max-height: 60px;
+            background: var(--background);
+            transition: var(--transition);
         }
-        .modal-body .exp-detail-add { background: var(--primary); color: white; }
-        .modal-body .exp-detail-add:hover { background: var(--primary-dark); }
-        .modal-body .exp-detail-share { background: var(--success); color: white; }
-        .modal-body .exp-detail-share:hover { background: #059669; }
-        .modal-body .exp-detail-whatsapp { background: #25D366; color: white; }
-        .modal-body .exp-detail-whatsapp:hover { background: #1da851; }
-        .modal-body .exp-detail-book { background: var(--secondary); color: white; }
-        .modal-body .exp-detail-book:hover { background: #d97706; }
+        body.dark-mode .chat-popup .chat-input-area textarea { background: #1e293b; border-color: #334155; color: #f1f5f9; }
+        .chat-popup .chat-input-area textarea:focus { outline: none; border-color: var(--primary); }
+        .chat-popup .chat-input-area .send-btn {
+            padding: 6px 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            height: 36px;
+            width: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .chat-popup .chat-input-area .send-btn:hover { background: var(--primary-dark); }
+        .chat-popup .chat-input-area .voice-btn {
+            padding: 6px 10px;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            height: 36px;
+            transition: var(--transition);
+            color: var(--text-light);
+        }
+        body.dark-mode .chat-popup .chat-input-area .voice-btn { background: #1e293b; border-color: #334155; color: #94a3b8; }
+        .chat-popup .chat-input-area .voice-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .chat-popup .chat-input-area .voice-btn.listening { background: var(--danger); color: white; border-color: var(--danger); animation: pulse 1s infinite; }
+        .chat-popup .typing-indicator {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            padding: 6px 12px;
+        }
+        .chat-popup .typing-indicator .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--text-light);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        .chat-popup .typing-indicator .dot:nth-child(2) { animation-delay: 0.2s; }
+        .chat-popup .typing-indicator .dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
 
+        /* ===== ITINERARY TAB ===== */
         .itinerary-container {
             background: var(--surface);
             border-radius: var(--radius);
@@ -811,6 +801,7 @@
         }
         .btn-danger:hover { background: #dc2626; transform: translateY(-2px); }
 
+        /* ===== PROVIDER TAB ===== */
         .provider-container {
             background: var(--surface);
             border-radius: var(--radius);
@@ -926,8 +917,8 @@
 
         .notification {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 96px;
+            right: 24px;
             background: var(--surface);
             border-radius: 10px;
             padding: 12px 16px;
@@ -938,14 +929,13 @@
             animation: slideUp 0.4s ease;
             border-left: 4px solid var(--primary);
         }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .notification .title { font-weight: 600; font-size: 13px; }
         .notification .desc { font-size: 12px; color: var(--text-light); }
 
         .comparison-panel {
             position: fixed;
-            bottom: 80px;
-            right: 20px;
+            bottom: 96px;
+            right: 100px;
             background: var(--surface);
             border-radius: var(--radius);
             border: 1px solid var(--border);
@@ -980,13 +970,14 @@
             .nav-actions { width: 100%; justify-content: center; }
             .location-bar { flex-direction: column; align-items: stretch; }
             .modal-content { padding: 16px; }
-            .modal-body .exp-detail-grid { grid-template-columns: 1fr 1fr; }
             .login-container { padding: 24px 20px; }
+            .chat-popup { width: 92vw; right: 4vw; bottom: 80px; height: 60vh; }
+            .chat-toggle-btn { width: 50px; height: 50px; font-size: 20px; bottom: 16px; right: 16px; }
         }
         @media (max-width: 480px) {
-            .modal-body .exp-detail-grid { grid-template-columns: 1fr; }
             .itinerary-stats { gap: 6px; }
             .stat { font-size: 11px; }
+            .recommendations-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -1132,86 +1123,28 @@
 
         <!-- ===== DISCOVER TAB ===== -->
         <section id="tab-discover" class="tab-content active">
-            <div class="discover-layout">
-                <div class="chat-panel">
-                    <div class="chat-header">
-                        <h2><i class="fas fa-robot"></i> Nexus Assistant</h2>
-                        <p>Tell me what you're looking for, or click a suggestion!</p>
-                    </div>
-                    <div class="chat-messages" id="chatMessages">
-                        <div class="message bot">
-                            <div class="message-avatar"><i class="fas fa-globe"></i></div>
-                            <div class="message-bubble">
-                                <p>👋 Welcome! 🌍 Explore experiences in 20+ countries. Try searching for food, culture, adventure, or relaxation!</p>
-                                <div class="quick-suggestions">
-                                    <button class="suggestion-chip" data-query="family food tour under 50">
-                                        <span class="chip-icon">🍽️</span>
-                                        <span class="chip-label">Family Food</span>
-                                        <span class="chip-desc">$50 • 2hrs</span>
-                                    </button>
-                                    <button class="suggestion-chip" data-query="culture and temples">
-                                        <span class="chip-icon">🏯</span>
-                                        <span class="chip-label">Culture</span>
-                                        <span class="chip-desc">Temples & History</span>
-                                    </button>
-                                    <button class="suggestion-chip" data-query="romantic sunset dinner">
-                                        <span class="chip-icon">❤️</span>
-                                        <span class="chip-label">Romantic</span>
-                                        <span class="chip-desc">Sunset & Dinner</span>
-                                    </button>
-                                    <button class="suggestion-chip" data-query="adventure and nature">
-                                        <span class="chip-icon">🚀</span>
-                                        <span class="chip-label">Adventure</span>
-                                        <span class="chip-desc">Nature & Thrills</span>
-                                    </button>
-                                    <button class="suggestion-chip" data-query="relax spa wellness">
-                                        <span class="chip-icon">🧘</span>
-                                        <span class="chip-label">Wellness</span>
-                                        <span class="chip-desc">Spa & Relax</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat-input-area">
-                        <div class="input-wrapper">
-                            <textarea id="chatInput" rows="1" placeholder="Describe your perfect experience..."></textarea>
-                            <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()"><i class="fas fa-microphone"></i></button>
-                            <button id="sendBtn" class="send-btn"><i class="fas fa-paper-plane"></i></button>
-                        </div>
-                        <div class="input-actions">
-                            <button class="action-btn" data-action="location"><i class="fas fa-location-dot"></i> Location</button>
-                            <button class="action-btn" data-action="time"><i class="fas fa-clock"></i> Time</button>
-                            <button class="action-btn" data-action="budget"><i class="fas fa-wallet"></i> Budget</button>
-                            <button class="action-btn" data-action="preferences"><i class="fas fa-sliders"></i> Preferences</button>
-                            <button class="action-btn" onclick="showRandomDestination()"><i class="fas fa-dice"></i> Surprise Me!</button>
-                        </div>
+            <div class="recommendations-panel">
+                <div class="recommendations-header">
+                    <h3>✨ Global Experiences <span id="recCount" style="font-size:12px;color:var(--text-light);font-weight:400;"></span></h3>
+                    <div class="filter-bar">
+                        <select id="filterType">
+                            <option value="all">All Types</option>
+                            <option value="food">🍽️ Food</option>
+                            <option value="culture">🏯 Culture</option>
+                            <option value="adventure">🚀 Adventure</option>
+                            <option value="relaxation">🧘 Relaxation</option>
+                            <option value="shopping">🛍️ Shopping</option>
+                        </select>
+                        <select id="sortBy">
+                            <option value="relevance">⭐ Relevance</option>
+                            <option value="rating">⭐ Rating</option>
+                            <option value="price">💰 Price: Low-High</option>
+                            <option value="popularity">🔥 Popularity</option>
+                        </select>
+                        <button class="btn-secondary" style="padding:3px 10px;font-size:10px;" onclick="showComparison()"><i class="fas fa-balance-scale"></i> Compare</button>
                     </div>
                 </div>
-
-                <div class="recommendations-panel">
-                    <div class="recommendations-header">
-                        <h3>✨ Global Experiences <span id="recCount" style="font-size:12px;color:var(--text-light);font-weight:400;"></span></h3>
-                        <div class="filter-bar">
-                            <select id="filterType">
-                                <option value="all">All Types</option>
-                                <option value="food">🍽️ Food</option>
-                                <option value="culture">🏯 Culture</option>
-                                <option value="adventure">🚀 Adventure</option>
-                                <option value="relaxation">🧘 Relaxation</option>
-                                <option value="shopping">🛍️ Shopping</option>
-                            </select>
-                            <select id="sortBy">
-                                <option value="relevance">⭐ Relevance</option>
-                                <option value="rating">⭐ Rating</option>
-                                <option value="price">💰 Price: Low-High</option>
-                                <option value="popularity">🔥 Popularity</option>
-                            </select>
-                            <button class="btn-secondary" style="padding:3px 10px;font-size:10px;" onclick="showComparison()"><i class="fas fa-balance-scale"></i> Compare</button>
-                        </div>
-                    </div>
-                    <div class="recommendations-grid" id="recommendationsGrid"></div>
-                </div>
+                <div class="recommendations-grid" id="recommendationsGrid"></div>
             </div>
         </section>
 
@@ -1301,6 +1234,38 @@
             </div>
         </section>
     </main>
+
+    <!-- ===== CHAT POPUP BUTTON ===== -->
+    <button class="chat-toggle-btn" id="chatToggleBtn" onclick="toggleChat()">
+        <i class="fas fa-comment-dots"></i>
+        <span class="notification-dot"></span>
+    </button>
+
+    <!-- ===== CHAT POPUP WINDOW ===== -->
+    <div class="chat-popup" id="chatPopup">
+        <div class="chat-popup-header">
+            <h3><i class="fas fa-robot"></i> Nexus Assistant</h3>
+            <button class="close-chat" onclick="toggleChat()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-message bot">
+                👋 Hi! I'm Nexus, your travel assistant.<br>
+                Ask me about experiences or click a suggestion below!
+                <div class="quick-suggestions" id="quickSuggestions">
+                    <button class="suggestion-chip" data-query="family food tour under 50">🍽️ Family Food</button>
+                    <button class="suggestion-chip" data-query="culture and temples">🏯 Culture</button>
+                    <button class="suggestion-chip" data-query="romantic sunset dinner">❤️ Romantic</button>
+                    <button class="suggestion-chip" data-query="adventure and nature">🚀 Adventure</button>
+                    <button class="suggestion-chip" data-query="relax spa wellness">🧘 Wellness</button>
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <textarea id="chatInput" rows="1" placeholder="Ask me anything..."></textarea>
+            <button class="voice-btn" onclick="toggleVoice()"><i class="fas fa-microphone"></i></button>
+            <button class="send-btn" onclick="handleChatQuery()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
 
     <!-- ===== DETAIL MODAL ===== -->
     <div class="modal-overlay" id="detailModal">
@@ -1561,6 +1526,100 @@
         let currentWeatherIndex = 0;
 
         // ============================================
+        // CHAT FUNCTIONS
+        // ============================================
+        function toggleChat() {
+            const popup = document.getElementById('chatPopup');
+            popup.classList.toggle('open');
+        }
+
+        function addChatMessage(type, content) {
+            const container = document.getElementById('chatMessages');
+            const div = document.createElement('div');
+            div.className = `chat-message ${type}`;
+            div.innerHTML = content.replace(/\n/g, '<br>');
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function handleChatQuery() {
+            const input = document.getElementById('chatInput');
+            const query = input.value.trim();
+            if (!query) return;
+            
+            addChatMessage('user', query);
+            input.value = '';
+            
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+            document.getElementById('chatMessages').appendChild(typingDiv);
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+            
+            setTimeout(() => {
+                const indicator = document.getElementById('typingIndicator');
+                if (indicator) indicator.remove();
+                
+                const results = getRecommendations(query + ' ' + currentLocation);
+                if (results.length === 0) {
+                    addChatMessage('bot', '😕 No experiences found. Try adjusting your budget/time sliders or changing your location!');
+                } else {
+                    const top = results[0];
+                    addChatMessage('bot', `🎯 Found ${results.length} experiences! Top pick: ${top.country || '🌍'} <strong>${top.name}</strong> ($${top.price}, ${top.duration}h, ⭐${top.rating})`);
+                    // Update recommendations
+                    recommendations = results;
+                    renderRecommendations(results);
+                    document.getElementById('recCount').textContent = `(${results.length} found)`;
+                }
+            }, 800);
+        }
+
+        // ============================================
+        // VOICE INPUT
+        // ============================================
+        let recognition = null;
+
+        function toggleVoice() {
+            const btn = document.querySelector('.chat-popup .voice-btn');
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!recognition) {
+                    recognition = new SpeechRecognition();
+                    recognition.lang = 'en-US';
+                    recognition.continuous = false;
+                    recognition.interimResults = true;
+                    recognition.onresult = function(event) {
+                        const transcript = Array.from(event.results)
+                            .map(result => result[0].transcript)
+                            .join('');
+                        document.getElementById('chatInput').value = transcript;
+                        if (event.results[0].isFinal) {
+                            btn.classList.remove('listening');
+                            handleChatQuery();
+                        }
+                    };
+                    recognition.onerror = function() {
+                        btn.classList.remove('listening');
+                        showNotification('❌ Voice Error', 'Please try again or type your query.');
+                    };
+                    recognition.onend = function() {
+                        btn.classList.remove('listening');
+                    };
+                }
+                if (btn.classList.contains('listening')) {
+                    recognition.stop();
+                    btn.classList.remove('listening');
+                } else {
+                    btn.classList.add('listening');
+                    recognition.start();
+                }
+            } else {
+                showNotification('❌ Not Supported', 'Voice input is not supported in this browser.');
+            }
+        }
+
+        // ============================================
         // LOCATION FUNCTIONS
         // ============================================
         function setLocation() {
@@ -1642,11 +1701,9 @@
                 }
             }
             
-            // If no location in query, use current location
             if (!locationMatch && currentLocation) {
                 const locParts = currentLocation.split(',')[0].toLowerCase().trim();
                 results = results.filter(e => e.location.toLowerCase().includes(locParts));
-                // If no results with current location, try all locations
                 if (results.length === 0) {
                     results = [...EXPERIENCES];
                 }
@@ -1662,7 +1719,6 @@
             const hasFamily = q.includes('family') || q.includes('kids') || q.includes('children') || q.includes('child') || q.includes('baby') || q.includes('parent');
             const hasSolo = q.includes('solo') || q.includes('alone') || q.includes('single') || q.includes('individual');
             
-            // Apply category filter
             let categoryFiltered = [];
             if (hasFood) {
                 categoryFiltered = results.filter(e => e.category === 'food');
@@ -1683,7 +1739,6 @@
                 categoryFiltered = results;
             }
             
-            // If category filter removed all results, fallback to all
             if (categoryFiltered.length === 0) {
                 categoryFiltered = results;
             }
@@ -1707,7 +1762,6 @@
             
             let budgetFiltered = travelerFiltered.filter(e => e.price <= budget * 1.2);
             if (budgetFiltered.length === 0) {
-                // If no results in budget, show all with slightly higher budget
                 budgetFiltered = travelerFiltered.filter(e => e.price <= budget * 1.5);
                 if (budgetFiltered.length === 0) budgetFiltered = travelerFiltered;
             }
@@ -1738,7 +1792,6 @@
             
             scored.sort((a, b) => b.score - a.score);
             
-            // ===== 6. FINAL FALLBACK - Show popular experiences if nothing matches =====
             if (scored.length === 0) {
                 scored = EXPERIENCES.map(e => ({ ...e, score: e.popularity }))
                     .sort((a, b) => b.score - a.score)
@@ -1765,10 +1818,11 @@
                     <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-light);">
                         <i class="fas fa-globe" style="font-size:48px;display:block;margin-bottom:16px;color:var(--primary);"></i>
                         <h3 style="color:var(--text);margin-bottom:8px;">🌍 Exploring ${currentLocation}</h3>
-                        <p>Try changing your location, adjusting the budget/time sliders, or asking a different question!</p>
+                        <p>Try changing your location, adjusting the budget/time sliders, or asking the assistant!</p>
                         <div style="margin-top:16px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
                             <button onclick="showRandomDestination()" class="btn-secondary"><i class="fas fa-dice"></i> Surprise Me!</button>
                             <button onclick="refreshRecommendations()" class="btn-secondary"><i class="fas fa-sync"></i> Refresh</button>
+                            <button onclick="toggleChat()" class="btn-primary"><i class="fas fa-comment"></i> Ask Assistant</button>
                         </div>
                     </div>
                 `;
@@ -1964,28 +2018,28 @@
             
             document.getElementById('modalTitle').textContent = exp.name;
             document.getElementById('modalBody').innerHTML = `
-                <div class="exp-detail-icon">${exp.country || '🌍'} ${exp.image || '📍'}</div>
-                <div class="exp-detail-name">${exp.name}</div>
-                <div class="exp-detail-category"><i class="fas fa-tag"></i> ${exp.category} • 📍 ${exp.location}</div>
-                <div class="exp-detail-desc">${exp.description}</div>
-                <div class="exp-detail-grid">
-                    <div class="item"><div class="label">⭐ Rating</div><div class="value">${exp.rating}</div></div>
-                    <div class="item"><div class="label">💰 Price</div><div class="value">$${exp.price}</div></div>
-                    <div class="item"><div class="label">⏱️ Duration</div><div class="value">${exp.duration} hrs</div></div>
-                    <div class="item"><div class="label">👥 For</div><div class="value">${exp.idealFor.join(', ')}</div></div>
-                    <div class="item"><div class="label">📝 Reviews</div><div class="value">${exp.reviews}</div></div>
-                    <div class="item"><div class="label">🔥 Popularity</div><div class="value">${exp.popularity}%</div></div>
+                <div style="text-align:center;font-size:48px;margin-bottom:6px;">${exp.country || '🌍'} ${exp.image || '📍'}</div>
+                <div style="font-size:18px;font-weight:700;">${exp.name}</div>
+                <div style="color:var(--primary);font-weight:500;margin-bottom:6px;font-size:13px;"><i class="fas fa-tag"></i> ${exp.category} • 📍 ${exp.location}</div>
+                <div style="color:var(--text-light);line-height:1.6;margin-bottom:10px;font-size:14px;">${exp.description}</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px;">
+                    <div style="background:var(--background);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">⭐ Rating</div><div style="font-size:14px;font-weight:700;">${exp.rating}</div></div>
+                    <div style="background:var(--background);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">💰 Price</div><div style="font-size:14px;font-weight:700;">$${exp.price}</div></div>
+                    <div style="background:var(--background);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">⏱️ Duration</div><div style="font-size:14px;font-weight:700;">${exp.duration} hrs</div></div>
+                    <div style="background:var(--background);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">👥 For</div><div style="font-size:14px;font-weight:700;">${exp.idealFor.join(', ')}</div></div>
+                    <div style="background:var(--background);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">📝 Reviews</div><div style="font-size:14px;font-weight:700;">${exp.reviews}</div></div>
+                    <div style="background:var(--background);padding:8px;border-radius:6px;text-align:center;"><div style="font-size:9px;color:var(--text-light);text-transform:uppercase;">🔥 Popularity</div><div style="font-size:14px;font-weight:700;">${exp.popularity}%</div></div>
                 </div>
-                <div class="exp-detail-tags">${exp.tags.map(t => `<span>#${t}</span>`).join('')}</div>
-                <div class="exp-detail-what">
+                <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;">${exp.tags.map(t => `<span style="background:var(--primary-light);padding:2px 8px;border-radius:8px;font-size:10px;color:var(--primary-dark);">#${t}</span>`).join('')}</div>
+                <div style="background:var(--background);padding:10px;border-radius:6px;margin-bottom:10px;border-left:4px solid var(--primary);">
                     <strong><i class="fas fa-check-circle" style="color:var(--primary);"></i> What to Expect:</strong><br>
                     ${exp.whatToExpect || 'A unique local experience with professional guidance.'}
                 </div>
-                <div class="exp-detail-actions">
-                    <button class="exp-detail-add" onclick="addToItinerary(${exp.id}); closeModal();"><i class="fas fa-plus"></i> Add</button>
-                    <button class="exp-detail-book" onclick="simulateBooking(${exp.id})"><i class="fas fa-calendar-check"></i> Book</button>
-                    <button class="exp-detail-share" onclick="shareExperience(${exp.id})"><i class="fas fa-share-alt"></i> Share</button>
-                    <button class="exp-detail-whatsapp" onclick="shareWhatsApp(${exp.id})"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                    <button class="btn-primary" onclick="addToItinerary(${exp.id}); closeModal();" style="flex:1;justify-content:center;"><i class="fas fa-plus"></i> Add</button>
+                    <button class="btn-secondary" onclick="simulateBooking(${exp.id})" style="flex:1;justify-content:center;"><i class="fas fa-calendar-check"></i> Book</button>
+                    <button class="btn-secondary" onclick="shareExperience(${exp.id})" style="flex:1;justify-content:center;"><i class="fas fa-share-alt"></i> Share</button>
+                    <button class="btn-secondary" onclick="shareWhatsApp(${exp.id})" style="flex:1;justify-content:center;background:#25D366;color:white;"><i class="fab fa-whatsapp"></i> WhatsApp</button>
                 </div>
             `;
             document.getElementById('detailModal').classList.add('active');
@@ -2173,103 +2227,6 @@
         }
 
         // ============================================
-        // CHAT FUNCTIONS
-        // ============================================
-        function addChatMessage(type, content) {
-            const container = document.getElementById('chatMessages');
-            const div = document.createElement('div');
-            div.className = `message ${type}`;
-            const avatar = document.createElement('div');
-            avatar.className = 'message-avatar';
-            if (type === 'user') avatar.innerHTML = '<i class="fas fa-user"></i>';
-            else if (type === 'system') avatar.innerHTML = '<i class="fas fa-info-circle"></i>';
-            else avatar.innerHTML = '<i class="fas fa-globe"></i>';
-            const bubble = document.createElement('div');
-            bubble.className = 'message-bubble';
-            bubble.innerHTML = content.replace(/\n/g, '<br>');
-            div.appendChild(avatar);
-            div.appendChild(bubble);
-            container.appendChild(div);
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function handleUserQuery() {
-            const input = document.getElementById('chatInput');
-            const query = input.value.trim();
-            if (!query) return;
-            
-            addChatMessage('user', query);
-            input.value = '';
-            input.style.height = 'auto';
-            
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'message bot typing-indicator';
-            typingDiv.id = 'typingIndicator';
-            typingDiv.innerHTML = `<div class="message-avatar"><i class="fas fa-globe"></i></div><div class="message-bubble"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`;
-            document.getElementById('chatMessages').appendChild(typingDiv);
-            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
-            
-            setTimeout(() => {
-                const indicator = document.getElementById('typingIndicator');
-                if (indicator) indicator.remove();
-                const results = getRecommendations(query + ' ' + currentLocation);
-                recommendations = results;
-                renderRecommendations(results);
-                if (results.length === 0) {
-                    addChatMessage('bot', '😕 No experiences found. Try adjusting your budget/time sliders or changing your location!');
-                } else {
-                    const top = results[0];
-                    addChatMessage('bot', `🎯 Found ${results.length} experiences! Top pick: ${top.country || '🌍'} <strong>${top.name}</strong> ($${top.price}, ${top.duration}h, ⭐${top.rating})<br><br>💡 Click on any card for details, or ❤️ to save to favorites!`);
-                }
-                autoSave();
-            }, 800);
-        }
-
-        // ============================================
-        // VOICE INPUT
-        // ============================================
-        let recognition = null;
-
-        function toggleVoice() {
-            const btn = document.getElementById('voiceBtn');
-            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                if (!recognition) {
-                    recognition = new SpeechRecognition();
-                    recognition.lang = 'en-US';
-                    recognition.continuous = false;
-                    recognition.interimResults = true;
-                    recognition.onresult = function(event) {
-                        const transcript = Array.from(event.results)
-                            .map(result => result[0].transcript)
-                            .join('');
-                        document.getElementById('chatInput').value = transcript;
-                        if (event.results[0].isFinal) {
-                            btn.classList.remove('listening');
-                            handleUserQuery();
-                        }
-                    };
-                    recognition.onerror = function() {
-                        btn.classList.remove('listening');
-                        showNotification('❌ Voice Error', 'Please try again or type your query.');
-                    };
-                    recognition.onend = function() {
-                        btn.classList.remove('listening');
-                    };
-                }
-                if (btn.classList.contains('listening')) {
-                    recognition.stop();
-                    btn.classList.remove('listening');
-                } else {
-                    btn.classList.add('listening');
-                    recognition.start();
-                }
-            } else {
-                showNotification('❌ Not Supported', 'Voice input is not supported in this browser.');
-            }
-        }
-
-        // ============================================
         // NAVIGATION
         // ============================================
         document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -2302,6 +2259,30 @@
 
         document.getElementById('filterType').addEventListener('change', applyFilters);
         document.getElementById('sortBy').addEventListener('change', applyFilters);
+
+        // ============================================
+        // QUICK SUGGESTIONS
+        // ============================================
+        document.querySelectorAll('.suggestion-chip').forEach(chip => {
+            chip.addEventListener('click', function() {
+                const query = this.dataset.query + ' in ' + currentLocation;
+                document.getElementById('chatInput').value = query;
+                handleChatQuery();
+                if (!document.getElementById('chatPopup').classList.contains('open')) {
+                    toggleChat();
+                }
+            });
+        });
+
+        // ============================================
+        // CHAT ENTER KEY
+        // ============================================
+        document.getElementById('chatInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleChatQuery();
+            }
+        });
 
         // ============================================
         // INIT
@@ -2369,37 +2350,6 @@
         // ============================================
         // EVENT LISTENERS
         // ============================================
-        document.getElementById('sendBtn').addEventListener('click', handleUserQuery);
-        document.getElementById('chatInput').addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleUserQuery(); }
-        });
-        document.getElementById('chatInput').addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = this.scrollHeight + 'px';
-        });
-
-        document.querySelectorAll('.suggestion-chip').forEach(chip => {
-            chip.addEventListener('click', function() {
-                const query = this.dataset.query + ' in ' + currentLocation;
-                document.getElementById('chatInput').value = query;
-                handleUserQuery();
-            });
-        });
-
-        document.querySelectorAll('.action-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const action = btn.dataset.action;
-                const queries = {
-                    location: `I am in ${currentLocation}`,
-                    time: `I have ${document.getElementById('timeSlider').value} hours available`,
-                    budget: `My budget is $${document.getElementById('budgetSlider').value}`,
-                    preferences: `I love ${userPreferences.interests?.join(' and ') || 'food and culture'} experiences`
-                };
-                document.getElementById('chatInput').value = queries[action] || '';
-                handleUserQuery();
-            });
-        });
-
         document.getElementById('optimizeRouteBtn').addEventListener('click', optimizeRoute);
         document.getElementById('shareItineraryBtn').addEventListener('click', shareItinerary);
         document.getElementById('clearItineraryBtn').addEventListener('click', clearItinerary);
@@ -2435,9 +2385,9 @@
         updateWeatherDisplay();
         updateComparisonPanel();
 
-        console.log('🔐 Nexus with Login Loaded!');
+        console.log('🔐 Nexus with Popup Chat Loaded!');
         console.log('📧 Demo: demo@nexus.com / password123');
-        console.log('💡 All user data is saved in your browser (localStorage)');
+        console.log('💬 Chat is now a floating button!');
 
         init();
     </script>
