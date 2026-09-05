@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nexus Global - Login & Discovery</title>
+    <title>Nexus Global - Intelligent Discovery</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -24,6 +24,9 @@
             --shadow-lg: 0 20px 60px rgba(0,0,0,0.15);
             --radius: 16px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --dark-bg: #0f172a;
+            --dark-surface: #1e293b;
+            --dark-text: #f1f5f9;
         }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -33,8 +36,8 @@
             transition: var(--transition);
         }
         body.dark-mode {
-            background: #0f172a;
-            color: #f1f5f9;
+            background: var(--dark-bg);
+            color: var(--dark-text);
         }
         body.dark-mode .navbar,
         body.dark-mode .chat-panel,
@@ -44,7 +47,7 @@
         body.dark-mode .location-bar,
         body.dark-mode .modal-content,
         body.dark-mode .login-container {
-            background: #1e293b;
+            background: var(--dark-surface);
             border-color: #334155;
         }
         body.dark-mode .chat-header,
@@ -73,7 +76,6 @@
         ::-webkit-scrollbar-track { background: var(--background); }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-        /* ===== LOGIN OVERLAY ===== */
         .login-overlay {
             position: fixed;
             top: 0;
@@ -101,27 +103,11 @@
             overflow-y: auto;
         }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .login-container .logo {
-            text-align: center;
-            margin-bottom: 24px;
-        }
-        .login-container .logo h1 {
-            font-size: 28px;
-            background: linear-gradient(135deg, var(--primary), #8b5cf6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .login-container .logo { text-align: center; margin-bottom: 24px; }
+        .login-container .logo h1 { font-size: 28px; background: linear-gradient(135deg, var(--primary), #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .login-container .logo p { color: var(--text-light); font-size: 14px; -webkit-text-fill-color: var(--text-light); }
-        .login-container .form-group {
-            margin-bottom: 16px;
-        }
-        .login-container label {
-            display: block;
-            font-weight: 600;
-            font-size: 13px;
-            margin-bottom: 4px;
-            color: var(--text);
-        }
+        .login-container .form-group { margin-bottom: 16px; }
+        .login-container label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 4px; color: var(--text); }
         .login-container input {
             width: 100%;
             padding: 10px 14px;
@@ -133,55 +119,14 @@
             background: var(--background);
             color: var(--text);
         }
-        .login-container input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
-        }
-        .login-container .btn-primary {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            justify-content: center;
-            margin-top: 8px;
-        }
-        .login-container .auth-switch {
-            text-align: center;
-            margin-top: 16px;
-            font-size: 13px;
-            color: var(--text-light);
-        }
-        .login-container .auth-switch span {
-            color: var(--primary);
-            cursor: pointer;
-            font-weight: 600;
-        }
+        .login-container input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99,102,241,0.15); }
+        .login-container .btn-primary { width: 100%; padding: 12px; font-size: 16px; justify-content: center; margin-top: 8px; }
+        .login-container .auth-switch { text-align: center; margin-top: 16px; font-size: 13px; color: var(--text-light); }
+        .login-container .auth-switch span { color: var(--primary); cursor: pointer; font-weight: 600; }
         .login-container .auth-switch span:hover { text-decoration: underline; }
-        .login-container .error-msg {
-            background: #fef2f2;
-            color: #dc2626;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 13px;
-            margin-bottom: 12px;
-            display: none;
-        }
+        .login-container .error-msg { background: #fef2f2; color: #dc2626; padding: 8px 12px; border-radius: 8px; font-size: 13px; margin-bottom: 12px; display: none; }
         body.dark-mode .login-container .error-msg { background: #450a0a; color: #fca5a5; }
-        .login-container .user-avatar-large {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--primary-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-            color: var(--primary);
-            margin: 0 auto 16px;
-        }
-        body.dark-mode .login-container .user-avatar-large { background: #334155; color: #f1f5f9; }
 
-        /* ===== NAVBAR ===== */
         .navbar {
             background: var(--surface);
             border-bottom: 1px solid var(--border);
@@ -204,19 +149,8 @@
             flex-wrap: wrap;
             gap: 6px;
         }
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 22px;
-            font-weight: 800;
-            cursor: pointer;
-        }
-        .nav-logo span {
-            background: linear-gradient(135deg, var(--primary), #8b5cf6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .nav-logo { display: flex; align-items: center; gap: 8px; font-size: 22px; font-weight: 800; cursor: pointer; }
+        .nav-logo span { background: linear-gradient(135deg, var(--primary), #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
         .nav-btn {
             padding: 6px 14px;
@@ -235,11 +169,7 @@
         .nav-btn:hover { background: var(--primary-light); color: var(--primary); }
         .nav-btn.active { background: var(--primary); color: white; }
         body.dark-mode .nav-btn:hover { background: #334155; color: var(--primary-light); }
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        .nav-actions { display: flex; align-items: center; gap: 6px; }
         .nav-actions .user-badge {
             display: flex;
             align-items: center;
@@ -276,13 +206,9 @@
             color: var(--text-light);
             font-size: 14px;
         }
-        .theme-toggle:hover, .logout-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
+        .theme-toggle:hover, .logout-btn:hover { border-color: var(--primary); color: var(--primary); }
         .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
 
-        /* ===== MAIN CONTENT ===== */
         .main-content { max-width: 1400px; margin: 0 auto; padding: 16px; }
         .tab-content { display: none; animation: fadeIn 0.4s ease; }
         .tab-content.active { display: block; }
@@ -1216,7 +1142,7 @@
                         <div class="message bot">
                             <div class="message-avatar"><i class="fas fa-globe"></i></div>
                             <div class="message-bubble">
-                                <p>👋 Welcome back! 🌍 Explore experiences in 20+ countries. Tell me what you're looking for.</p>
+                                <p>👋 Welcome! 🌍 Explore experiences in 20+ countries. Try searching for food, culture, adventure, or relaxation!</p>
                                 <div class="quick-suggestions">
                                     <button class="suggestion-chip" data-query="family food tour under 50">
                                         <span class="chip-icon">🍽️</span>
@@ -1431,9 +1357,6 @@
             return users[session.email] || null;
         }
 
-        // ============================================
-        // AUTH FUNCTIONS
-        // ============================================
         function handleLogin() {
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value.trim();
@@ -1488,7 +1411,6 @@
                 return;
             }
 
-            // Create new user
             users[email] = {
                 name: name,
                 email: email,
@@ -1517,11 +1439,9 @@
             document.getElementById('mainNav').style.display = 'block';
             document.getElementById('mainContent').style.display = 'block';
             
-            // Update UI with user info
             document.getElementById('userNameDisplay').textContent = user.name;
             document.getElementById('userAvatarSmall').textContent = user.name.charAt(0).toUpperCase();
 
-            // Load user data into app
             if (user.preferences) {
                 document.getElementById('budgetSlider').value = user.preferences.budget || 50;
                 document.getElementById('budgetDisplay').textContent = user.preferences.budget || 50;
@@ -1534,18 +1454,10 @@
                 }
             }
 
-            // Load itinerary and favorites
-            if (user.itinerary) {
-                itinerary = user.itinerary;
-            }
-            if (user.favorites) {
-                favorites = user.favorites;
-            }
-            if (user.compareList) {
-                compareList = user.compareList;
-            }
+            if (user.itinerary) itinerary = user.itinerary;
+            if (user.favorites) favorites = user.favorites;
+            if (user.compareList) compareList = user.compareList;
 
-            // Refresh everything
             refreshRecommendations();
             renderItinerary();
             renderFavorites();
@@ -1596,67 +1508,44 @@
             }
         }
 
-        // Save data whenever it changes (auto-save)
         function autoSave() {
             saveUserData();
         }
 
         // ============================================
-        // GLOBAL DATA - 47 Experiences
+        // GLOBAL DATA - 30 Experiences
         // ============================================
         const EXPERIENCES = [
-            // Thailand
-            { id: 1, name: "Bangkok Street Food Tour", category: "food", description: "Explore hidden food stalls in Chinatown with a local guide. Taste authentic pad thai, mango sticky rice, and more!", price: 35, duration: 2.5, rating: 4.9, reviews: 342, location: "Bangkok, Thailand", country: "🇹🇭", tags: ["local", "authentic", "foodie", "family"], idealFor: ["family", "couple", "solo"], image: "🍜", popularity: 95, whatToExpect: "5 food tastings, local guide, cultural stories", availability: "available" },
-            { id: 2, name: "Elephant Sanctuary Visit", category: "adventure", description: "Ethical elephant experience in Chiang Rai. Feed, walk with, and bathe rescued elephants.", price: 75, duration: 4, rating: 4.9, reviews: 534, location: "Chiang Mai, Thailand", country: "🇹🇭", tags: ["animals", "nature", "ethical", "adventure"], idealFor: ["family", "couple"], image: "🐘", popularity: 98, whatToExpect: "Elephant interaction, feeding, bathing, educational talk", availability: "available" },
-            { id: 3, name: "Thai Cooking Class", category: "food", description: "Learn authentic Thai dishes from a local chef in Phuket. Market visit included.", price: 55, duration: 4, rating: 4.9, reviews: 421, location: "Phuket, Thailand", country: "🇹🇭", tags: ["hands-on", "foodie", "cultural", "family"], idealFor: ["family", "couple"], image: "👨‍🍳", popularity: 91, whatToExpect: "Market visit, 4 dishes cooked, recipe book", availability: "available" },
-            { id: 4, name: "Phi Phi Islands Boat Tour", category: "adventure", description: "Speedboat tour to Phi Phi Islands. Snorkel in crystal clear waters, visit Maya Bay.", price: 90, duration: 8, rating: 4.8, reviews: 567, location: "Phuket, Thailand", country: "🇹🇭", tags: ["boat", "snorkeling", "islands", "adventure"], idealFor: ["couple", "family"], image: "⛵", popularity: 93, whatToExpect: "Speedboat, snorkeling, lunch, Maya Bay", availability: "soon" },
+            { id: 1, name: "Bangkok Street Food Tour", category: "food", description: "Explore hidden food stalls in Chinatown with a local guide. Taste authentic pad thai, mango sticky rice, and more!", price: 35, duration: 2.5, rating: 4.9, reviews: 342, location: "Bangkok, Thailand", country: "🇹🇭", tags: ["local", "authentic", "foodie"], idealFor: ["family", "couple", "solo"], image: "🍜", popularity: 95, whatToExpect: "5 food tastings, local guide, cultural stories", availability: "available" },
+            { id: 2, name: "Elephant Sanctuary Visit", category: "adventure", description: "Ethical elephant experience. Feed, walk with, and bathe rescued elephants.", price: 75, duration: 4, rating: 4.9, reviews: 534, location: "Chiang Mai, Thailand", country: "🇹🇭", tags: ["animals", "nature", "ethical"], idealFor: ["family", "couple"], image: "🐘", popularity: 98, whatToExpect: "Elephant interaction, feeding, bathing, educational talk", availability: "available" },
+            { id: 3, name: "Thai Cooking Class", category: "food", description: "Learn authentic Thai dishes from a local chef. Market visit included.", price: 55, duration: 4, rating: 4.9, reviews: 421, location: "Phuket, Thailand", country: "🇹🇭", tags: ["hands-on", "foodie", "cultural"], idealFor: ["family", "couple"], image: "👨‍🍳", popularity: 91, whatToExpect: "Market visit, 4 dishes cooked, recipe book", availability: "available" },
+            { id: 4, name: "Phi Phi Islands Boat Tour", category: "adventure", description: "Speedboat tour to Phi Phi Islands. Snorkel in crystal clear waters.", price: 90, duration: 8, rating: 4.8, reviews: 567, location: "Phuket, Thailand", country: "🇹🇭", tags: ["boat", "snorkeling", "islands"], idealFor: ["couple", "family"], image: "⛵", popularity: 93, whatToExpect: "Speedboat, snorkeling, lunch, Maya Bay", availability: "soon" },
             { id: 5, name: "Night Market Experience", category: "shopping", description: "Explore Bangkok's night bazaar with a local shopping guide. Find unique handicrafts.", price: 20, duration: 2, rating: 4.6, reviews: 198, location: "Bangkok, Thailand", country: "🇹🇭", tags: ["shopping", "nightlife", "local"], idealFor: ["couple", "solo"], image: "🏮", popularity: 76, whatToExpect: "Shopping guide, bargaining tips, local snacks", availability: "available" },
-            { id: 6, name: "Thai Massage Workshop", category: "relaxation", description: "Learn ancient Thai massage techniques in a peaceful Bangkok studio.", price: 40, duration: 2, rating: 4.8, reviews: 234, location: "Bangkok, Thailand", country: "🇹🇭", tags: ["wellness", "learning", "relaxing"], idealFor: ["couple", "solo"], image: "💆", popularity: 85, whatToExpect: "Theory session, practical practice, certificate", availability: "available" },
-            { id: 7, name: "Floating Market Tour", category: "food", description: "Boat tour through Damnoen Saduak floating market. Taste fresh tropical fruits.", price: 30, duration: 3, rating: 4.7, reviews: 256, location: "Bangkok, Thailand", country: "🇹🇭", tags: ["unique", "foodie", "boat"], idealFor: ["family", "couple"], image: "🚤", popularity: 87, whatToExpect: "Boat ride, food tastings, market guide", availability: "available" },
-            // Japan
-            { id: 8, name: "Tokyo Sushi Making Class", category: "food", description: "Learn to make authentic sushi from a master chef in Tokyo. Includes sake tasting.", price: 80, duration: 3, rating: 4.9, reviews: 412, location: "Tokyo, Japan", country: "🇯🇵", tags: ["sushi", "hands-on", "japanese", "foodie"], idealFor: ["couple", "solo"], image: "🍣", popularity: 94, whatToExpect: "Sushi making, sake tasting, chef guidance", availability: "available" },
-            { id: 9, name: "Kyoto Temple & Garden Tour", category: "culture", description: "Visit iconic temples and zen gardens in Kyoto. Tea ceremony experience included.", price: 65, duration: 4, rating: 4.9, reviews: 389, location: "Kyoto, Japan", country: "🇯🇵", tags: ["temples", "zen", "tea", "culture"], idealFor: ["couple", "solo"], image: "⛩️", popularity: 96, whatToExpect: "Temple visits, zen garden, tea ceremony", availability: "available" },
-            // Italy
-            { id: 10, name: "Rome Colosseum Tour", category: "culture", description: "Skip-the-line tour of the Colosseum, Roman Forum, and Palatine Hill with an archaeologist.", price: 60, duration: 3, rating: 4.9, reviews: 678, location: "Rome, Italy", country: "🇮🇹", tags: ["history", "ancient", "archaeology"], idealFor: ["couple", "solo"], image: "🏛️", popularity: 97, whatToExpect: "Colosseum, Forum, archaeologist guide", availability: "available" },
-            { id: 11, name: "Florence Pasta Class", category: "food", description: "Learn to make fresh pasta and tiramisu in Florence. Includes wine pairing.", price: 85, duration: 4, rating: 4.9, reviews: 345, location: "Florence, Italy", country: "🇮🇹", tags: ["pasta", "cooking", "italian", "foodie"], idealFor: ["couple", "family"], image: "🍝", popularity: 92, whatToExpect: "Pasta making, tiramisu, wine pairing", availability: "available" },
-            // France
-            { id: 12, name: "Paris Louvre Tour", category: "culture", description: "Skip-the-line tour of the Louvre Museum. See Mona Lisa and other masterpieces.", price: 70, duration: 3, rating: 4.8, reviews: 567, location: "Paris, France", country: "🇫🇷", tags: ["art", "museum", "famous"], idealFor: ["couple", "solo"], image: "🎨", popularity: 95, whatToExpect: "Louvre tour, art history, skip-the-line", availability: "available" },
-            // Spain
-            { id: 13, name: "Barcelona Tapas Tour", category: "food", description: "Evening tapas and wine tour in Barcelona's Gothic Quarter. 5 stops included.", price: 55, duration: 3, rating: 4.8, reviews: 412, location: "Barcelona, Spain", country: "🇪🇸", tags: ["tapas", "wine", "spanish", "foodie"], idealFor: ["couple", "solo"], image: "🍷", popularity: 90, whatToExpect: "5 tapas stops, wine pairings, local guide", availability: "available" },
-            // UK
-            { id: 14, name: "London Walking Tour", category: "culture", description: "Historic walking tour of London. See Big Ben, Buckingham Palace, and Tower Bridge.", price: 30, duration: 3, rating: 4.6, reviews: 234, location: "London, UK", country: "🇬🇧", tags: ["history", "iconic", "walking"], idealFor: ["solo", "couple"], image: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", popularity: 78, whatToExpect: "Landmarks, history, local stories", availability: "available" },
-            // USA
-            { id: 15, name: "NYC Food Truck Tour", category: "food", description: "Food truck tour through NYC. Taste the best street food from around the world.", price: 40, duration: 2.5, rating: 4.7, reviews: 289, location: "New York, USA", country: "🇺🇸", tags: ["street food", "american", "foodie"], idealFor: ["family", "couple"], image: "🌭", popularity: 86, whatToExpect: "Food trucks, diverse cuisine, local guide", availability: "available" },
-            // Bali
-            { id: 16, name: "Bali Rice Terrace Tour", category: "culture", description: "Walk through the UNESCO-listed rice terraces in Ubud. Visit a local village.", price: 35, duration: 3, rating: 4.8, reviews: 356, location: "Bali, Indonesia", country: "🇮🇩", tags: ["rice terraces", "scenic", "cultural"], idealFor: ["couple", "solo"], image: "🌾", popularity: 88, whatToExpect: "Rice terraces, village visit, local guide", availability: "available" },
-            // Dubai
-            { id: 17, name: "Dubai Desert Safari", category: "adventure", description: "Desert safari with dune bashing, camel riding, and BBQ dinner under the stars.", price: 85, duration: 6, rating: 4.8, reviews: 567, location: "Dubai, UAE", country: "🇦🇪", tags: ["desert", "adventure", "luxury"], idealFor: ["family", "couple"], image: "🏜️", popularity: 94, whatToExpect: "Dune bashing, camel ride, BBQ dinner", availability: "available" },
-            // Australia
-            { id: 18, name: "Sydney Harbour Cruise", category: "relaxation", description: "Luxury cruise on Sydney Harbour. See Opera House and Harbour Bridge. Lunch included.", price: 95, duration: 3, rating: 4.8, reviews: 289, location: "Sydney, Australia", country: "🇦🇺", tags: ["harbour", "cruise", "iconic"], idealFor: ["couple", "family"], image: "🦘", popularity: 91, whatToExpect: "Harbour cruise, lunch, iconic views", availability: "available" },
-            // Greece
-            { id: 19, name: "Santorini Sunset Tour", category: "relaxation", description: "Private sunset tour in Santorini. Visit Oia for the famous sunset views.", price: 80, duration: 3, rating: 4.9, reviews: 345, location: "Santorini, Greece", country: "🇬🇷", tags: ["sunset", "romantic", "iconic"], idealFor: ["couple"], image: "🌅", popularity: 97, whatToExpect: "Oia sunset, photos, wine tasting", availability: "available" },
-            // Mexico
-            { id: 20, name: "Cancun Snorkel & Ruins", category: "adventure", description: "Combine snorkeling in crystal waters with a visit to Mayan ruins. Perfect day trip.", price: 70, duration: 6, rating: 4.7, reviews: 234, location: "Cancun, Mexico", country: "🇲🇽", tags: ["ruins", "snorkeling", "mayan"], idealFor: ["family", "couple"], image: "🏝️", popularity: 87, whatToExpect: "Snorkeling, ruins, lunch included", availability: "available" },
-            // Singapore
-            { id: 21, name: "Singapore Food Trail", category: "food", description: "Hawker centre food tour. Taste Hainanese chicken rice, chili crab, and more.", price: 40, duration: 3, rating: 4.8, reviews: 289, location: "Singapore, Singapore", country: "🇸🇬", tags: ["hawker", "singapore", "foodie"], idealFor: ["family", "couple"], image: "🍚", popularity: 89, whatToExpect: "Hawker food, local guide, 6 tastings", availability: "available" },
-            // Morocco
-            { id: 22, name: "Marrakech Souk Shopping", category: "shopping", description: "Explore Marrakech's famous souks with a shopping guide. Find unique crafts.", price: 25, duration: 3, rating: 4.6, reviews: 178, location: "Marrakech, Morocco", country: "🇲🇦", tags: ["shopping", "souk", "morrocan"], idealFor: ["solo", "couple"], image: "🧿", popularity: 74, whatToExpect: "Souk tour, bargaining tips, crafts", availability: "available" },
-            // South Africa
-            { id: 23, name: "Cape Town Safari", category: "adventure", description: "Full day safari near Cape Town. See the Big 5 in their natural habitat.", price: 120, duration: 8, rating: 4.9, reviews: 456, location: "Cape Town, South Africa", country: "🇿🇦", tags: ["safari", "wildlife", "adventure"], idealFor: ["family", "couple"], image: "🦁", popularity: 96, whatToExpect: "Safari, Big 5, lunch included", availability: "soon" },
-            // South Korea
-            { id: 24, name: "Seoul Food Tour", category: "food", description: "Visit traditional markets in Seoul. Taste kimchi, bibimbap, and more.", price: 45, duration: 3, rating: 4.7, reviews: 234, location: "Seoul, South Korea", country: "🇰🇷", tags: ["korean", "foodie", "culture"], idealFor: ["couple", "solo"], image: "🥢", popularity: 84, whatToExpect: "Market tour, food tastings, history", availability: "available" },
-            // Egypt
-            { id: 25, name: "Pyramids & Sphinx Tour", category: "culture", description: "Guided tour of the Great Pyramids and Sphinx in Cairo. Camel ride included.", price: 55, duration: 4, rating: 4.9, reviews: 567, location: "Cairo, Egypt", country: "🇪🇬", tags: ["pyramids", "ancient", "iconic"], idealFor: ["family", "couple"], image: "🐫", popularity: 97, whatToExpect: "Pyramids, Sphinx, camel ride, guide", availability: "available" },
-            // Brazil
-            { id: 26, name: "Rio Cultural Walking Tour", category: "culture", description: "Explore Rio's historic center. Visit the Selaron Steps and historic churches.", price: 35, duration: 3, rating: 4.6, reviews: 156, location: "Rio de Janeiro, Brazil", country: "🇧🇷", tags: ["samba", "culture", "historic"], idealFor: ["solo", "couple"], image: "⛪", popularity: 76, whatToExpect: "Walking tour, history, local stories", availability: "available" },
-            // New Zealand
-            { id: 27, name: "Queenstown Adventure", category: "adventure", description: "Bungee jumping, jet boating, and more in the adventure capital of the world.", price: 150, duration: 5, rating: 4.9, reviews: 345, location: "Queenstown, New Zealand", country: "🇳🇿", tags: ["bungee", "adventure", "thrilling"], idealFor: ["couple", "solo"], image: "🪂", popularity: 94, whatToExpect: "Bungee, jet boat, views", availability: "soon" },
-            // Portugal
-            { id: 28, name: "Lisbon Fado & Dinner", category: "culture", description: "Traditional Fado music performance with Portuguese dinner and wine.", price: 60, duration: 3, rating: 4.8, reviews: 198, location: "Lisbon, Portugal", country: "🇵🇹", tags: ["fado", "music", "portuguese"], idealFor: ["couple"], image: "🎵", popularity: 86, whatToExpect: "Fado show, Portuguese dinner, wine", availability: "available" },
-            // Vietnam
-            { id: 29, name: "Ho Chi Minh Street Food", category: "food", description: "Motorbike food tour in Ho Chi Minh City. Taste pho, banh mi, and more.", price: 30, duration: 3, rating: 4.8, reviews: 289, location: "Ho Chi Minh, Vietnam", country: "🇻🇳", tags: ["vietnamese", "street food", "foodie"], idealFor: ["couple", "solo"], image: "🍲", popularity: 88, whatToExpect: "Motorbike, 6 food stops, local guide", availability: "available" },
-            // Turkey
-            { id: 30, name: "Istanbul Bosphorus Cruise", category: "relaxation", description: "Sunset cruise on the Bosphorus. See the city's skyline and bridges.", price: 40, duration: 2, rating: 4.7, reviews: 234, location: "Istanbul, Turkey", country: "🇹🇷", tags: ["bosphorus", "sunset", "romantic"], idealFor: ["couple", "solo"], image: "🌉", popularity: 81, whatToExpect: "Bosphorus cruise, sunset views, guide", availability: "available" }
+            { id: 6, name: "Thai Massage Workshop", category: "relaxation", description: "Learn ancient Thai massage techniques in a peaceful studio.", price: 40, duration: 2, rating: 4.8, reviews: 234, location: "Bangkok, Thailand", country: "🇹🇭", tags: ["wellness", "learning", "relaxing"], idealFor: ["couple", "solo"], image: "💆", popularity: 85, whatToExpect: "Theory session, practical practice, certificate", availability: "available" },
+            { id: 7, name: "Tokyo Sushi Making Class", category: "food", description: "Learn to make authentic sushi from a master chef in Tokyo. Includes sake tasting.", price: 80, duration: 3, rating: 4.9, reviews: 412, location: "Tokyo, Japan", country: "🇯🇵", tags: ["sushi", "hands-on", "japanese"], idealFor: ["couple", "solo"], image: "🍣", popularity: 94, whatToExpect: "Sushi making, sake tasting, chef guidance", availability: "available" },
+            { id: 8, name: "Kyoto Temple & Garden Tour", category: "culture", description: "Visit iconic temples and zen gardens in Kyoto. Tea ceremony included.", price: 65, duration: 4, rating: 4.9, reviews: 389, location: "Kyoto, Japan", country: "🇯🇵", tags: ["temples", "zen", "tea"], idealFor: ["couple", "solo"], image: "⛩️", popularity: 96, whatToExpect: "Temple visits, zen garden, tea ceremony", availability: "available" },
+            { id: 9, name: "Rome Colosseum Tour", category: "culture", description: "Skip-the-line tour of the Colosseum, Roman Forum, and Palatine Hill.", price: 60, duration: 3, rating: 4.9, reviews: 678, location: "Rome, Italy", country: "🇮🇹", tags: ["history", "ancient", "archaeology"], idealFor: ["couple", "solo"], image: "🏛️", popularity: 97, whatToExpect: "Colosseum, Forum, archaeologist guide", availability: "available" },
+            { id: 10, name: "Florence Pasta Class", category: "food", description: "Learn to make fresh pasta and tiramisu in Florence. Includes wine pairing.", price: 85, duration: 4, rating: 4.9, reviews: 345, location: "Florence, Italy", country: "🇮🇹", tags: ["pasta", "cooking", "italian"], idealFor: ["couple", "family"], image: "🍝", popularity: 92, whatToExpect: "Pasta making, tiramisu, wine pairing", availability: "available" },
+            { id: 11, name: "Paris Louvre Tour", category: "culture", description: "Skip-the-line tour of the Louvre Museum. See Mona Lisa and other masterpieces.", price: 70, duration: 3, rating: 4.8, reviews: 567, location: "Paris, France", country: "🇫🇷", tags: ["art", "museum", "famous"], idealFor: ["couple", "solo"], image: "🎨", popularity: 95, whatToExpect: "Louvre tour, art history, skip-the-line", availability: "available" },
+            { id: 12, name: "Barcelona Tapas Tour", category: "food", description: "Evening tapas and wine tour in Barcelona's Gothic Quarter. 5 stops included.", price: 55, duration: 3, rating: 4.8, reviews: 412, location: "Barcelona, Spain", country: "🇪🇸", tags: ["tapas", "wine", "spanish"], idealFor: ["couple", "solo"], image: "🍷", popularity: 90, whatToExpect: "5 tapas stops, wine pairings, local guide", availability: "available" },
+            { id: 13, name: "London Walking Tour", category: "culture", description: "Historic walking tour of London. See Big Ben, Buckingham Palace, and Tower Bridge.", price: 30, duration: 3, rating: 4.6, reviews: 234, location: "London, UK", country: "🇬🇧", tags: ["history", "iconic", "walking"], idealFor: ["solo", "couple"], image: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", popularity: 78, whatToExpect: "Landmarks, history, local stories", availability: "available" },
+            { id: 14, name: "NYC Food Truck Tour", category: "food", description: "Food truck tour through NYC. Taste the best street food from around the world.", price: 40, duration: 2.5, rating: 4.7, reviews: 289, location: "New York, USA", country: "🇺🇸", tags: ["street food", "american", "foodie"], idealFor: ["family", "couple"], image: "🌭", popularity: 86, whatToExpect: "Food trucks, diverse cuisine, local guide", availability: "available" },
+            { id: 15, name: "Bali Rice Terrace Tour", category: "culture", description: "Walk through the UNESCO-listed rice terraces in Ubud. Visit a local village.", price: 35, duration: 3, rating: 4.8, reviews: 356, location: "Bali, Indonesia", country: "🇮🇩", tags: ["rice terraces", "scenic", "cultural"], idealFor: ["couple", "solo"], image: "🌾", popularity: 88, whatToExpect: "Rice terraces, village visit, local guide", availability: "available" },
+            { id: 16, name: "Dubai Desert Safari", category: "adventure", description: "Desert safari with dune bashing, camel riding, and BBQ dinner under the stars.", price: 85, duration: 6, rating: 4.8, reviews: 567, location: "Dubai, UAE", country: "🇦🇪", tags: ["desert", "adventure", "luxury"], idealFor: ["family", "couple"], image: "🏜️", popularity: 94, whatToExpect: "Dune bashing, camel ride, BBQ dinner", availability: "available" },
+            { id: 17, name: "Sydney Harbour Cruise", category: "relaxation", description: "Luxury cruise on Sydney Harbour. See Opera House and Harbour Bridge.", price: 95, duration: 3, rating: 4.8, reviews: 289, location: "Sydney, Australia", country: "🇦🇺", tags: ["harbour", "cruise", "iconic"], idealFor: ["couple", "family"], image: "🦘", popularity: 91, whatToExpect: "Harbour cruise, lunch, iconic views", availability: "available" },
+            { id: 18, name: "Santorini Sunset Tour", category: "relaxation", description: "Private sunset tour in Santorini. Visit Oia for the famous sunset views.", price: 80, duration: 3, rating: 4.9, reviews: 345, location: "Santorini, Greece", country: "🇬🇷", tags: ["sunset", "romantic", "iconic"], idealFor: ["couple"], image: "🌅", popularity: 97, whatToExpect: "Oia sunset, photos, wine tasting", availability: "available" },
+            { id: 19, name: "Cancun Snorkel & Ruins", category: "adventure", description: "Combine snorkeling in crystal waters with a visit to Mayan ruins.", price: 70, duration: 6, rating: 4.7, reviews: 234, location: "Cancun, Mexico", country: "🇲🇽", tags: ["ruins", "snorkeling", "mayan"], idealFor: ["family", "couple"], image: "🏝️", popularity: 87, whatToExpect: "Snorkeling, ruins, lunch included", availability: "available" },
+            { id: 20, name: "Singapore Food Trail", category: "food", description: "Hawker centre food tour. Taste Hainanese chicken rice, chili crab, and more.", price: 40, duration: 3, rating: 4.8, reviews: 289, location: "Singapore, Singapore", country: "🇸🇬", tags: ["hawker", "singapore", "foodie"], idealFor: ["family", "couple"], image: "🍚", popularity: 89, whatToExpect: "Hawker food, local guide, 6 tastings", availability: "available" },
+            { id: 21, name: "Marrakech Souk Shopping", category: "shopping", description: "Explore Marrakech's famous souks with a shopping guide. Find unique crafts.", price: 25, duration: 3, rating: 4.6, reviews: 178, location: "Marrakech, Morocco", country: "🇲🇦", tags: ["shopping", "souk", "morrocan"], idealFor: ["solo", "couple"], image: "🧿", popularity: 74, whatToExpect: "Souk tour, bargaining tips, crafts", availability: "available" },
+            { id: 22, name: "Cape Town Safari", category: "adventure", description: "Full day safari near Cape Town. See the Big 5 in their natural habitat.", price: 120, duration: 8, rating: 4.9, reviews: 456, location: "Cape Town, South Africa", country: "🇿🇦", tags: ["safari", "wildlife", "adventure"], idealFor: ["family", "couple"], image: "🦁", popularity: 96, whatToExpect: "Safari, Big 5, lunch included", availability: "soon" },
+            { id: 23, name: "Seoul Food Tour", category: "food", description: "Visit traditional markets in Seoul. Taste kimchi, bibimbap, and more.", price: 45, duration: 3, rating: 4.7, reviews: 234, location: "Seoul, South Korea", country: "🇰🇷", tags: ["korean", "foodie", "culture"], idealFor: ["couple", "solo"], image: "🥢", popularity: 84, whatToExpect: "Market tour, food tastings, history", availability: "available" },
+            { id: 24, name: "Pyramids & Sphinx Tour", category: "culture", description: "Guided tour of the Great Pyramids and Sphinx in Cairo. Camel ride included.", price: 55, duration: 4, rating: 4.9, reviews: 567, location: "Cairo, Egypt", country: "🇪🇬", tags: ["pyramids", "ancient", "iconic"], idealFor: ["family", "couple"], image: "🐫", popularity: 97, whatToExpect: "Pyramids, Sphinx, camel ride, guide", availability: "available" },
+            { id: 25, name: "Rio Cultural Walking Tour", category: "culture", description: "Explore Rio's historic center. Visit the Selaron Steps and historic churches.", price: 35, duration: 3, rating: 4.6, reviews: 156, location: "Rio de Janeiro, Brazil", country: "🇧🇷", tags: ["samba", "culture", "historic"], idealFor: ["solo", "couple"], image: "⛪", popularity: 76, whatToExpect: "Walking tour, history, local stories", availability: "available" },
+            { id: 26, name: "Queenstown Adventure", category: "adventure", description: "Bungee jumping, jet boating, and more in the adventure capital of the world.", price: 150, duration: 5, rating: 4.9, reviews: 345, location: "Queenstown, New Zealand", country: "🇳🇿", tags: ["bungee", "adventure", "thrilling"], idealFor: ["couple", "solo"], image: "🪂", popularity: 94, whatToExpect: "Bungee, jet boat, views", availability: "soon" },
+            { id: 27, name: "Lisbon Fado & Dinner", category: "culture", description: "Traditional Fado music performance with Portuguese dinner and wine.", price: 60, duration: 3, rating: 4.8, reviews: 198, location: "Lisbon, Portugal", country: "🇵🇹", tags: ["fado", "music", "portuguese"], idealFor: ["couple"], image: "🎵", popularity: 86, whatToExpect: "Fado show, Portuguese dinner, wine", availability: "available" },
+            { id: 28, name: "Ho Chi Minh Street Food", category: "food", description: "Motorbike food tour in Ho Chi Minh City. Taste pho, banh mi, and more.", price: 30, duration: 3, rating: 4.8, reviews: 289, location: "Ho Chi Minh, Vietnam", country: "🇻🇳", tags: ["vietnamese", "street food", "foodie"], idealFor: ["couple", "solo"], image: "🍲", popularity: 88, whatToExpect: "Motorbike, 6 food stops, local guide", availability: "available" },
+            { id: 29, name: "Istanbul Bosphorus Cruise", category: "relaxation", description: "Sunset cruise on the Bosphorus. See the city's skyline and bridges.", price: 40, duration: 2, rating: 4.7, reviews: 234, location: "Istanbul, Turkey", country: "🇹🇷", tags: ["bosphorus", "sunset", "romantic"], idealFor: ["couple", "solo"], image: "🌉", popularity: 81, whatToExpect: "Bosphorus cruise, sunset views, guide", availability: "available" },
+            { id: 30, name: "Venice Gondola Ride", category: "relaxation", description: "Romantic gondola ride through Venice's canals. Includes serenade and prosecco.", price: 90, duration: 1.5, rating: 4.8, reviews: 423, location: "Venice, Italy", country: "🇮🇹", tags: ["romantic", "gondola", "iconic"], idealFor: ["couple"], image: "🚣", popularity: 94, whatToExpect: "Gondola ride, serenade, prosecco", availability: "available" }
         ];
 
         // ============================================
@@ -1701,16 +1590,7 @@
             currentWeatherIndex = (currentWeatherIndex + 1) % weatherStates.length;
             updateWeatherDisplay();
             showNotification('🌤️ Weather Updated', `Weather changed to ${weatherStates[currentWeatherIndex]}`);
-            const weather = weatherStates[currentWeatherIndex];
-            let filtered = [...EXPERIENCES].filter(e => e.location.includes(currentLocation));
-            if (weather === 'rainy' || weather === 'stormy') {
-                filtered = filtered.filter(e => e.tags.some(t => ['wellness', 'learning', 'cultural', 'foodie', 'indoor'].includes(t)));
-            } else if (weather === 'hot' || weather === 'sunny') {
-                filtered = filtered.filter(e => e.tags.some(t => ['nature', 'outdoor', 'water', 'adventure'].includes(t)));
-            }
-            if (filtered.length > 12) filtered = filtered.slice(0, 12);
-            recommendations = filtered;
-            renderRecommendations(filtered);
+            refreshRecommendations();
             autoSave();
         }
 
@@ -1729,6 +1609,7 @@
             document.getElementById('budgetDisplay').textContent = value;
             userPreferences.budget = parseInt(value);
             document.getElementById('budgetSlider').value = value;
+            refreshRecommendations();
             autoSave();
         }
 
@@ -1736,159 +1617,109 @@
             document.getElementById('timeDisplay').textContent = value;
             userPreferences.timeAvailable = parseFloat(value);
             document.getElementById('timeSlider').value = value;
+            refreshRecommendations();
             autoSave();
         }
 
         // ============================================
-        // CHAT FUNCTIONS
-        // ============================================
-        function addChatMessage(type, content) {
-            const container = document.getElementById('chatMessages');
-            const div = document.createElement('div');
-            div.className = `message ${type}`;
-            const avatar = document.createElement('div');
-            avatar.className = 'message-avatar';
-            if (type === 'user') avatar.innerHTML = '<i class="fas fa-user"></i>';
-            else if (type === 'system') avatar.innerHTML = '<i class="fas fa-info-circle"></i>';
-            else avatar.innerHTML = '<i class="fas fa-globe"></i>';
-            const bubble = document.createElement('div');
-            bubble.className = 'message-bubble';
-            bubble.innerHTML = content.replace(/\n/g, '<br>');
-            div.appendChild(avatar);
-            div.appendChild(bubble);
-            container.appendChild(div);
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function handleUserQuery() {
-            const input = document.getElementById('chatInput');
-            const query = input.value.trim();
-            if (!query) return;
-            
-            let fullQuery = query;
-            const cities = ['bangkok', 'tokyo', 'kyoto', 'paris', 'rome', 'london', 'barcelona', 'sydney', 'dubai', 'bali', 'singapore'];
-            const hasLocation = cities.some(c => query.toLowerCase().includes(c));
-            if (!hasLocation && currentLocation) {
-                fullQuery = query + ' in ' + currentLocation;
-            }
-            
-            addChatMessage('user', query);
-            input.value = '';
-            input.style.height = 'auto';
-            
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'message bot typing-indicator';
-            typingDiv.id = 'typingIndicator';
-            typingDiv.innerHTML = `<div class="message-avatar"><i class="fas fa-globe"></i></div><div class="message-bubble"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`;
-            document.getElementById('chatMessages').appendChild(typingDiv);
-            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
-            
-            setTimeout(() => {
-                const indicator = document.getElementById('typingIndicator');
-                if (indicator) indicator.remove();
-                const results = getRecommendations(fullQuery);
-                recommendations = results;
-                renderRecommendations(results);
-                if (results.length === 0) {
-                    addChatMessage('bot', '😕 No experiences found. Try changing your destination or query!');
-                } else {
-                    const top = results[0];
-                    addChatMessage('bot', `🎯 Found ${results.length} experiences in ${currentLocation}! Top pick: ${top.country || '🌍'} <strong>${top.name}</strong> ($${top.price}, ${top.duration}h, ⭐${top.rating})<br><br>💡 Click on any card for details, or ❤️ to save to favorites!`);
-                }
-                autoSave();
-            }, 800);
-        }
-
-        // ============================================
-        // VOICE INPUT
-        // ============================================
-        let recognition = null;
-
-        function toggleVoice() {
-            const btn = document.getElementById('voiceBtn');
-            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                if (!recognition) {
-                    recognition = new SpeechRecognition();
-                    recognition.lang = 'en-US';
-                    recognition.continuous = false;
-                    recognition.interimResults = true;
-                    recognition.onresult = function(event) {
-                        const transcript = Array.from(event.results)
-                            .map(result => result[0].transcript)
-                            .join('');
-                        document.getElementById('chatInput').value = transcript;
-                        if (event.results[0].isFinal) {
-                            btn.classList.remove('listening');
-                            handleUserQuery();
-                        }
-                    };
-                    recognition.onerror = function() {
-                        btn.classList.remove('listening');
-                        showNotification('❌ Voice Error', 'Please try again or type your query.');
-                    };
-                    recognition.onend = function() {
-                        btn.classList.remove('listening');
-                    };
-                }
-                if (btn.classList.contains('listening')) {
-                    recognition.stop();
-                    btn.classList.remove('listening');
-                } else {
-                    btn.classList.add('listening');
-                    recognition.start();
-                }
-            } else {
-                showNotification('❌ Not Supported', 'Voice input is not supported in this browser.');
-            }
-        }
-
-        // ============================================
-        // RECOMMENDATION ENGINE
+        // ENHANCED RECOMMENDATION ENGINE (WITH FALLBACK)
         // ============================================
         function getRecommendations(query) {
             let results = [...EXPERIENCES];
             const q = query.toLowerCase();
             
-            const locations = ['bangkok', 'tokyo', 'kyoto', 'paris', 'rome', 'london', 'barcelona', 'sydney', 'dubai', 'bali', 'singapore', 'phuket', 'chiang mai', 'florence', 'venice', 'madrid', 'cancun', 'marrakech', 'cape town', 'seoul', 'cairo', 'rio', 'queenstown', 'lisbon', 'istanbul'];
+            // ===== 1. LOCATION FILTER =====
+            const locations = ['bangkok', 'tokyo', 'kyoto', 'paris', 'rome', 'london', 'barcelona', 'sydney', 'dubai', 'bali', 'singapore', 'phuket', 'chiang mai', 'florence', 'venice', 'madrid', 'cancun', 'marrakech', 'cape town', 'seoul', 'cairo', 'rio', 'queenstown', 'lisbon', 'istanbul', 'mumbai', 'ho chi minh', 'vienna', 'prague', 'amsterdam', 'berlin'];
             let locationMatch = false;
+            let locationQuery = '';
+            
             for (const loc of locations) {
                 if (q.includes(loc)) {
                     results = results.filter(e => e.location.toLowerCase().includes(loc));
                     locationMatch = true;
+                    locationQuery = loc;
                     break;
                 }
             }
+            
+            // If no location in query, use current location
             if (!locationMatch && currentLocation) {
                 const locParts = currentLocation.split(',')[0].toLowerCase().trim();
                 results = results.filter(e => e.location.toLowerCase().includes(locParts));
+                // If no results with current location, try all locations
+                if (results.length === 0) {
+                    results = [...EXPERIENCES];
+                }
             }
             
-            const hasFood = q.includes('food') || q.includes('eat') || q.includes('dining') || q.includes('cooking') || q.includes('meal');
-            const hasCulture = q.includes('culture') || q.includes('art') || q.includes('museum') || q.includes('temple') || q.includes('history');
-            const hasAdventure = q.includes('adventure') || q.includes('thrill') || q.includes('active') || q.includes('zip') || q.includes('dive') || q.includes('safari');
-            const hasRelax = q.includes('relax') || q.includes('spa') || q.includes('massage') || q.includes('cruise') || q.includes('sunset');
-            const hasShopping = q.includes('shop') || q.includes('market') || q.includes('buy') || q.includes('souvenir');
-            const hasRomantic = q.includes('romantic') || q.includes('couple') || q.includes('date');
-            const hasFamily = q.includes('family') || q.includes('kids') || q.includes('children');
-            const hasSolo = q.includes('solo') || q.includes('alone') || q.includes('single');
+            // ===== 2. CATEGORY DETECTION =====
+            const hasFood = q.includes('food') || q.includes('eat') || q.includes('dining') || q.includes('cooking') || q.includes('meal') || q.includes('restaurant') || q.includes('cuisine') || q.includes('taste');
+            const hasCulture = q.includes('culture') || q.includes('art') || q.includes('museum') || q.includes('temple') || q.includes('history') || q.includes('heritage') || q.includes('historical');
+            const hasAdventure = q.includes('adventure') || q.includes('thrill') || q.includes('active') || q.includes('zip') || q.includes('dive') || q.includes('safari') || q.includes('trek') || q.includes('hike') || q.includes('bungee');
+            const hasRelax = q.includes('relax') || q.includes('spa') || q.includes('massage') || q.includes('cruise') || q.includes('sunset') || q.includes('wellness') || q.includes('peaceful') || q.includes('calm');
+            const hasShopping = q.includes('shop') || q.includes('market') || q.includes('buy') || q.includes('souvenir') || q.includes('bazaar') || q.includes('mall');
+            const hasRomantic = q.includes('romantic') || q.includes('couple') || q.includes('date') || q.includes('dinner') || q.includes('honeymoon') || q.includes('lovers');
+            const hasFamily = q.includes('family') || q.includes('kids') || q.includes('children') || q.includes('child') || q.includes('baby') || q.includes('parent');
+            const hasSolo = q.includes('solo') || q.includes('alone') || q.includes('single') || q.includes('individual');
             
-            if (hasFood) results = results.filter(e => e.category === 'food');
-            else if (hasCulture) results = results.filter(e => e.category === 'culture');
-            else if (hasAdventure) results = results.filter(e => e.category === 'adventure');
-            else if (hasRelax) results = results.filter(e => e.category === 'relaxation');
-            else if (hasShopping) results = results.filter(e => e.category === 'shopping');
-            else if (hasRomantic) results = results.filter(e => e.idealFor.includes('couple'));
+            // Apply category filter
+            let categoryFiltered = [];
+            if (hasFood) {
+                categoryFiltered = results.filter(e => e.category === 'food');
+                if (categoryFiltered.length === 0) categoryFiltered = results.filter(e => e.tags.some(t => ['foodie', 'local', 'authentic'].includes(t)));
+            } else if (hasCulture) {
+                categoryFiltered = results.filter(e => e.category === 'culture');
+                if (categoryFiltered.length === 0) categoryFiltered = results.filter(e => e.tags.some(t => ['history', 'cultural', 'art'].includes(t)));
+            } else if (hasAdventure) {
+                categoryFiltered = results.filter(e => e.category === 'adventure');
+                if (categoryFiltered.length === 0) categoryFiltered = results.filter(e => e.tags.some(t => ['nature', 'active', 'thrilling'].includes(t)));
+            } else if (hasRelax) {
+                categoryFiltered = results.filter(e => e.category === 'relaxation');
+                if (categoryFiltered.length === 0) categoryFiltered = results.filter(e => e.tags.some(t => ['wellness', 'peaceful', 'sunset'].includes(t)));
+            } else if (hasShopping) {
+                categoryFiltered = results.filter(e => e.category === 'shopping');
+                if (categoryFiltered.length === 0) categoryFiltered = results.filter(e => e.tags.some(t => ['local', 'market'].includes(t)));
+            } else {
+                categoryFiltered = results;
+            }
             
-            if (hasFamily) results = results.filter(e => e.idealFor.includes('family'));
-            else if (hasSolo) results = results.filter(e => e.idealFor.includes('solo'));
+            // If category filter removed all results, fallback to all
+            if (categoryFiltered.length === 0) {
+                categoryFiltered = results;
+            }
             
+            // ===== 3. TRAVELER TYPE FILTER =====
+            let travelerFiltered = categoryFiltered;
+            if (hasFamily) {
+                travelerFiltered = categoryFiltered.filter(e => e.idealFor.includes('family'));
+                if (travelerFiltered.length === 0) travelerFiltered = categoryFiltered;
+            } else if (hasSolo) {
+                travelerFiltered = categoryFiltered.filter(e => e.idealFor.includes('solo'));
+                if (travelerFiltered.length === 0) travelerFiltered = categoryFiltered;
+            } else if (hasRomantic) {
+                travelerFiltered = categoryFiltered.filter(e => e.idealFor.includes('couple'));
+                if (travelerFiltered.length === 0) travelerFiltered = categoryFiltered;
+            }
+            
+            // ===== 4. BUDGET & DURATION FILTER (WITH FALLBACK) =====
             const budget = userPreferences.budget || 50;
             const duration = userPreferences.timeAvailable || 3;
-            results = results.filter(e => e.price <= budget * 1.2);
-            results = results.filter(e => e.duration <= duration + 1);
             
-            results = results.map(e => {
+            let budgetFiltered = travelerFiltered.filter(e => e.price <= budget * 1.2);
+            if (budgetFiltered.length === 0) {
+                // If no results in budget, show all with slightly higher budget
+                budgetFiltered = travelerFiltered.filter(e => e.price <= budget * 1.5);
+                if (budgetFiltered.length === 0) budgetFiltered = travelerFiltered;
+            }
+            
+            let durationFiltered = budgetFiltered.filter(e => e.duration <= duration + 1.5);
+            if (durationFiltered.length === 0) {
+                durationFiltered = budgetFiltered.filter(e => e.duration <= duration + 3);
+                if (durationFiltered.length === 0) durationFiltered = budgetFiltered;
+            }
+            
+            // ===== 5. SCORING =====
+            let scored = durationFiltered.map(e => {
                 let score = 0;
                 if (hasFood && e.category === 'food') score += 30;
                 if (hasCulture && e.category === 'culture') score += 30;
@@ -1900,12 +1731,21 @@
                 if (hasRomantic && e.idealFor.includes('couple')) score += 20;
                 score += (e.rating / 5) * 20;
                 score += (e.popularity / 100) * 10;
-                if (budget) score += (1 - Math.min(e.price / budget, 1)) * 10;
-                if (duration) score += (1 - Math.min(e.duration / duration, 1)) * 10;
+                score += (1 - Math.min(e.price / budget, 1)) * 10;
+                score += (1 - Math.min(e.duration / duration, 1)) * 10;
                 return { ...e, score };
             });
-            results.sort((a, b) => b.score - a.score);
-            return results.slice(0, 12);
+            
+            scored.sort((a, b) => b.score - a.score);
+            
+            // ===== 6. FINAL FALLBACK - Show popular experiences if nothing matches =====
+            if (scored.length === 0) {
+                scored = EXPERIENCES.map(e => ({ ...e, score: e.popularity }))
+                    .sort((a, b) => b.score - a.score)
+                    .slice(0, 8);
+            }
+            
+            return scored.slice(0, 12);
         }
 
         function refreshRecommendations() {
@@ -1921,7 +1761,17 @@
         function renderRecommendations(recs) {
             const container = document.getElementById('recommendationsGrid');
             if (!recs || recs.length === 0) {
-                container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-light);"><i class="fas fa-globe" style="font-size:32px;display:block;margin-bottom:12px;"></i><p>No recommendations found in ${currentLocation}. Try changing your location, budget, or time!</p></div>`;
+                container.innerHTML = `
+                    <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-light);">
+                        <i class="fas fa-globe" style="font-size:48px;display:block;margin-bottom:16px;color:var(--primary);"></i>
+                        <h3 style="color:var(--text);margin-bottom:8px;">🌍 Exploring ${currentLocation}</h3>
+                        <p>Try changing your location, adjusting the budget/time sliders, or asking a different question!</p>
+                        <div style="margin-top:16px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+                            <button onclick="showRandomDestination()" class="btn-secondary"><i class="fas fa-dice"></i> Surprise Me!</button>
+                            <button onclick="refreshRecommendations()" class="btn-secondary"><i class="fas fa-sync"></i> Refresh</button>
+                        </div>
+                    </div>
+                `;
                 return;
             }
             document.getElementById('recCount').textContent = `(${recs.length} found)`;
@@ -2323,6 +2173,103 @@
         }
 
         // ============================================
+        // CHAT FUNCTIONS
+        // ============================================
+        function addChatMessage(type, content) {
+            const container = document.getElementById('chatMessages');
+            const div = document.createElement('div');
+            div.className = `message ${type}`;
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            if (type === 'user') avatar.innerHTML = '<i class="fas fa-user"></i>';
+            else if (type === 'system') avatar.innerHTML = '<i class="fas fa-info-circle"></i>';
+            else avatar.innerHTML = '<i class="fas fa-globe"></i>';
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            bubble.innerHTML = content.replace(/\n/g, '<br>');
+            div.appendChild(avatar);
+            div.appendChild(bubble);
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function handleUserQuery() {
+            const input = document.getElementById('chatInput');
+            const query = input.value.trim();
+            if (!query) return;
+            
+            addChatMessage('user', query);
+            input.value = '';
+            input.style.height = 'auto';
+            
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `<div class="message-avatar"><i class="fas fa-globe"></i></div><div class="message-bubble"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`;
+            document.getElementById('chatMessages').appendChild(typingDiv);
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+            
+            setTimeout(() => {
+                const indicator = document.getElementById('typingIndicator');
+                if (indicator) indicator.remove();
+                const results = getRecommendations(query + ' ' + currentLocation);
+                recommendations = results;
+                renderRecommendations(results);
+                if (results.length === 0) {
+                    addChatMessage('bot', '😕 No experiences found. Try adjusting your budget/time sliders or changing your location!');
+                } else {
+                    const top = results[0];
+                    addChatMessage('bot', `🎯 Found ${results.length} experiences! Top pick: ${top.country || '🌍'} <strong>${top.name}</strong> ($${top.price}, ${top.duration}h, ⭐${top.rating})<br><br>💡 Click on any card for details, or ❤️ to save to favorites!`);
+                }
+                autoSave();
+            }, 800);
+        }
+
+        // ============================================
+        // VOICE INPUT
+        // ============================================
+        let recognition = null;
+
+        function toggleVoice() {
+            const btn = document.getElementById('voiceBtn');
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!recognition) {
+                    recognition = new SpeechRecognition();
+                    recognition.lang = 'en-US';
+                    recognition.continuous = false;
+                    recognition.interimResults = true;
+                    recognition.onresult = function(event) {
+                        const transcript = Array.from(event.results)
+                            .map(result => result[0].transcript)
+                            .join('');
+                        document.getElementById('chatInput').value = transcript;
+                        if (event.results[0].isFinal) {
+                            btn.classList.remove('listening');
+                            handleUserQuery();
+                        }
+                    };
+                    recognition.onerror = function() {
+                        btn.classList.remove('listening');
+                        showNotification('❌ Voice Error', 'Please try again or type your query.');
+                    };
+                    recognition.onend = function() {
+                        btn.classList.remove('listening');
+                    };
+                }
+                if (btn.classList.contains('listening')) {
+                    recognition.stop();
+                    btn.classList.remove('listening');
+                } else {
+                    btn.classList.add('listening');
+                    recognition.start();
+                }
+            } else {
+                showNotification('❌ Not Supported', 'Voice input is not supported in this browser.');
+            }
+        }
+
+        // ============================================
         // NAVIGATION
         // ============================================
         document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -2357,15 +2304,13 @@
         document.getElementById('sortBy').addEventListener('change', applyFilters);
 
         // ============================================
-        // INIT - Check for existing session
+        // INIT
         // ============================================
         function init() {
-            // Check if user is already logged in
             const session = getSession();
             if (session) {
                 const users = getUsers();
                 if (users[session.email]) {
-                    // User exists, login automatically
                     document.getElementById('loginOverlay').classList.add('hidden');
                     document.getElementById('mainNav').style.display = 'block';
                     document.getElementById('mainContent').style.display = 'block';
@@ -2374,7 +2319,6 @@
                     document.getElementById('userNameDisplay').textContent = user.name;
                     document.getElementById('userAvatarSmall').textContent = user.name.charAt(0).toUpperCase();
                     
-                    // Load user data
                     if (user.preferences) {
                         document.getElementById('budgetSlider').value = user.preferences.budget || 50;
                         document.getElementById('budgetDisplay').textContent = user.preferences.budget || 50;
@@ -2401,12 +2345,10 @@
                 }
             }
             
-            // No session - show login
             document.getElementById('loginOverlay').classList.remove('hidden');
             document.getElementById('mainNav').style.display = 'none';
             document.getElementById('mainContent').style.display = 'none';
             
-            // Event listeners for login form
             document.getElementById('loginEmail').addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') handleLogin();
             });
@@ -2425,7 +2367,7 @@
         }
 
         // ============================================
-        // APP EVENT LISTENERS
+        // EVENT LISTENERS
         // ============================================
         document.getElementById('sendBtn').addEventListener('click', handleUserQuery);
         document.getElementById('chatInput').addEventListener('keydown', (e) => {
@@ -2497,7 +2439,6 @@
         console.log('📧 Demo: demo@nexus.com / password123');
         console.log('💡 All user data is saved in your browser (localStorage)');
 
-        // Start the app
         init();
     </script>
 </body>
